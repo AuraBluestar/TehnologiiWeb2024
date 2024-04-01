@@ -1,0 +1,118 @@
+/* Add a black background color to the top navigation */
+.topnav {
+    background-color: #CD7F32;
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+}
+  
+/* Style the links inside the navigation bar */
+.active {
+    float: left;
+    color: #f2f2f2;
+    text-align: left;
+    padding: 20px 16px 25px 48px;
+    text-decoration: none;
+    font-size: 17px;
+}
+  
+  /* Change the color of links on hover */
+.active :hover {
+    background-color: #ddd;
+    color: black;
+}
+  
+/* Add a color to the active/current link */
+.topnav a.active {
+    background-color: #C04000;
+    color: white;
+}
+
+/* The sidebar menu */
+.sidenav {
+    margin-top: 65px; /*Trebuie modificat sa pt ca la ecran intreb merge 5, la jumatate merge 9*/
+    height: 100%; /* Full-height: remove this if you want "auto" height */
+    width: 160px; /* Set the width of the sidebar */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color:#F2D2BD ; /* Peach */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 20px;
+  }
+  
+  /* The navigation menu links */
+  .sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #C04000;
+    display: block;
+  }
+  
+   /*When you mouse over the navigation links, change their color */
+  .sidenav a:hover {
+    color: #f1f1f1;
+  }
+  .text{
+    margin-left: 160px; /* Same as the width of the sidenav */
+    padding: 10% 10px;
+  }
+  .myApp{
+    background-color:white;
+  }
+  .titlu{
+    /* TitluProblema */
+    position: absolute;
+    width: 375px;
+    height: 57px;
+    left: 180px;
+    right: 547px;
+    top: 90px;
+    bottom: 866px;
+    color: rgb(0, 0, 0);
+    font-family: Roboto;
+    font-size: 30px;
+    font-weight: 900;
+    line-height: 57px;
+    letter-spacing: 4.03px;
+    text-align: left;
+  }
+  .categorie{
+    /* Categorie */
+    position: absolute;
+    width: 375px;
+    height: 57px;
+    left: 700px;
+    right: 266px;
+    top: 90px;
+    bottom: 866px;
+    color: rgb(0, 0, 0);
+    font-family: Roboto;
+    font-size: 30px;
+    font-weight: 900;
+    line-height: 57px;
+    letter-spacing: 4.03px;
+    text-align: left;
+  }
+  .dificultate{
+    /* Dificultate */
+    position: absolute;
+    width: 375px;
+    height: 57px;
+    left: 1200px;
+    right: 266px;
+    top: 90px;
+    bottom: 866px;
+    color: rgb(0, 0, 0);
+    font-family: Roboto;
+    font-size: 30px;
+    font-weight: 900;
+    line-height: 57px;
+    letter-spacing: 4.03px;
+    text-align: left;
+  }
