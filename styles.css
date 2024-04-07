@@ -1,0 +1,186 @@
+.topnav {
+  background-color: #CD7F32;
+  overflow: hidden;
+  position: fixed;
+  width: 100em;
+  height: 4em;
+  z-index: 1;
+  top: 0;
+  left: 0;
+}
+
+/* Style the links inside the navigation bar */
+.active {
+  float: left;
+  height: 4em;
+  max-width: 10em;
+  color: #f2f2f2;
+  text-align: left;
+  padding: 20px 16px 25px 48px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.logout {
+  float: left;
+  height: 4em;
+  max-width: 10em;
+  color: #f2f2f2;
+  text-align: left;
+  padding: 20px 16px 25px 70em;
+  /* top, right, bottom, left */
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+  background-color: #C04000;
+  color: white;
+}
+
+/* The sidebar menu */
+.sidenav {
+  margin-top: 4em;
+  height: 38em;
+  width: 10em;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #F2D2BD;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+/* The navigation menu links */
+.sidenav a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  display: block;
+  font-size: 25px;
+  color: #C04000;
+}
+
+/*When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.myApp {
+  width: 90em;
+  height: 30em;
+}
+
+.top-side {
+  margin-top: 4em;
+  height: auto;
+  width: 84.9em;
+  margin-left: 9.5em;
+}
+
+.titlu_pagina {
+  padding: 3em 10em;
+  list-style-type: none;
+  font-size: 1em;
+  font-family: Garamond;
+  color: black;
+  display: flex;
+  flex-direction: column;
+}
+
+.button {
+  text-decoration: none;
+  color: black;
+  margin-left: 0.25em;
+}
+
+.sub_section {
+  background-color: #ceaa91;
+  margin-left: 8em;
+  margin-bottom: 2em;
+  width: 65em;
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  text-decoration: none;
+}
+
+.nume {
+  margin-left: 5em;
+  margin-right: 5em;
+  margin-top: 2em;
+  margin-bottom: 2em;
+  font-size: medium;
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: bold;
+  color: black;
+}
+
+.categorie {
+  margin-left: 5em;
+  margin-right: 5em;
+  margin-top: 2em;
+  margin-bottom: 2em;
+  font-size: medium;
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: bold;
+  color: black;
+}
+
+.dificultate {
+  margin-left: 5em;
+  margin-right: 5em;
+  margin-top: 2em;
+  margin-bottom: 2em;
+  font-size: medium;
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: bold;
+  color: black;
+}
+
+.logInPage {
+  position: absolute;
+  width: 26.5em;
+  margin-bottom: 5em;
+}
+
+
+
+.password {
+  position: absolute;
+  width: 26.5em;
+  height: 3.5em;
+  margin-top: 5em;
+  background: rgb(217, 217, 217);
+}
+
+.register {
+  position: absolute;
+  width: 4em;
+  height: 2.5em;
+  margin-top: 5em;
+  margin-left: -15em;
+  border-style: double;
+  border-radius: 50%;
+  border-color: #ceaa91;
+  text-align: center;
+  line-height: 2em;
+  color: #C04000;
+  text-decoration: none;
+  background-color: #ceaa91;
+}
+
+.LoginPage {
+  margin-top: 25em;
+  margin-left: 37em;
+  height: 15em;
+  width: 26.5em;
+}
+
+.RegisterPage {
+  margin-top: 12em;
+  margin-left: 37em;
+  height: 15em;
+  width: 26.5em;
+}
