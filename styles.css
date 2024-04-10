@@ -106,6 +106,54 @@
   text-decoration: none;
 }
 
+.sub_section_A {
+  background-color: #ceaa91;
+  margin-left: 8em;
+  margin-bottom: 2em;
+  width: 50em;
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  text-decoration: none;
+}
+
+.sub_section_B {
+  background-color: #ceaa91;
+  margin-left: 8em;
+  margin-bottom: 2em;
+  margin-top: 2em;
+  width: 15em;
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  text-decoration: none;
+}
+
+.sub_section_Q {
+  background-color: #ceaa91;
+  margin-left: 60em;
+  margin-bottom: 2em;
+  margin-top: -7em;
+  width: 13em;
+  height: 5em;
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  text-decoration: none;
+}
+
+.sub_section_S {
+  margin-left: 25em;
+  margin-bottom: 2em;
+  margin-top: -7em;
+  width: 2em;
+  height: 2em;
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  text-decoration: none;
+}
+
 .nume {
   margin-left: 5em;
   margin-right: 5em;
@@ -183,4 +231,32 @@
   margin-left: 37em;
   height: 15em;
   width: 26.5em;
+}
+
+.checkbox {
+  position: absolute;
+  display: inline-block;
+  width: 3em;
+  height: 3em;
+  border: 1px solid #ccc;
+  margin-top: -7em;
+  margin-left: 62em;
+}
+
+
+.checkboxes {
+  position: absolute;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #ccc;
+}
+
+.checkbox:checked::before {
+  content: '\2713'; /* Caracterul Unicode pentru check-mark */
+  font-size: 14px; /* Mărimea fontului pentru check-mark */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
