@@ -232,8 +232,20 @@
   height: 15em;
   width: 26.5em;
 }
+
 .checkbox {
-  position: relative;
+  position: absolute;
+  display: inline-block;
+  width: 3em;
+  height: 3em;
+  border: 1px solid #ccc;
+  margin-top: -7em;
+  margin-left: 62em;
+}
+
+
+.checkboxes {
+  position: absolute;
   display: inline-block;
   width: 20px;
   height: 20px;
