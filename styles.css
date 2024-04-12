@@ -2,11 +2,12 @@
   background-color: #CD7F32;
   overflow: hidden;
   position: fixed;
-  width: 100em;
-  height: 4em;
+  width: 100%;
+  height: 4rem;
   z-index: 1;
   top: 0;
   left: 0;
+  right:0;
 }
 
 /* Style the links inside the navigation bar */
@@ -48,6 +49,7 @@
   z-index: 1;
   top: 0;
   left: 0;
+  bottom: 0;
   background-color: #F2D2BD;
   overflow-x: hidden;
   padding-top: 20px;
@@ -190,10 +192,8 @@
 .logInPage {
   position: absolute;
   width: 26.5em;
-  margin-bottom: 5em;
+  height: auto;
 }
-
-
 
 .password {
   position: absolute;
@@ -259,4 +259,122 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+/*Profil*/
+
+/* Stiluri pentru containerul principal */
+.container {
+  margin-left: 10em; /* Asigură spațiul necesar pentru bara de navigare stângă */
+}
+
+/* Stiluri pentru profil */
+.profil {
+  text-align: center;
+  margin-top: 6rem; /* Asigură spațiul necesar pentru bara de navigare superioară */
+  margin-left: -60rem;
+}
+
+.profil img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profil ul {
+  list-style: none;
+  padding: 0;
+}
+
+.profil li {
+  margin-bottom: 10px;
+}
+
+/*Pagina de creeare problema*/
+
+.form-row {
+  display: flex;
+  margin-left: 5rem;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+
+.form-group {
+  margin-right: 1rem; 
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+/* Stiluri pentru blocul de text pentru cerință */
+.cerinta {
+  margin-top: 1rem; /* Adaugă un spațiu deasupra blocului de text pentru cerință */
+  margin-left: 5rem;
+}
+
+textarea {
+  width: 90%; /* Umple complet lățimea containerului */
+  height: 10rem; /* Setează înălțimea dorită */
+  resize: vertical; /* Permite redimensionarea verticală a textarea-ului */
+  margin-bottom: 1rem; /* Adaugă un spațiu sub textarea */
+  margin-left: 5rem;
+}
+
+button[type="submit"] {
+  padding: 0.5rem 1rem; /* Adaugă spațiu pentru buton */
+  font-size: 1rem; /* Mărimea fontului */
+  margin-left: 5rem;
+}
+
+/* Stiluri pentru detalii problema */
+.problem-details {
+  margin-bottom: 20px;
+  margin-left: 5rem;
+  list-style-type: none;
+}
+
+.problem-details h2 {
+  margin-top: 0;
+}
+
+.interactions{
+  margin-left: 5rem;
+  
+}
+
+/* Stiluri pentru interacțiuni */
+
+.interactions button {
+margin-bottom: 10px;
+margin-left: -64rem;
+margin-top: 3rem;
+}
+
+textarea {
+  width: 80%;
+  resize: vertical;
+  margin-left: -0.25rem;
+  margin-bottom: 3rem;
+}
+
+/*Rating*/
+.rating-container {
+  display: flex;
+  align-items: center;
+}
+
+.stars {
+  font-size: 24px;
+}
+
+.star {
+  cursor: pointer;
+}
+
+.rating-num {
+  margin-left: 10px;
+  font-size: 18px;
 }
