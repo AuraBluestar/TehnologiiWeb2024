@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="nav-bar.css">
+    <link rel="stylesheet" href="side-bar.css">
+    <link rel="stylesheet" href="main-content.css">
+    <link rel="stylesheet" href="searchmenu.css">
+    <link rel="stylesheet" href="authenticaton.css">
+    <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <title>NotLogged</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body,
+        html {
+            position: relative;
+            height: 100%;
+            font-family: Lato, normal;
+
+        }
+    </style>
+
+
+
+</head>
+
+<body style="background: url('background.svg');">
+
+    <!-- This is the NavBar -->
+    <nav class="navbar">
+        <div class="navleft">
+            <div class="logo"><a href="#">In&lt;form&gt;atiX</a> </div>
+        </div>
+        <div class="navright">
+
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Sign Up</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- This is the SideBar -->
+    <nav class="sidebar">
+        <div class="top">
+            <div class="menu">
+                <i class='bx bx-code'></i>
+                <span>Menu</span>
+            </div>
+            <i class='bx bx-menu' id="btn"></i>
+        </div>
+        <ul>
+            <li><a href="#"><i class='bx bxs-home'></i><span class="navitem">Home</span></a></li>
+            <li><a href="#"><i class='bx bxs-edit-alt'></i><span class="navitem">Sign Up</span></a></li>
+            <li><a href="#"><i class='bx bxs-contact'></i><span class="navitem">Contact</span></a></li>
+        </ul>
+    </nav>
+    <div class="maincontent" style="left: 60px; width:calc(100dvw - 160px);">
+        <div class="authForm">
+            <h1>Login</h1>
+            <form>
+                <div class="text_field">
+                    <input type="text" required><span></span><label>Username</label>
+                </div>
+                <div class="text_field">
+                    <input type="password" required><span></span><label>Password</label>
+                </div>
+                    <input type="submit" value="Login">
+                    <div class="signup_link">Not Signed Up? <a href="#">Sign Up</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+</body>
+
+<script>
+    /*Buton menu side bar*/
+    let btn = document.querySelector('#btn');
+    let sidebar = document.querySelector('.sidebar');
+
+    btn.onclick = function () {
+        sidebar.classList.toggle('active');
+    };
+
+
+    /*dropDown menu selector*/
+    const optionMenu = document.querySelector(".dropdown"),
+        selectBtn = optionMenu.querySelector(".selectbtn"),
+        options = optionMenu.querySelectorAll(".option"),
+        sBtn_text = optionMenu.querySelector(".sBtn-text");
+
+    selectBtn.addEventListener("click", () => optionMenu.classList.toggle("active"));
+
+    options.forEach(option => {
+        option.addEventListener("click", () => {
+            let selectedOption = option.querySelector(".option-text").innerText;
+            sBtn_text.innerText = selectedOption;
+            optionMenu.classList.remove("active");
+        });
+    });
+</script>
+
+</html>

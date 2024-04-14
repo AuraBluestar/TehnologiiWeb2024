@@ -1,0 +1,189 @@
+/*Search Bar*/
+
+.searchbox{
+    --padding: 14px;
+
+    width: max-content;
+    display: flex;
+    position: relative;
+    align-items:center;
+    padding: var(--padding);
+    border-radius: 28px;
+    background: #FBCEB1;
+    transition: box-shadow 0.2s;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.searchbox:focus-within{
+    
+    box-shadow: 0 0 2px rgba(0,0,0,0.75);
+}
+
+.search-input{
+    font-size: 16px;
+    margin-left: var(--padding);;
+    color:#333333;
+    outline: none;
+    border: none;
+    background: transparent;
+}
+
+.bx-search-alt-2{
+    position:relative;
+    top: 1px;
+    color: rgba(0,0,0,1.0);
+    border:1px;
+    border-radius: 50%;
+    width:16px;
+    height:16px;
+    background-color: white;
+    cursor: pointer;
+}
+
+/* Filter Problem Menu */
+
+.filterbox{
+    display: flex;
+}
+#filtermenu{
+
+    display: flex;
+  
+    flex-direction: column;
+    align-items: center;
+
+}
+
+/*Filter Difficulty*/
+.diffButtons{
+    user-select: none;
+}
+
+
+/* FilterCategory */
+
+.dropdown{
+    width: 277px;
+    
+}
+.dropdown .selectbtn{
+    display: flex;
+    height: 55px;
+    background: #fff;
+    padding: 20px;
+    font-size: 18px;
+    font-weight: 400;
+    border-radius: 28px;
+    background: #FBCEB1;
+    align-items: center;
+    cursor: pointer;
+    justify-content: space-between;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    user-select: none;
+}
+.selectbtn i{
+    font-size: 25px;
+    transition: 0.3s;
+}
+.dropdown.active .selectbtn i{
+    transform: rotate(-180deg);
+}
+
+.dropdown.active .selectbtn{
+    box-shadow: 0 0 1px rgba(0,0,0,0.75);
+}
+
+.dropdown .dmenu{
+    position:absolute;
+    width:277px;
+    left:auto;
+    padding: 20px;
+    margin-top: 10px;
+    border-radius: 28px;
+    
+    background: #FBCEB1;
+    box-shadow: 0 0 3px rgba(0,0,0,0.1);
+    display: none;
+    user-select: none;
+    z-index: 2;
+}
+
+.dropdown.active .dmenu{
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 1px rgba(0,0,0,0.75);
+}
+.dmenu .option{
+    display: flex;
+    height: 55px;
+    cursor: pointer;
+    padding: 0 16px;
+    border-radius: 28px;
+    background: #FBCEB1;
+    align-items: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    transition: 0.2s;
+}
+.dmenu .option:hover{
+    background: #F2F2F2;
+}
+.option i{
+    font-size: 25px;
+}
+.option .option-text{
+    font-size: 18px;
+    color: #333;
+}
+
+/* FilterButton */
+
+.filterbox .filter{
+    margin:5px ;
+    font-size: 14px;
+    padding: 5px;
+    border-radius: 10px;
+    background: #222222;
+    color: white;
+}
+
+/* Create New */
+
+
+.createnew{
+    user-select: none;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 0 2px rgba(0,0,0,0.75);
+    border-radius: 28px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.createnew .header{
+    margin-right: 5px;
+}
+
+.createnew li{
+    display: flex;
+    user-select: none;
+    
+    position: relative;
+    list-style: none;
+
+    margin-left:5px ;
+
+    
+}
+
+.createnew li a{
+    text-decoration: none;
+    color: hsl(0, 0%, 0%);
+
+    display:flex;
+    align-items: center;
+
+    font-size: 20px;
+}
