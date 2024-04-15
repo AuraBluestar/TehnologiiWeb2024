@@ -4,14 +4,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="nav-bar.css">
-  <link rel="stylesheet" href="side-bar.css">
-  <link rel="stylesheet" href="main-content.css">
-  <link rel="stylesheet" href="searchmenu.css">
-  <link rel="stylesheet" href="problempage.css">
+  <link rel="stylesheet" href="../styles/nav-bar.css">
+  <link rel="stylesheet" href="../styles/side-bar.css">
+  <link rel="stylesheet" href="../styles/main-content.css">
+  <link rel="stylesheet" href="../styles/searchmenu.css">
+  <link rel="stylesheet" href="../styles/listingsPage.css">
   <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-  <title>LogatStudent</title>
+  <title>LoggedTeacher</title>
   <style>
     * {
       margin: 0;
@@ -34,6 +34,7 @@
 
 <body>
 
+
   <!-- This is the NavBar -->
   <nav class="navbar">
     <div class="navleft">
@@ -42,8 +43,8 @@
     <div class="navright">
 
       <ul>
-        <li><a href="ProfilStudent.html">Profile</a></li>
-        <li><a href="notLogged.html">LogOut</a></li>
+        <li><a href="#">Profile</a></li>
+        <li><a href="#">LogOut</a></li>
         <li><a href="#">Contact</a></li>
       </ul>
     </div>
@@ -59,11 +60,13 @@
       <i class='bx bx-menu' id="btn"></i>
     </div>
     <ul>
-      <li><a href="ProfilStudent.html"><i class='bx bxs-user-circle'></i><span class="navitem">Profile</span></a></li>
-      <li><a href="VizualizareGrupeStudent.html"><i class='bx bxs-group'></i><span class="navitem">Groups</span></a></li>
-      <li><a href="VizualizareTemeStudent.html"><i class='bx bxs-book-alt'></i></i><span class="navitem">Homeworks</span></a></li>
+      <li><a href="#"><i class='bx bxs-user-circle'></i><span class="navitem">Profile</span></a></li>
+      <li><a href="#"><i class='bx bxs-group'></i><span class="navitem">Groups</span></a></li>
+      <li><a href="#"><i class='bx bxs-book-alt'></i><span class="navitem">Homeworks</span></a></li>
+      <li><a href="#"><i class='bx bxs-book-content'></i><span class="navitem">Proposed Problems</span></a></li>
+      <li><a href="#"><i class='bx bxs-edit'></i><span class="navitem">New Problem</span></a></li>
       <li><a href="#"><i class='bx bxs-contact'></i><span class="navitem">Contact</span></a></li>
-      <li><a href="notLogged.html"><i class='bx bx-log-out'></i><span class="navitem">LogOut</span></a></li>
+      <li><a href="#"><i class='bx bx-log-out'></i><span class="navitem">LogOut</span></a></li>
     </ul>
   </nav>
 
@@ -71,16 +74,18 @@
 
 
     <div class="searchmenu">
-      <header>Problem Number</header>
       <div class="searchbox">
-        <form id="search">
-
-          <div class="seachBar">
-            <input class="search-input" type="search" placeholder="Search">
-            <i class='bx bx-search-alt-2'></i>
-          </div>
-
-        </form>
+        <header>Problem Number</header>
+        <div class="searchfield">
+          <form id="search">
+  
+            <div class="seachBar">
+              <input class="search-input" type="search" placeholder="Search">
+              <i class='bx bx-search-alt-2'></i>
+            </div>
+  
+          </form>
+        </div>
       </div>
 
       <div class="filterbox">
@@ -91,16 +96,16 @@
           <header>Difficulty</header>
           <div class="diffButtons">
 
-            <input type="radio" id="radio-1" name="diffButons" checked />
+            <input type="radio" id="radio-1" name="diffButons" checked>
             <label class="diff" for="radio-1">All</label>
 
-            <input type="radio" id="radio-2" name="diffButons" checked />
+            <input type="radio" id="radio-2" name="diffButons" checked>
             <label class="diff" for="radio-2">Easy</label>
 
-            <input type="radio" id="radio-3" name="diffButons" checked />
+            <input type="radio" id="radio-3" name="diffButons" checked>
             <label class="diff" for="radio-3">Medium</label>
 
-            <input type="radio" id="radio-4" name="diffButons" checked />
+            <input type="radio" id="radio-4" name="diffButons" checked>
             <label class="diff" for="radio-4">Hard</label>
 
           </div>
@@ -205,33 +210,35 @@
     </div>
   </div>
 
+  <script>
+    /*Buton menu side bar*/
+    let btn = document.querySelector('#btn');
+    let sidebar = document.querySelector('.sidebar');
+
+    btn.onclick = function () {
+      sidebar.classList.toggle('active');
+    };
+
+
+    /*dropDown menu selector*/
+    const optionMenu = document.querySelector(".dropdown"),
+      selectBtn = optionMenu.querySelector(".selectbtn"),
+      options = optionMenu.querySelectorAll(".option"),
+      sBtn_text = optionMenu.querySelector(".sBtn-text");
+
+    selectBtn.addEventListener("click", () => optionMenu.classList.toggle("active"));
+
+    options.forEach(option => {
+      option.addEventListener("click", () => {
+        let selectedOption = option.querySelector(".option-text").innerText;
+        sBtn_text.innerText = selectedOption;
+        optionMenu.classList.remove("active");
+      });
+    });
+  </script>
+
+
 </body>
 
-<script>
-  /*Buton menu side bar*/
-  let btn = document.querySelector('#btn');
-  let sidebar = document.querySelector('.sidebar');
-
-  btn.onclick = function () {
-    sidebar.classList.toggle('active');
-  };
-
-
-  /*dropDown menu selector*/
-  const optionMenu = document.querySelector(".dropdown"),
-    selectBtn = optionMenu.querySelector(".selectbtn"),
-    options = optionMenu.querySelectorAll(".option"),
-    sBtn_text = optionMenu.querySelector(".sBtn-text");
-
-  selectBtn.addEventListener("click", () => optionMenu.classList.toggle("active"));
-
-  options.forEach(option => {
-    option.addEventListener("click", () => {
-      let selectedOption = option.querySelector(".option-text").innerText;
-      sBtn_text.innerText = selectedOption;
-      optionMenu.classList.remove("active");
-    });
-  });
-</script>
 
 </html>

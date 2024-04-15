@@ -4,14 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="nav-bar.css">
-    <link rel="stylesheet" href="side-bar.css">
-    <link rel="stylesheet" href="main-content.css">
-    <link rel="stylesheet" href="searchmenu.css">
-    <link rel="stylesheet" href="authenticaton.css">
+    <link rel="stylesheet" href="../styles/nav-bar.css">
+    <link rel="stylesheet" href="../styles/side-bar.css">
+    <link rel="stylesheet" href="../styles/main-content.css">
+    <link rel="stylesheet" href="../styles/searchmenu.css">
+    <link rel="stylesheet" href="../styles/authenticaton.css">
     <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-    <title>NotLogged</title>
+    <title>signUp</title>
     <style>
         * {
             margin: 0;
@@ -29,10 +29,9 @@
     </style>
 
 
-
 </head>
 
-<body style="background: url('background.svg');">
+<body style="background: url('../styles/background.svg');">
 
     <!-- This is the NavBar -->
     <nav class="navbar">
@@ -42,8 +41,8 @@
         <div class="navright">
 
             <ul>
-                <li><a href="loggedStudent.html">Home</a></li>
-                <li><a href="signupPage.html">Sign Up</a></li>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Login</a></li>
                 <li><a href="#">Contact</a></li>
             </ul>
         </div>
@@ -59,31 +58,44 @@
             <i class='bx bx-menu' id="btn"></i>
         </div>
         <ul>
-            <li><a href="loggedStudent.html"><i class='bx bxs-home'></i><span class="navitem">Home</span></a></li>
-            <li><a href="signupPage.html"><i class='bx bxs-edit-alt'></i><span class="navitem">Sign Up</span></a></li>
+            <li><a href="#"><i class='bx bxs-home'></i><span class="navitem">Home</span></a></li>
+            <li><a href="#"><i class='bx bx-log-in' ></i><span class="navitem">Login</span></a></li>
             <li><a href="#"><i class='bx bxs-contact'></i><span class="navitem">Contact</span></a></li>
         </ul>
     </nav>
-    <div class="maincontent" style="left: 60px; width:calc(100dvw - 160px);">
+    <div class="authcontent" style="left: 60px; width:calc(100dvw - 160px);">
         <div class="authForm">
-            <h1>Login</h1>
+            <h1>Sign Up</h1>
             <form>
-                <div class="text_field">
+
+                <div class="text-field">
                     <input type="text" required><span></span><label>Username</label>
                 </div>
-                <div class="text_field">
+                <div class="text-field">
+                    <input type="email" required><span></span><label>E-Mail</label>
+                </div>
+                <div class="text-field">
                     <input type="password" required><span></span><label>Password</label>
                 </div>
-                    <input type="submit" value="Login">
-                    <div class="signup_link">Not Signed Up? <a href="signupPage.html">Sign Up</a>
+
+                <div class="acc">
+                    <div class="accType">
+                    <input type="radio" id="radio-1" name="accType" checked >
+                    <label class="type" for="radio-1">Student</label>
+                </div>
+                    
+                    <div class="accType">
+                    <input type="radio" id="radio-2" name="accType" checked >
+                    <label class="type" for="radio-2">Teacher</label>
+                    </div>
+    
+                  </div>
+                    <input type="submit" value="Sign Up">
+                    <div class="signup-link">Already Signed Up? <a href="#">Login</a>
                 </div>
             </form>
         </div>
     </div>
-
-
-
-</body>
 
 <script>
     /*Buton menu side bar*/
@@ -111,5 +123,11 @@
         });
     });
 </script>
+
+
+
+</body>
+
+
 
 </html>

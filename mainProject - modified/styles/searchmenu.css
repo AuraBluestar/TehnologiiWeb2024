@@ -1,6 +1,6 @@
 /*Search Bar*/
 
-.searchbox{
+.searchfield{
     --padding: 14px;
 
     width: max-content;
@@ -15,7 +15,7 @@
     margin-right: 5px;
 }
 
-.searchbox:focus-within{
+.searchfield:focus-within{
     
     box-shadow: 0 0 2px rgba(0,0,0,0.75);
 }
