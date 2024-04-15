@@ -25,8 +25,10 @@
             <section>
                 <h3>1.1 Scop</h3>
                 <p>Scopul proiectului este de a dezvolta o aplicație web
-                    destinată elevilor de liceu pentru învățarea programării
-                    prin rezolvarea de probleme informatice. Această aplicație
+                    destinată elevilor de liceu pentru ai ajuta in învățarea
+                    programării
+                    prin rezolvarea de probleme propuse de profesori. Această
+                    aplicație
                     va oferi o platformă interactivă și educațională pentru
                     rezolvarea problemelor de programare, facilitând
                     interacțiunea între elevi și profesori într-un mediu
@@ -37,7 +39,7 @@
                 <p>Audiența principală a proiectului sunt elevii de liceu
                     interesați să învețe programare și să-și îmbunătățească
                     abilitățile practice prin rezolvarea de probleme. De
-                    asemenea, profesorii care doresc să ofere elevilor lor o
+                    asemenea, profesorii care doresc să ofere elevilor o
                     modalitate eficientă de a învăța programare vor beneficia de
                     această aplicație.</p>
             </section>
@@ -64,19 +66,7 @@
         <section id="descriere-generala">
             <h2>2. Descrierea Generală</h2>
             <section>
-                <h3>2.1 Perspectiva Produsului</h3>
-                <p>Produsul descris în acest SRS este o aplicație web nouă și
-                    autonomă, creată pentru a oferi elevilor de liceu o
-                    platformă interactivă și educativă pentru învățarea
-                    programării. Nu face parte dintr-o familie de produse
-                    existente și nu este un înlocuitor pentru sistemele
-                    existente. Aplicația este proiectată pentru a fi un produs
-                    complet nou, destinat să răspundă nevoilor educaționale ale
-                    utilizatorilor săi.
-                </p>
-            </section>
-            <section>
-                <h3>2.2 Funcționalități Principale
+                <h3>2.1 Funcționalități Principale
                 </h3>
                 <p>Principalele funcționalități ale aplicației includ:
                     <ul>
@@ -101,7 +91,7 @@
                 </p>
             </section>
             <section>
-                <h3>2.3 Clasele de Utilizatori și Caracteristicile Lor</h3>
+                <h3>2.2 Clasele de Utilizatori și Caracteristicile Lor</h3>
                 <p>Utilizatorii prevăzuți pentru acest produs pot fi clasificați
                     în mai multe categorii, inclusiv:
                     <ul>
@@ -123,38 +113,13 @@
             </section>
             <section>
                 <h3>
-                    2.4 Mediu de Operare
+                    2.3 Mediu de Operare
                 </h3>
                 <p>Aplicația va funcționa într-un mediu online, accesibil prin
                     intermediul unui browser web. Nu sunt necesare cerințe
                     specifice legate de platforme hardware sau software,
                     deoarece produsul va fi compatibil cu o gamă largă de
                     dispozitive și sisteme de operare.</p>
-            </section>
-            <section>
-                <h3>
-                    2.5 Constrângeri de Design și Implementare
-                </h3>
-                <p>Unele constrângeri care vor influența opțiunile disponibile
-                    pentru dezvoltatori includ:
-                    <ul>
-                        <li>Limitări hardware precum cerințe de timp sau de
-                            memorie.</li>
-                        <li>Interfețe cu alte aplicații sau tehnologii externe.
-                        </li>
-                        <li>Convenții de design sau standarde de programare.
-                        </li>
-                    </ul>
-                </p>
-            </section>
-            <section>
-                <h3>
-                    2.6 Documentație pentru Utilizatori
-                </h3>
-                <p>Documentația pentru utilizatori va include un manual de
-                    utilizare pentru a asigura o experiență plăcută și eficientă
-                    pentru utilizatori în utilizarea aplicației.
-                </p>
             </section>
 
         </section>
@@ -177,16 +142,8 @@
                             interfață.
                         </li>
                         <li>Butonul standard și funcțiile de bază (cum ar fi
-                            ajutorul) care vor apărea pe fiecare ecran.</li>
-                        <li>Scurtături de tastatură pentru a facilita navigarea
-                            și utilizarea rapidă a aplicației.
-                        </li>
-                        <li>Standarde pentru afișarea mesajelor de eroare și a
-                            mesajelor informative pentru a ghida utilizatorii în
-                            utilizarea corectă a aplicației.</li>
-                        <li>Detaliile designului interfeței utilizator vor fi
-                            documentate într-o specificație separată a
-                            interfeței utilizator.</li>
+                            contact sau log in/log out) care vor apărea pe fiecare ecran.</li>
+                  
                     </ul>
                 </p>
             </section>
@@ -222,8 +179,7 @@
                 <h3>3.4 Interfețe de Comunicație</h3>
                 <p>Cerințele asociate funcțiilor de comunicare vor include:
                     <ul>
-                        <li>Suport pentru e-mail pentru comunicarea între
-                            utilizatori și pentru notificările sistemului.
+                        <li>Suport pentru e-mail pentru notificările de sistem(cum ar fi activarea contului sau recuperearea parolei).
                         </li>
                         <li>Protocoluri de comunicare pentru interacțiunea cu
                             serverele de rețea și pentru transmiterea datelor
@@ -258,25 +214,26 @@
                         funcționarea corectă a sistemului, dar nu este critică
                         pentru funcționalitatea de bază.
                     </p>
-                    <img src="register.jpeg" alt="Register Page" style="width: 100%;">
+                    <img src="register.jpeg" alt="Register Page"
+                        style="width: 100%;">
                     <h5>Sau daca are deja cont</h5>
-                    <img src="logIn.jpeg" alt="Log In Page" style="width: 100%;">
+                    <img src="logIn.jpeg" alt="Log In Page"
+                        style="width: 100%;">
                 </section>
                 <section>
                     <h4>4.1.2 Secvențe Stimul/Reacție</h4>
                     <p>
                         <ul>
-                            <li>Utilizatorul accesează pagina de înregistrare.
+                            <li>Utilizatorul accesează pagina de înregistrare/conectare.
                             </li>
                             <li>Sistemul afișează formularul de
-                                înregistrare.</li>
+                                înregistrare/conectare.</li>
                             <li>Utilizatorul completează detaliile necesare și
                                 trimite formularul.</li>
                             <li>Sistemul validează informațiile și creează
-                                contul.
+                                contul(daca e cazul).
                             </li>
-                            <li>Utilizatorul este redirecționat către pagina de
-                                autentificare.
+                            <li>Utilizatorul este redirecționat către landing page.
                             </li>
                         </ul>
                     </p>
@@ -287,7 +244,7 @@
                         <ul>
                             <li>Sistemul trebuie să ofere formulare de
                                 înregistrare pentru diferite tipuri de
-                                utilizatori (profesori, elevi, admin).
+                                utilizatori (profesori, elevi).
                             </li>
                             <li>Validarea datelor introduse în formularele de
                                 înregistrare trebuie să se facă atât la nivelul
@@ -320,24 +277,26 @@
                         ridicată, deoarece este esențială pentru procesul
                         educațional și interacțiunea dintre profesori și elevi.
                     </p>
-                    <img src="grouPage.jpeg" alt="See all groups(that you created, for prof, or that you are a part of,for students) Page" style="width: 100%;"> 
+                    <img src="grouPage.jpeg"
+                        alt="See all groups(that you created, for prof, or that you are a part of,for students) Page"
+                        style="width: 100%;">
                 </section>
                 <section>
                     <h4>4.2.2 Secvențe Stimul/Reacție</h4>
                     <p>
                         <ul>
                             <li>Profesorul accesează pagina de gestionare a
-                                temei și a grupelor.
+                                temei și/sau a grupelor.
                             </li>
                             <li>Sistemul afișează opțiunile disponibile pentru
-                                crearea și gestionarea temei și a grupelor.</li>
-                            <li>Profesorul creează o nouă temă sau grup și
-                                atribuie elevilor relevanți.
+                                crearea și gestionarea temei și/sau a grupelor.</li>
+                            <li>Profesorul creează o nouă temă și o trimite grupei/lor selectate</li><li>Profesorul creează o nouă grupă și
+                                adauga elevii relevanți.
                             </li>
                             <li>Sistemul validează datele introduse și
                                 actualizează baza de date corespunzător.</li>
                             <li>Elevii sunt notificați cu privire la noile teme
-                                sau grupuri atribuite.
+                                sau grupe atribuite.
                             </li>
                         </ul>
                     </p>
@@ -347,17 +306,16 @@
                     <p>
                         <ul>
                             <li>Sistemul trebuie să ofere o interfață intuitivă
-                                pentru gestionarea temei și a grupelor.
+                                pentru gestionarea temelor și a grupelor.
                             </li>
                             <li>Profesorii trebuie să poată atribui teme
-                                specifice unor grupuri de elevi sau elevilor
-                                individuali.</li>
+                                specifice unor clase de elevi.</li>
                             <li>Elevii trebuie să primească notificări
                                 instantanee atunci când sunt atribuite teme noi
-                                sau sunt adăugați în noi grupuri.</li>
+                                sau sunt adăugați în noi grupe.</li>
                             <li>Sistemul trebuie să permită modificări
-                                ulterioare și ștergeri de teme sau grupuri, atât
-                                de către profesori, cât și de către admin.</li>
+                                ulterioare și ștergeri de teme sau clase
+                                de către profesori.</li>
                         </ul>
                     </p>
                 </section>
@@ -367,12 +325,13 @@
                 <section>
                     <h4>4.3.1 Descriere și Prioritate</h4>
                     <p>Această caracteristică reprezintă pagina principală a
-                        platformei, unde utilizatorii pot vedea toate problemele
-                        disponibile și le pot filtra sau căuta pe cele
+                        platformei(sau landing page), unde utilizatorii pot vedea toate problemele
+                        disponibile și le pot filtra sau căuta probleme
                         specifice. Este de prioritate medie, deoarece este
                         esențială pentru experiența de utilizare a platformei,
                         dar nu este critică pentru funcționalitatea de bază.</p>
-                        <img src="mainPage_nelog.jpeg" alt="Landing Page" style="width: 100%;"> 
+                    <img src="mainPage_nelog.jpeg" alt="Landing Page"
+                        style="width: 100%;">
                 </section>
                 <section>
                     <h4>4.3.2 Secvențe Stimul/Reacție</h4>
@@ -414,8 +373,7 @@
                             <li>
                                 Fiecare problemă afișată trebuie să includă
                                 detalii relevante, cum ar fi titlul, categorie,
-                                dificultate etc., pentru a ajuta utilizatorii să
-                                facă alegeri informate.
+                                dificultate etc.
                             </li>
                             <li>
                                 Interfața utilizator trebuie să fie receptivă și
