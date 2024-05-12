@@ -1,0 +1,17 @@
+Ce mi=a placut:
+Ati inteles complexitatea problemei si se vede ca ati incercat sa faceti pagini pentru cam toate elementele necesare in proiect (sau daca nu, macar exista in documentatie - cum ar fi de exemplu acceptarea sau respingerea problemelor).
+Paginile sunt valide (cel putin cate am validat eu)
+
+
+Ce ar mai fi trebuit sa fie:
+Paginile nu fac toate parte din aceeasi poveste... se cunoaste ca sunt facute de doua persoane diferite... una are meniuri cu icoane, altele cu cuvinte.
+Chiar daca se vede interesul pentru a face paginile responsive, unele pagini se vad aiurea rau pe telefon (de exemplu loggedStudent). De asemenea, aveti texte care va ies din chenarele alea pe aceeasi pagina (ca de exemplu Problem Name) - adaugati un padding ceva 
+Mai aveti de adaugat pagini (nu vad cum as putea 
+In pagina creare grupe va apare scroll orizontal
+In directorul "to be modfied" CSSul e pus in acelasi folder cu HTMLurile
+In documentuyl scholarly nu sunt adnotari semantice de nici un fel.
+Imi pare ca este facut pe fuga si ca nu v-a ajuns timpul 
+Il rog pe eusebiu sa nu mai faca commit in grup la mai multe pagini deodata, vreau sa vad cum progreseaza aplicatia - nu imi dau seama daca el a lucrat pe parcurs sau daca toate sunt puse calup si facute de altcineva. !
+
+-----------
+Concluzii: Paginile nu sunt facute cum trebuie... mai aveti de lucrat. sa stiti ca ma uit la responsive si in partea finala - ca la voi e facut numai asa ca sa nu se zica ca nu e facut. Nota pe componenta asta o sa fie 8. 
