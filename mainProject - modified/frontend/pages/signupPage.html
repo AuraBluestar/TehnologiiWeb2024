@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../styles/nav-bar.css">
-    <link rel="stylesheet" href="../styles/side-bar.css">
-    <link rel="stylesheet" href="../styles/main-content.css">
-    <link rel="stylesheet" href="../styles/searchmenu.css">
-    <link rel="stylesheet" href="../styles/authenticaton.css">
-    <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-    <title>signUp</title>
-    <style>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../styles/nav-bar.css">
+        <link rel="stylesheet" href="../styles/side-bar.css">
+        <link rel="stylesheet" href="../styles/main-content.css">
+        <link rel="stylesheet" href="../styles/searchmenu.css">
+        <link rel="stylesheet" href="../styles/authenticaton.css">
+        <link rel='stylesheet'
+            href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Lato">
+        <title>signUp</title>
+        <style>
         * {
             margin: 0;
             padding: 0;
@@ -28,76 +30,79 @@
         }
     </style>
 
+    </head>
 
-</head>
+    <body style="background: url('../styles/background.svg');">
 
-<body style="background: url('../styles/background.svg');">
-
-    <!-- This is the NavBar -->
-    <nav class="navbar">
-        <div class="navleft">
-            <div class="logo"><a href="#">In&lt;form&gt;atiX</a> </div>
-        </div>
-        <div class="navright">
-
-            <ul>
-                <li><a href="notLogged.html">Home</a></li>
-                <li><a href="loginPage.html">Login</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <!-- This is the SideBar -->
-    <nav class="sidebar">
-        <div class="top">
-            <div class="menu">
-                <i class='bx bx-code'></i>
-                <span>Menu</span>
+        <!-- This is the NavBar -->
+        <nav class="navbar">
+            <div class="navleft">
+                <div class="logo"><a href="#">In&lt;form&gt;atiX</a> </div>
             </div>
-            <i class='bx bx-menu' id="btn"></i>
-        </div>
-        <ul>
-            <li><a href="notLogged.html"><i class='bx bxs-home'></i><span class="navitem">Home</span></a></li>
-            <li><a href="loginPage.html"><i class='bx bx-log-in' ></i><span class="navitem">Login</span></a></li>
-            <li><a href="#"><i class='bx bxs-contact'></i><span class="navitem">Contact</span></a></li>
-        </ul>
-    </nav>
-    <div class="authcontent" style="left: 60px; width:calc(100dvw - 160px);">
-        <div class="authForm">
-            <h1>Sign Up</h1>
-            <form>
+            <div class="navright">
 
-                <div class="text-field">
-                    <input type="text" required><span></span><label>Username</label>
-                </div>
-                <div class="text-field">
-                    <input type="email" required><span></span><label>E-Mail</label>
-                </div>
-                <div class="text-field">
-                    <input type="password" required><span></span><label>Password</label>
-                </div>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/login">Login</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
 
-                <div class="acc">
-                    <div class="accType">
-                    <input type="radio" id="radio-1" name="accType" checked >
-                    <label class="type" for="radio-1">Student</label>
+        <!-- This is the SideBar -->
+        <nav class="sidebar">
+            <div class="top">
+                <div class="menu">
+                    <i class='bx bx-code'></i>
+                    <span>Menu</span>
                 </div>
-                    
-                    <div class="accType">
-                    <input type="radio" id="radio-2" name="accType" checked >
-                    <label class="type" for="radio-2">Teacher</label>
+                <i class='bx bx-menu' id="btn"></i>
+            </div>
+            <ul>
+                <li><a href="/"><i class='bx bxs-home'></i><span
+                            class="navitem">Home</span></a></li>
+                <li><a href="/login"><i class='bx bx-log-in'></i><span
+                            class="navitem">Login</span></a></li>
+                <li><a href="#"><i class='bx bxs-contact'></i><span
+                            class="navitem">Contact</span></a></li>
+            </ul>
+        </nav>
+        <div class="authcontent"
+            style="left: 60px; width:calc(100dvw - 160px);">
+            <div class="authForm">
+                <h1>Sign Up</h1>
+                <form id="signupForm" method="POST" action="/signup">
+
+                    <div class="text-field">
+                        <input type="text" id="username" required><span></span><label>Username</label>
                     </div>
-    
-                  </div>
-                    <input type="submit" value="Sign Up" href="./loggedStudent.html" >
-                    <div class="signup-link">Already Signed Up? <a href="#">Login</a>
-                </div>
-            </form>
-        </div>
-    </div>
+                    <div class="text-field">
+                        <input type="email" id="email" required><span></span><label>E-Mail</label>
+                    </div>
+                    <div class="text-field">
+                        <input type="password" id="password" required><span></span><label>Password</label>
+                    </div>
 
-<script>
+                    <div class="acc">
+                        <div class="accType">
+                            <input type="radio" id="radio-1" name="accType" value="Student" checked>
+                            <label class="type" for="radio-1">Student</label>
+                        </div>
+
+                        <div class="accType">
+                            <input type="radio" id="radio-2" name="accType" value="Teacher" checked>
+                            <label class="type" for="radio-2">Teacher</label>
+                        </div>
+
+                    </div>
+                    <input type="submit" value="Sign Up" href="./loggedStudent">
+                    <div class="signup-link">Already Signed Up? <a href="/login">Login</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <script src="../scripts/signup.js"></script>
+        <script>
     /*Buton menu side bar*/
     let btn = document.querySelector('#btn');
     let sidebar = document.querySelector('.sidebar');
@@ -123,11 +128,5 @@
         });
     });
 </script>
-
-
-
-</body>
-
-
-
+    </body>
 </html>
