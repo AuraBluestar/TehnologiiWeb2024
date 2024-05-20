@@ -2,64 +2,28 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const mysql = require('mysql');
-const qs = require('querystring');
 
 // Configurarea conexiunii la baza de date
-const db = mysql.createConnection({
+const dbConfig = {
     host: 'informatix-informatix.h.aivencloud.com',
     user: 'avnadmin',
     password: 'AVNS_1u_r2mfq1FxPl9dd3yX',
     database: 'defaultdb',
     port: 22933
-});
+};
 
-// Conectarea la baza de date
-db.connect((err) => {
-    if (err) {
-        console.error('Nu s-a putut conecta la baza de date:', err);
-    } else {
-        console.log('Conectat la baza de date MySQL.');
-    }
-});
+// Crearea unui pool de conexiuni MySQL
+const pool = mysql.createPool(dbConfig);
+
+// Serverul rulează pe localhost
+const ip = "localhost";
+const port = 3000;
 
 const server = http.createServer((req, res) => {
     const baseDir = path.join(__dirname, '..', 'frontend');
-
-    if (req.method === 'POST' && req.url === '/signup') {
-        let body = '';
-        req.on('data', chunk => {
-            body += chunk.toString();
-        });
-
-        req.on('end', () => {
-            const { username, email, password, accType } = qs.parse(body);
-
-            // Verificarea existenței utilizatorului
-            const checkUserQuery = `SELECT * FROM ${accType === 'Student' ? 'elevi' : 'profesori'} WHERE nume = ? OR email = ?`;
-            db.query(checkUserQuery, [username, email], (err, result) => {
-                if (err) {
-                    res.writeHead(500, { 'Content-Type': 'application/json' });
-                    res.end(JSON.stringify({ success: false, message: 'Database error' }));
-                } else if (result.length > 0) {
-                    res.writeHead(400, { 'Content-Type': 'application/json' });
-                    res.end(JSON.stringify({ success: false, message: 'Username or email already taken' }));
-                } else {
-                    // Inserarea utilizatorului în baza de date
-                    const insertUserQuery = `INSERT INTO ${accType === 'Student' ? 'elevi' : 'profesori'} (nume, email, parola) VALUES (?, ?, ?)`;
-                    db.query(insertUserQuery, [username, email, password], (err, result) => {
-                        if (err) {
-                            res.writeHead(500, { 'Content-Type': 'application/json' });
-                            res.end(JSON.stringify({ success: false, message: 'Database error' }));
-                        } else {
-                            res.writeHead(200, { 'Content-Type': 'application/json' });
-                            res.end(JSON.stringify({ success: true }));
-                        }
-                    });
-                }
-            });
-        });
-    } else {
-        let filePath = '';
+    
+    let filePath = '';
+    if (req.method === 'GET') {
         if (req.url === '/') {
             filePath = path.join(baseDir, 'pages', 'notLogged.html');
         } else if (req.url === '/login') {
@@ -126,10 +90,57 @@ const server = http.createServer((req, res) => {
                 res.end(content, 'utf-8');
             }
         });
+    } else if (req.method === 'POST' && req.url === '/addStudent') {
+        let body = '';
+
+        req.on('data', chunk => {
+            body += chunk.toString();
+        });
+
+        req.on('end', () => {
+            const { name, email, password } = JSON.parse(body);
+
+            const query = 'INSERT INTO elevi (nume, email, parola) VALUES (?, ?, ?)';
+            pool.query(query, [name, email, password], (error, results) => {
+                if (error) {
+                    console.error('Error inserting data:', error);
+                    res.writeHead(500, {'Content-Type': 'application/json'});
+                    res.end(JSON.stringify({ success: false, message: 'Database error' }));
+                } else {
+                    res.writeHead(200, {'Content-Type': 'application/json'});
+                    res.end(JSON.stringify({ success: true, message: 'Student added successfully' }));
+                }
+            });
+        });
+    }
+    else if (req.method === 'POST' && req.url === '/addProfesor') {
+        let body = '';
+
+        req.on('data', chunk => {
+            body += chunk.toString();
+        });
+
+        req.on('end', () => {
+            const { name, email, password } = JSON.parse(body);
+
+            const query = 'INSERT INTO profesori (nume, email, parola) VALUES (?, ?, ?)';
+            pool.query(query, [name, email, password], (error, results) => {
+                if (error) {
+                    console.error('Error inserting data:', error);
+                    res.writeHead(500, {'Content-Type': 'application/json'});
+                    res.end(JSON.stringify({ success: false, message: 'Database error' }));
+                } else {
+                    res.writeHead(200, {'Content-Type': 'application/json'});
+                    res.end(JSON.stringify({ success: true, message: 'Student added successfully' }));
+                }
+            });
+        });
+    } else {
+        res.writeHead(404, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify({ success: false, message: 'Not Found' }));
     }
 });
 
-const PORT = 3000;
-server.listen(PORT, () => {
-    console.log(`Serverul rulează pe portul ${PORT}`);
+server.listen(port, ip, () => {
+    console.log(`Server is listening at http://${ip}:${port}`);
 });
