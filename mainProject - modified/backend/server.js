@@ -19,9 +19,63 @@ const pool = mysql.createPool(dbConfig);
 const ip = "localhost";
 const port = 3000;
 
+// Functie pentru a manevra cererile de autentificare
+const handleLogin = (req, res) => {
+    let body = '';
+
+    req.on('data', chunk => {
+        body += chunk.toString();
+    });
+
+    req.on('end', () => {
+        try {
+            const { username, password } = JSON.parse(body);
+            console.log('Username:', username);
+            console.log('Password:', password);
+
+            const queryStudent = 'SELECT id FROM elevi WHERE nume = ? AND parola = ?';
+            pool.query(queryStudent, [username, password], (error, results) => {
+                if (error) {
+                    console.error('Error querying database:', error);
+                    res.writeHead(500, {'Content-Type': 'application/json'});
+                    res.end(JSON.stringify({ success: false, message: 'Database error' }));
+                    return;
+                }
+
+                if (results.length > 0) {
+                    res.writeHead(200, {'Content-Type': 'application/json'});
+                    res.end(JSON.stringify({ success: true, userType: 'elev', id: results[0].id }));
+                } else {
+                    const queryTeacher = 'SELECT id FROM profesori WHERE nume = ? AND parola = ?';
+                    pool.query(queryTeacher, [username, password], (error, results) => {
+                        if (error) {
+                            console.error('Error querying database:', error);
+                            res.writeHead(500, {'Content-Type': 'application/json'});
+                            res.end(JSON.stringify({ success: false, message: 'Database error' }));
+                            return;
+                        }
+
+                        if (results.length > 0) {
+                            res.writeHead(200, {'Content-Type': 'application/json'});
+                            res.end(JSON.stringify({ success: true, userType: 'profesor', id: results[0].id }));
+                        } else {
+                            res.writeHead(401, {'Content-Type': 'application/json'});
+                            res.end(JSON.stringify({ success: false, message: 'Invalid username or password' }));
+                        }
+                    });
+                }
+            });
+        } catch (err) {
+            console.error('Error parsing JSON:', err);
+            res.writeHead(400, {'Content-Type': 'application/json'});
+            res.end(JSON.stringify({ success: false, message: 'Invalid JSON' }));
+        }
+    });
+};
+
 const server = http.createServer((req, res) => {
     const baseDir = path.join(__dirname, '..', 'frontend');
-    
+
     let filePath = '';
     if (req.method === 'GET') {
         if (req.url === '/') {
@@ -98,19 +152,25 @@ const server = http.createServer((req, res) => {
         });
 
         req.on('end', () => {
-            const { name, email, password } = JSON.parse(body);
+            try {
+                const { name, email, password } = JSON.parse(body);
 
-            const query = 'INSERT INTO elevi (nume, email, parola) VALUES (?, ?, ?)';
-            pool.query(query, [name, email, password], (error, results) => {
-                if (error) {
-                    console.error('Error inserting data:', error);
-                    res.writeHead(500, {'Content-Type': 'application/json'});
-                    res.end(JSON.stringify({ success: false, message: 'Database error' }));
-                } else {
-                    res.writeHead(200, {'Content-Type': 'application/json'});
-                    res.end(JSON.stringify({ success: true, message: 'Student added successfully' }));
-                }
-            });
+                const query = 'INSERT INTO elevi (nume, email, parola) VALUES (?, ?, ?)';
+                pool.query(query, [name, email, password], (error, results) => {
+                    if (error) {
+                        console.error('Error inserting data:', error);
+                        res.writeHead(500, {'Content-Type': 'application/json'});
+                        res.end(JSON.stringify({ success: false, message: 'Database error' }));
+                    } else {
+                        res.writeHead(200, {'Content-Type': 'application/json'});
+                        res.end(JSON.stringify({ success: true, message: 'Student added successfully' }));
+                    }
+                });
+            } catch (err) {
+                console.error('Error parsing JSON:', err);
+                res.writeHead(400, {'Content-Type': 'application/json'});
+                res.end(JSON.stringify({ success: false, message: 'Invalid JSON' }));
+            }
         });
     }
     else if (req.method === 'POST' && req.url === '/addProfesor') {
@@ -121,21 +181,30 @@ const server = http.createServer((req, res) => {
         });
 
         req.on('end', () => {
-            const { name, email, password } = JSON.parse(body);
+            try {
+                const { name, email, password } = JSON.parse(body);
 
-            const query = 'INSERT INTO profesori (nume, email, parola) VALUES (?, ?, ?)';
-            pool.query(query, [name, email, password], (error, results) => {
-                if (error) {
-                    console.error('Error inserting data:', error);
-                    res.writeHead(500, {'Content-Type': 'application/json'});
-                    res.end(JSON.stringify({ success: false, message: 'Database error' }));
-                } else {
-                    res.writeHead(200, {'Content-Type': 'application/json'});
-                    res.end(JSON.stringify({ success: true, message: 'Student added successfully' }));
-                }
-            });
+                const query = 'INSERT INTO profesori (nume, email, parola) VALUES (?, ?, ?)';
+                pool.query(query, [name, email, password], (error, results) => {
+                    if (error) {
+                        console.error('Error inserting data:', error);
+                        res.writeHead(500, {'Content-Type': 'application/json'});
+                        res.end(JSON.stringify({ success: false, message: 'Database error' }));
+                    } else {
+                        res.writeHead(200, {'Content-Type': 'application/json'});
+                        res.end(JSON.stringify({ success: true, message: 'Professor added successfully' }));
+                    }
+                });
+            } catch (err) {
+                console.error('Error parsing JSON:', err);
+                res.writeHead(400, {'Content-Type': 'application/json'});
+                res.end(JSON.stringify({ success: false, message: 'Invalid JSON' }));
+            }
         });
-    } else {
+    } else if (req.method === 'POST' && req.url === '/login') {
+        handleLogin(req, res);
+    }
+    else {
         res.writeHead(404, {'Content-Type': 'application/json'});
         res.end(JSON.stringify({ success: false, message: 'Not Found' }));
     }
