@@ -1,20 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="../styles/nav-bar.css">
-        <link rel="stylesheet" href="../styles/side-bar.css">
-        <link rel="stylesheet" href="../styles/main-content.css">
-        <link rel="stylesheet" href="../styles/searchmenu.css">
-        <link rel="stylesheet" href="../styles/authenticaton.css">
-        <link rel='stylesheet'
-            href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
-        <link rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Lato">
-        <title>signUp</title>
-        <style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/nav-bar.css">
+    <link rel="stylesheet" href="../styles/side-bar.css">
+    <link rel="stylesheet" href="../styles/main-content.css">
+    <link rel="stylesheet" href="../styles/searchmenu.css">
+    <link rel="stylesheet" href="../styles/authenticaton.css">
+    <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <title>signUp</title>
+    <style>
         * {
             margin: 0;
             padding: 0;
@@ -26,107 +24,147 @@
             position: relative;
             height: 100%;
             font-family: Lato, normal;
-
         }
     </style>
+</head>
 
-    </head>
+<body style="background: url('../styles/background.svg');">
 
-    <body style="background: url('../styles/background.svg');">
-
-        <!-- This is the NavBar -->
-        <nav class="navbar">
-            <div class="navleft">
-                <div class="logo"><a href="#">In&lt;form&gt;atiX</a> </div>
-            </div>
-            <div class="navright">
-
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/login">Login</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
-            </div>
-        </nav>
-
-        <!-- This is the SideBar -->
-        <nav class="sidebar">
-            <div class="top">
-                <div class="menu">
-                    <i class='bx bx-code'></i>
-                    <span>Menu</span>
-                </div>
-                <i class='bx bx-menu' id="btn"></i>
-            </div>
-            <ul>
-                <li><a href="/"><i class='bx bxs-home'></i><span
-                            class="navitem">Home</span></a></li>
-                <li><a href="/login"><i class='bx bx-log-in'></i><span
-                            class="navitem">Login</span></a></li>
-                <li><a href="#"><i class='bx bxs-contact'></i><span
-                            class="navitem">Contact</span></a></li>
-            </ul>
-        </nav>
-        <div class="authcontent"
-            style="left: 60px; width:calc(100dvw - 160px);">
-            <div class="authForm">
-                <h1>Sign Up</h1>
-                <form id="signupForm" method="POST" action="/signup">
-
-                    <div class="text-field">
-                        <input type="text" id="username" required><span></span><label>Username</label>
-                    </div>
-                    <div class="text-field">
-                        <input type="email" id="email" required><span></span><label>E-Mail</label>
-                    </div>
-                    <div class="text-field">
-                        <input type="password" id="password" required><span></span><label>Password</label>
-                    </div>
-
-                    <div class="acc">
-                        <div class="accType">
-                            <input type="radio" id="radio-1" name="accType" value="Student" checked>
-                            <label class="type" for="radio-1">Student</label>
-                        </div>
-
-                        <div class="accType">
-                            <input type="radio" id="radio-2" name="accType" value="Teacher" checked>
-                            <label class="type" for="radio-2">Teacher</label>
-                        </div>
-
-                    </div>
-                    <input type="submit" value="Sign Up" href="./loggedStudent">
-                    <div class="signup-link">Already Signed Up? <a href="/login">Login</a>
-                    </div>
-                </form>
-            </div>
+    <!-- This is the NavBar -->
+    <nav class="navbar">
+        <div class="navleft">
+            <div class="logo"><a href="#">In&lt;form&gt;atiX</a></div>
         </div>
-        <script src="../scripts/signup.js"></script>
-        <script>
-    /*Buton menu side bar*/
-    let btn = document.querySelector('#btn');
-    let sidebar = document.querySelector('.sidebar');
+        <div class="navright">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/login">Login</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
 
-    btn.onclick = function () {
-        sidebar.classList.toggle('active');
-    };
+    <!-- This is the SideBar -->
+    <nav class="sidebar">
+        <div class="top">
+            <div class="menu">
+                <i class='bx bx-code'></i>
+                <span>Menu</span>
+            </div>
+            <i class='bx bx-menu' id="btn"></i>
+        </div>
+        <ul>
+            <li><a href="/"><i class='bx bxs-home'></i><span class="navitem">Home</span></a></li>
+            <li><a href="/login"><i class='bx bx-log-in'></i><span class="navitem">Login</span></a></li>
+            <li><a href="#"><i class='bx bxs-contact'></i><span class="navitem">Contact</span></a></li>
+        </ul>
+    </nav>
+    <div class="authcontent" style="left: 60px; width:calc(100dvw - 160px);">
+        <div class="authForm">
+            <h1>Sign Up</h1>
+            <form id="signupForm" method="POST">
+                <div class="text-field">
+                    <input type="text" id="username" name="username" required><span></span><label>Username</label>
+                </div>
+                <div class="text-field">
+                    <input type="email" id="email" name="email" required><span></span><label>E-Mail</label>
+                </div>
+                <div class="text-field">
+                    <input type="password" id="password" name="password" required><span></span><label>Password</label>
+                </div>
+                <div class="acc">
+                    <div class="accType">
+                        <input type="radio" id="radio-1" name="accType" value="Student" checked>
+                        <label class="type" for="radio-1">Student</label>
+                    </div>
+                    <div class="accType">
+                        <input type="radio" id="radio-2" name="accType" value="Teacher">
+                        <label class="type" for="radio-2">Teacher</label>
+                    </div>
+                </div>
+                <input type="submit" value="Sign Up">
+                <div class="signup-link">Already Signed Up? <a href="/login">Login</a></div>
+            </form>
+        </div>
+    </div>
 
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', function(event) {
+            event.preventDefault();
 
-    /*dropDown menu selector*/
-    const optionMenu = document.querySelector(".dropdown"),
-        selectBtn = optionMenu.querySelector(".selectbtn"),
-        options = optionMenu.querySelectorAll(".option"),
-        sBtn_text = optionMenu.querySelector(".sBtn-text");
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const accType = document.querySelector('input[name="accType"]:checked').value;
 
-    selectBtn.addEventListener("click", () => optionMenu.classList.toggle("active"));
+            const data = {
+                name: username,
+                email: email,
+                password: password
+            };
 
-    options.forEach(option => {
-        option.addEventListener("click", () => {
-            let selectedOption = option.querySelector(".option-text").innerText;
-            sBtn_text.innerText = selectedOption;
-            optionMenu.classList.remove("active");
+            let url = '';
+            if (accType === 'Student') {
+                url = 'http://localhost:3000/addStudent';
+            } else if (accType === 'Teacher') {
+                url = 'http://localhost:3000/addTeacher';
+            }
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Response:', data);
+                if (data.success) {
+                    // Storing userType and id in localStorage
+                    localStorage.setItem('userType', data.userType);
+                    localStorage.setItem('id', data.id);
+
+                    // Redirecting based on userType
+                    if (data.userType === 'elev') {
+                        window.location.href = '/loggedStudent';
+                    } else if (data.userType === 'profesor') {
+                        window.location.href = '/loggedTeacher';
+                    }
+                } else {
+                    alert('Sign Up failed: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
         });
-    });
-</script>
-    </body>
+    </script>
+
+    <script>
+        /*Buton menu side bar*/
+        let btn = document.querySelector('#btn');
+        let sidebar = document.querySelector('.sidebar');
+
+        btn.onclick = function () {
+            sidebar.classList.toggle('active');
+        };
+
+        /*dropDown menu selector*/
+        const optionMenu = document.querySelector(".dropdown"),
+            selectBtn = optionMenu.querySelector(".selectbtn"),
+            options = optionMenu.querySelectorAll(".option"),
+            sBtn_text = optionMenu.querySelector(".sBtn-text");
+
+        selectBtn.addEventListener("click", () => optionMenu.classList.toggle("active"));
+
+        options.forEach(option => {
+            option.addEventListener("click", () => {
+                let selectedOption = option.querySelector(".option-text").innerText;
+                sBtn_text.innerText = selectedOption;
+                optionMenu.classList.remove("active");
+            });
+        });
+    </script>
+</body>
 </html>
