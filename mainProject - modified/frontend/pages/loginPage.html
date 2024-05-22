@@ -65,10 +65,10 @@
             <h1>Login</h1>
             <form id="loginForm">
                 <div class="text-field">
-                    <input type="text" required><span></span><label>Username</label>
+                    <input type="text" id="username" name="username" required><span></span><label>Username</label>
                 </div>
                 <div class="text-field">
-                    <input type="password" required><span></span><label>Password</label>
+                    <input type="password" id="password" name="password" required><span></span><label>Password</label>
                 </div>
                 <input type="submit" value="Login">
                 <div class="signup-link">Not Signed Up? <a href="#">Sign Up</a>
@@ -76,35 +76,46 @@
             </form>
         </div>
     </div>
-    <script>document.getElementById('loginForm').addEventListener('submit', function(event) {
-        event.preventDefault();
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
 
-        const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
 
-        console.log('Username:', username);
-        console.log('Password:', password);
+            console.log('Username:', username);
+            console.log('Password:', password);
 
-        fetch('http://localhost:3000/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ username, password })
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Response:', data);
-            if (data.success) {
-                alert('Login successful! UserType: ' + data.userType + ', ID: ' + data.id);
-            } else {
-                alert('Login failed: ' + data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
+            fetch('http://localhost:3000/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Response:', data);
+                if (data.success) {
+                    // Storing userType and id in localStorage
+                    localStorage.setItem('userType', data.userType);
+                    localStorage.setItem('id', data.id);
+
+                    // Redirecting based on userType
+                    if (data.userType === 'elev') {
+                        window.location.href = '/loggedStudent';
+                    } else if (data.userType === 'profesor') {
+                        window.location.href = '/loggedTeacher';
+                    }
+                } else {
+                    alert('Login failed: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
         });
-    });</script>
+    </script>
 
     <script>
         /*Buton menu side bar*/
@@ -134,9 +145,4 @@
     </script>
 
 </body>
-
-
-
-
-
 </html>

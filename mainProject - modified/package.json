@@ -7,7 +7,7 @@
     "start": "node backend/server.js"
   },
   "keywords": [],
-  "author": "Numele Tau",
+  "author": "Informatix",
   "license": "ISC",
   "dependencies": {
     "mysql": "^2.18.1"
