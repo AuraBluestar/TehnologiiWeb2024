@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../styles/nav-bar.css">
-  <link rel="stylesheet" href="../styles/side-bar.css">
-  <link rel="stylesheet" href="../styles/main-content.css">
-  <link rel="stylesheet" href="../styles/searchmenu.css">
-  <link rel="stylesheet" href="../styles/listingsPage.css">
-  <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-  <title>LoggedTeacher</title>
-  <style>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/nav-bar.css">
+    <link rel="stylesheet" href="../styles/side-bar.css">
+    <link rel="stylesheet" href="../styles/main-content.css">
+    <link rel="stylesheet" href="../styles/searchmenu.css">
+    <link rel="stylesheet" href="../styles/listingsPage.css">
+    <link rel='stylesheet'
+      href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <title>LoggedTeacher</title>
+    <style>
     * {
       margin: 0;
       padding: 0;
@@ -27,191 +28,125 @@
 
     }
   </style>
+  </head>
 
+  <body>
+    <!-- This is the NavBar -->
+    <nav class="navbar">
+      <div class="navleft">
+        <div class="logo"><a href="#">In&lt;form&gt;atiX</a> </div>
+      </div>
+      <div class="navright">
 
+        <ul>
+          <li><a href="#">Profile</a></li>
+          <li><a href="/">LogOut</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
 
-</head>
-
-<body>
-
-
-  <!-- This is the NavBar -->
-  <nav class="navbar">
-    <div class="navleft">
-      <div class="logo"><a href="#">In&lt;form&gt;atiX</a> </div>
-    </div>
-    <div class="navright">
-
+    <!-- This is the SideBar -->
+    <nav class="sidebar">
+      <div class="top">
+        <div class="menu">
+          <i class='bx bx-code'></i>
+          <span>Menu</span>
+        </div>
+        <i class='bx bx-menu' id="btn"></i>
+      </div>
       <ul>
-        <li><a href="#">Profile</a></li>
-        <li><a href="#">LogOut</a></li>
-        <li><a href="#">Contact</a></li>
+        <li><a href="/loggedTeacher"><i class='bx bxs-home'></i><span
+              class="navitem">Home</span></a></li>
+        <li><a href="../../to be modified/ProfilProfesor.html"><i
+              class='bx bxs-user-circle'></i><span
+              class="navitem">Profile</span></a></li>
+        <li><a href="/VisGroupsTeacher"><i class='bx bxs-group'></i><span
+              class="navitem">Groups</span></a></li>
+        <li><a href="/VisHWTeacher"><i class='bx bxs-book-alt'></i><span
+              class="navitem">Homeworks</span></a></li>
+        <li><a href="../../to be modified/ProblemePropuse.html"><i
+              class='bx bxs-book-content'></i><span class="navitem">Proposed
+              Problems</span></a></li>
+        <li><a href="/createHW"><i class='bx bxs-edit'></i><span
+              class="navitem">New Problem</span></a></li>
+        <li><a href="#"><i class='bx bxs-contact'></i><span
+              class="navitem">Contact</span></a></li>
+        <li><a href="/"><i class='bx bx-log-out'></i><span
+              class="navitem">LogOut</span></a></li>
       </ul>
-    </div>
-  </nav>
+    </nav>
 
-  <!-- This is the SideBar -->
-  <nav class="sidebar">
-    <div class="top">
-      <div class="menu">
-        <i class='bx bx-code'></i>
-        <span>Menu</span>
-      </div>
-      <i class='bx bx-menu' id="btn"></i>
-    </div>
-    <ul>
-      <li><a href="loggedTeacher.html"><i class='bx bxs-home'></i><span class="navitem">Home</span></a></li>
-      <li><a href="../../to be modified/ProfilProfesor.html"><i class='bx bxs-user-circle'></i><span class="navitem">Profile</span></a></li>
-      <li><a href="VisGroupsTeacher.html"><i class='bx bxs-group'></i><span class="navitem">Groups</span></a></li>
-      <li><a href="VisHWTeacher.html"><i class='bx bxs-book-alt'></i><span class="navitem">Homeworks</span></a></li>
-      <li><a href="../../to be modified/ProblemePropuse.html"><i class='bx bxs-book-content'></i><span class="navitem">Proposed Problems</span></a></li>
-      <li><a href="createHW.html"><i class='bx bxs-edit'></i><span class="navitem">New Problem</span></a></li>
-      <li><a href="#"><i class='bx bxs-contact'></i><span class="navitem">Contact</span></a></li>
-      <li><a href="notLogged.html"><i class='bx bx-log-out'></i><span class="navitem">LogOut</span></a></li>
-    </ul>
-  </nav>
+    <div class="maincontent">
 
-  <div class="maincontent">
+      <div class="searchmenu">
+        <div class="searchbox">
+          <header>Problem Number</header>
+          <div class="searchfield">
+            <form id="search">
 
+              <div class="seachBar">
+                <input class="search-input" type="search" placeholder="Search">
+                <i class='bx bx-search-alt-2'></i>
+              </div>
 
-    <div class="searchmenu">
-      <div class="searchbox">
-        <header>Problem Number</header>
-        <div class="searchfield">
-          <form id="search">
-  
-            <div class="seachBar">
-              <input class="search-input" type="search" placeholder="Search">
-              <i class='bx bx-search-alt-2'></i>
+            </form>
+          </div>
+        </div>
+
+        <div class="filterbox">
+
+          <form id="filtermenu">
+
+            <header>Difficulty</header>
+            <div class="diffButtons">
+
+              <input type="radio" id="radio-1" name="diffButons" checked>
+              <label class="diff" for="radio-1">All</label>
+
+              <input type="radio" id="radio-2" name="diffButons" checked>
+              <label class="diff" for="radio-2">Easy</label>
+
+              <input type="radio" id="radio-3" name="diffButons" checked>
+              <label class="diff" for="radio-3">Medium</label>
+
+              <input type="radio" id="radio-4" name="diffButons" checked>
+              <label class="diff" for="radio-4">Hard</label>
+
             </div>
-  
+
+            <header>Category</header>
+            <div class="dropdown">
+              <div class="selectbtn">
+                <span class="sBtn-text">Select your option</span>
+                <i class="bx bx-chevron-down"></i>
+              </div>
+
+              <ul class="dmenu">
+                <li class="option"><span class="option-text">None</span></li>
+                <li class="option"><span class="option-text">Basic Principles Of
+                    The Language</span></li>
+                <li class="option"><span class="option-text">Basic
+                    Algorithms</span></li>
+                <li class="option"><span class="option-text">Vectors</span></li>
+                <li class="option"><span class="option-text">Matrix</span></li>
+              </ul>
+
+            </div>
+
+            <button type="submit" class="filter">Filter</button>
+
           </form>
+
         </div>
       </div>
 
-      <div class="filterbox">
-
-        <form id="filtermenu">
-
-
-          <header>Difficulty</header>
-          <div class="diffButtons">
-
-            <input type="radio" id="radio-1" name="diffButons" checked>
-            <label class="diff" for="radio-1">All</label>
-
-            <input type="radio" id="radio-2" name="diffButons" checked>
-            <label class="diff" for="radio-2">Easy</label>
-
-            <input type="radio" id="radio-3" name="diffButons" checked>
-            <label class="diff" for="radio-3">Medium</label>
-
-            <input type="radio" id="radio-4" name="diffButons" checked>
-            <label class="diff" for="radio-4">Hard</label>
-
-          </div>
-
-          <header>Category</header>
-          <div class="dropdown">
-            <div class="selectbtn">
-              <span class="sBtn-text">Select your option</span>
-              <i class="bx bx-chevron-down"></i>
-            </div>
-
-            <ul class="dmenu">
-              <li class="option"><span class="option-text">None</span></li>
-              <li class="option"><span class="option-text">Basic Principles Of The Language</span></li>
-              <li class="option"><span class="option-text">Basic Algorithms</span></li>
-              <li class="option"><span class="option-text">Vectors</span></li>
-              <li class="option"><span class="option-text">Matrix</span></li>
-            </ul>
-
-          </div>
-
-          <button type="submit" class="filter">Filter</button>
-
-        </form>
-
+      <div class="ProblemsPage">
+        <!-- Problem list will be dynamically inserted here -->
       </div>
     </div>
 
-    <div class="ProblemsPage">
-
-      <div class="problem">
-        <h2 class="problem-name">Problem Name</h2>
-        <p class="problem-id"><strong>ID:</strong> 12</p>
-        <p class="problem-category"><strong>Category:</strong> Algorithms</p>
-        <p class="problem-difficulty"><strong>Difficulty:</strong> Hard</p>
-        <p class="problem-description">This is a detailed description of the problem, explaining what needs to be
-          solved, any specific constraints, and possibly providing examples.</p>
-      </div>
-
-      <div class="problem">
-        <h2 class="problem-name">Problem Name</h2>
-        <p class="problem-id"><strong>ID:</strong> 12</p>
-        <p class="problem-category"><strong>Category:</strong> Algorithms</p>
-        <p class="problem-difficulty"><strong>Difficulty:</strong> Hard</p>
-        <p class="problem-description">This is a detailed description of the problem, explaining what needs to be
-          solved, any specific constraints, and possibly providing examples.</p>
-      </div>
-
-      <div class="problem">
-        <h2 class="problem-name">Problem Name</h2>
-        <p class="problem-id"><strong>ID:</strong> 12</p>
-        <p class="problem-category"><strong>Category:</strong> Algorithms</p>
-        <p class="problem-difficulty"><strong>Difficulty:</strong> Hard</p>
-        <p class="problem-description">This is a detailed description of the problem, explaining what needs to be
-          solved, any specific constraints, and possibly providing examples.</p>
-      </div>
-
-      <div class="problem">
-        <h2 class="problem-name">Problem Name</h2>
-        <p class="problem-id"><strong>ID:</strong> 12</p>
-        <p class="problem-category"><strong>Category:</strong> Algorithms</p>
-        <p class="problem-difficulty"><strong>Difficulty:</strong> Hard</p>
-        <p class="problem-description">This is a detailed description of the problem, explaining what needs to be
-          solved, any specific constraints, and possibly providing examples.</p>
-      </div>
-
-      <div class="problem">
-        <h2 class="problem-name">Problem Name</h2>
-        <p class="problem-id"><strong>ID:</strong> 12</p>
-        <p class="problem-category"><strong>Category:</strong> Algorithms</p>
-        <p class="problem-difficulty"><strong>Difficulty:</strong> Hard</p>
-        <p class="problem-description">This is a detailed description of the problem, explaining what needs to be
-          solved, any specific constraints, and possibly providing examples.</p>
-      </div>
-
-      <div class="paginare">
-
-        <button class="button" id="startBtn" disabled>
-          <i class='bx bx-first-page'></i>
-        </button>
-        <button class="button prevNext" id="prev" disabled>
-          <i class='bx bxs-chevron-left'></i>
-        </button>
-
-        <div class="links">
-          <a href="#" class="link active">1</a>
-          <a href="#" class="link">2</a>
-          <a href="#" class="link">3</a>
-          <a href="#" class="link">4</a>
-          <a href="#" class="link">5</a>
-        </div>
-
-        <button class="button prevNext" id="next">
-          <i class='bx bxs-chevron-right'></i>
-        </button>
-        <button class="button" id="endBtn">
-          <i class='bx bx-last-page'></i>
-        </button>
-
-      </div>
-
-    </div>
-  </div>
-
-  <script>
+    <script>
     /*Buton menu side bar*/
     let btn = document.querySelector('#btn');
     let sidebar = document.querySelector('.sidebar');
@@ -236,10 +171,49 @@
         optionMenu.classList.remove("active");
       });
     });
+
+    // Funcție pentru a converti valoarea dificultății în cuvinte corespunzătoare
+    function getDifficultyText(difficulty) {
+      switch (difficulty) {
+        case 0:
+          return "Easy";
+        case 1:
+          return "Medium";
+        case 2:
+          return "Hard";
+        default:
+          return "Unknown";
+      }
+    }
+
+    // Funcție pentru a încărca și afișa lista de probleme din fișierul JSON
+    function loadProblems() {
+      fetch('http://localhost:3000/problems/all',{
+                method: 'POST',
+            })
+        .then(response => response.json())
+        .then(data => {
+          const problemsContainer = document.querySelector('.ProblemsPage');
+          data.forEach(problem => {
+            const problemElement = `
+              <div class="problem">
+                <h2 class="problem-name">${problem.Titlu}</h2>
+                <p class="problem-id"><strong>ID:</strong> ${problem.ID}</p>
+                <p class="problem-category"><strong>Category:</strong> ${problem.Materie}</p>
+                <p class="problem-difficulty"><strong>Difficulty:</strong> ${getDifficultyText(problem.Dificultate)}</p>
+                <p class="problem-description">${problem.Descriere}</p>
+              </div>
+            `;
+            problemsContainer.insertAdjacentHTML('beforeend', problemElement);
+          });
+        })
+        .catch(error => console.error('Error loading problems:', error));
+    }
+
+    // Apelăm funcția pentru a încărca și afișa lista de probleme la încărcarea paginii
+    window.onload = loadProblems;
   </script>
 
-
-</body>
-
+  </body>
 
 </html>

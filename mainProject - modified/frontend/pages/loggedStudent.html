@@ -132,79 +132,7 @@
     </div>
 
     <div class="ProblemsPage">
-
-      <div class="problem">
-        <h2 class="problem-name">Problem Name</h2>
-        <p class="problem-id"><strong>ID:</strong> 12</p>
-        <p class="problem-category"><strong>Category:</strong> Algorithms</p>
-        <p class="problem-difficulty"><strong>Difficulty:</strong> Hard</p>
-        <p class="problem-description">This is a detailed description of the problem, explaining what needs to be
-          solved, any specific constraints, and possibly providing examples.</p>
-      </div>
-
-      <div class="problem">
-        <h2 class="problem-name">Problem Name</h2>
-        <p class="problem-id"><strong>ID:</strong> 12</p>
-        <p class="problem-category"><strong>Category:</strong> Algorithms</p>
-        <p class="problem-difficulty"><strong>Difficulty:</strong> Hard</p>
-        <p class="problem-description">This is a detailed description of the problem, explaining what needs to be
-          solved, any specific constraints, and possibly providing examples.</p>
-      </div>
-
-      <div class="problem">
-        <h2 class="problem-name">Problem Name</h2>
-        <p class="problem-id"><strong>ID:</strong> 12</p>
-        <p class="problem-category"><strong>Category:</strong> Algorithms</p>
-        <p class="problem-difficulty"><strong>Difficulty:</strong> Hard</p>
-        <p class="problem-description">This is a detailed description of the problem, explaining what needs to be
-          solved, any specific constraints, and possibly providing examples.</p>
-      </div>
-
-      <div class="problem">
-        <h2 class="problem-name">Problem Name</h2>
-        <p class="problem-id"><strong>ID:</strong> 12</p>
-        <p class="problem-category"><strong>Category:</strong> Algorithms</p>
-        <p class="problem-difficulty"><strong>Difficulty:</strong> Hard</p>
-        <p class="problem-description">This is a detailed description of the problem, explaining what needs to be
-          solved, any specific constraints, and possibly providing examples.</p>
-      </div>
-
-      <div class="problem">
-        <h2 class="problem-name">Problem Name</h2>
-        <p class="problem-id"><strong>ID:</strong> 12</p>
-        <p class="problem-category"><strong>Category:</strong> Algorithms</p>
-        <p class="problem-difficulty"><strong>Difficulty:</strong> Hard</p>
-        <p class="problem-description">This is a detailed description of the problem, explaining what needs to be
-          solved, any specific constraints, and possibly providing examples.</p>
-      </div>
-
-      <div class="paginare">
-
-        <button class="button" id="startBtn" disabled>
-          <i class='bx bx-first-page'></i>
-        </button>
-        <button class="button prevNext" id="prev" disabled>
-          <i class='bx bxs-chevron-left'></i>
-        </button>
-
-        <div class="links">
-          <a href="#" class="link active">1</a>
-          <a href="#" class="link">2</a>
-          <a href="#" class="link">3</a>
-          <a href="#" class="link">4</a>
-          <a href="#" class="link">5</a>
-        </div>
-
-        <button class="button prevNext" id="next">
-          <i class='bx bxs-chevron-right'></i>
-        </button>
-        <button class="button" id="endBtn">
-          <i class='bx bx-last-page'></i>
-        </button>
-
-      </div>
-
-    </div>
+<!-- Problem list will be dynamically inserted here -->
   </div>
 
   <script>
@@ -232,6 +160,48 @@
         optionMenu.classList.remove("active");
       });
     });
+
+     // Funcție pentru a converti valoarea dificultății în cuvinte corespunzătoare
+     function getDifficultyText(difficulty) {
+      switch (difficulty) {
+        case 0:
+          return "Easy";
+        case 1:
+          return "Medium";
+        case 2:
+          return "Hard";
+        default:
+          return "Unknown";
+      }
+    }
+
+    // Funcție pentru a încărca și afișa lista de probleme din fișierul JSON
+    function loadProblems() {
+      fetch('http://localhost:3000/problems/all',{
+                method: 'POST',
+            })
+        .then(response => response.json())
+        .then(data => {
+          const problemsContainer = document.querySelector('.ProblemsPage');
+          data.forEach(problem => {
+            const problemElement = `
+              <div class="problem">
+                <h2 class="problem-name">${problem.Titlu}</h2>
+                <p class="problem-id"><strong>ID:</strong> ${problem.ID}</p>
+                <p class="problem-category"><strong>Category:</strong> ${problem.Materie}</p>
+                <p class="problem-difficulty"><strong>Difficulty:</strong> ${getDifficultyText(problem.Dificultate)}</p>
+                <p class="problem-description">${problem.Descriere}</p>
+              </div>
+            `;
+            problemsContainer.insertAdjacentHTML('beforeend', problemElement);
+          });
+        })
+        .catch(error => console.error('Error loading problems:', error));
+    }
+
+    // Apelăm funcția pentru a încărca și afișa lista de probleme la încărcarea paginii
+    window.onload = loadProblems;
+
   </script>
 
 
