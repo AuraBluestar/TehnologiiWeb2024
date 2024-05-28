@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="../styles/main-content.css">
   <link rel="stylesheet" href="../styles/searchmenu.css">
   <link rel="stylesheet" href="../styles/listingsPage.css">
+  <link rel="stylesheet" href="../styles/add.css">
   <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
   <title>createGroup</title>
@@ -84,6 +85,95 @@
           <input type="submit" value="Create">
         </form>
       </div>
+    </div>
+
+    <div class="add">
+      <form class="addForm">
+        <h1>Add Student</h1>
+
+        <div class="searchbox">
+          <header id="add-header">Student Name</header>
+          <div class="searchfield">
+          <form id="search">
+
+           <div class="searchBar">
+              <input class="search-input" type="search" placeholder="Type Student Name...">
+              <i class='bx bx-plus'></i>
+           </div>
+
+          </form>
+          </div>
+        </div>
+
+      </form>
+
+      <div class="added">
+        <ul class="added-flex">
+          <li>Vatamaniuc Eusebiu</li>
+          <li>Onisor Patricia</li>
+          <li>Mandrea Radu</li>
+          <li>Vatamaniuc Eusebiu</li>
+          <li>Onisor Patricia</li>
+          <li>Mandrea Radu</li>
+          <li>Vatamaniuc Eusebiu</li>
+          <li>Onisor Patricia</li>
+          <li>Mandrea Radu</li>
+          <li>Vatamaniuc Eusebiu</li>
+          <li>Onisor Patricia</li>
+          <li>Mandrea Radu</li>
+          <li>Vatamaniuc Eusebiu</li>
+          <li>Onisor Patricia</li>
+          <li>Mandrea Radu</li>
+          <li>Vatamaniuc Eusebiu</li>
+          <li>Onisor Patricia</li>
+          <li>Mandrea Radu</li>
+          <li>Vatamaniuc Eusebiu</li>
+          <li>Onisor Patricia</li>
+          <li>Mandrea Radu</li>
+          <li>Vatamaniuc Eusebiu</li>
+          <li>Onisor Patricia</li>
+          <li>Mandrea Radu</li>
+          <li>Vatamaniuc Eusebiu</li>
+          <li>Onisor Patricia</li>
+          <li>Mandrea Radu</li>
+          <li>Vatamaniuc Eusebiu</li>
+          <li>Onisor Patricia</li>
+          <li>Mandrea Radu</li>
+          <li>Vatamaniuc Eusebiu</li>
+          <li>Onisor Patricia</li>
+          <li>Mandrea Radu</li>
+          <li>Vatamaniuc Eusebiu</li>
+          <li>Onisor Patricia</li>
+          <li>Mandrea Radu</li>
+          <li>Vatamaniuc Eusebiu</li>
+          <li>Onisor Patricia</li>
+          <li>Mandrea Radu</li>
+          <li>Vatamaniuc Eusebiu</li>
+          <li>Onisor Patricia</li>
+          <li>Mandrea Radu</li>
+          <li>Vatamaniuc Eusebiu</li>
+          <li>Onisor Patricia</li>
+          <li>Mandrea Radu</li>
+          <li>Vatamaniuc Eusebiu</li>
+          <li>Onisor Patricia</li>
+          <li>Mandrea Radu</li>
+          <li>Vatamaniuc Eusebiu</li>
+          <li>Onisor Patricia</li>
+          <li>Mandrea Radu</li>
+          <li>Vatamaniuc Eusebiu</li>
+          <li>Onisor Patricia</li>
+          <li>Mandrea Radu</li>
+          <li>Vatamaniuc Eusebiu</li>
+          <li>Onisor Patricia</li>
+          <li>Mandrea Radu</li>
+
+
+
+        </ul>
+      </div>
+
+    
+    </div>
 
       <!-- <div class="GroupsPage">
 
@@ -148,35 +238,10 @@
 
       </div> -->
 
-    </div>
+    
   </div>
 
-  <script>
-    /*Buton menu side bar*/
-    let btn = document.querySelector('#btn');
-    let sidebar = document.querySelector('.sidebar');
-
-    btn.onclick = function () {
-      sidebar.classList.toggle('active');
-    };
-
-
-    /*dropDown menu selector*/
-    const optionMenu = document.querySelector(".dropdown"),
-      selectBtn = optionMenu.querySelector(".selectbtn"),
-      options = optionMenu.querySelectorAll(".option"),
-      sBtn_text = optionMenu.querySelector(".sBtn-text");
-
-    selectBtn.addEventListener("click", () => optionMenu.classList.toggle("active"));
-
-    options.forEach(option => {
-      option.addEventListener("click", () => {
-        let selectedOption = option.querySelector(".option-text").innerText;
-        sBtn_text.innerText = selectedOption;
-        optionMenu.classList.remove("active");
-      });
-    });
-  </script>
+  <script src="../scripts/script.js"></script>
 
 
 
