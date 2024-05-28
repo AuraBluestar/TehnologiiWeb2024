@@ -96,6 +96,11 @@ const handleLogin = (req, res) => {
   });
 };
 
+function sendErrorResponse(res, statusCode, message) {
+  res.writeHead(statusCode, { "Content-Type": "application/json" });
+  res.end(JSON.stringify({ success: false, message }));
+}
+
 // Functie pentru a manevra cererile de adăugare student
 const handleAddStudent = (req, res) => {
   let body = "";
@@ -179,27 +184,48 @@ const handleAddProblem = (req, res) => {
 
   req.on("end", () => {
     try {
-      const { titlu, descriere, profesorID, dificultate, materie, capitol } = JSON.parse(body);
+      const { titlu, descriere, profesorID, dificultate, materie, capitol } =
+        JSON.parse(body);
 
       // Verificarea validității datelor
-      if (!titlu || !descriere || !profesorID || !dificultate || !materie || !capitol) {
+      if (
+        !titlu ||
+        !descriere ||
+        !profesorID ||
+        !dificultate ||
+        !materie ||
+        !capitol
+      ) {
         res.writeHead(400, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({ success: false, message: "Missing required fields" }));
+        res.end(
+          JSON.stringify({ success: false, message: "Missing required fields" })
+        );
         return;
       }
 
-      const query = "INSERT INTO probleme (Titlu, Descriere, ProfesorID, Dificultate, Materie, Capitol) VALUES (?, ?, ?, ?, ?, ?)";
-      pool.query(query, [titlu, descriere, profesorID, dificultate, materie, capitol], (error, results) => {
-        if (error) {
-          console.error("Error inserting data:", error.sqlMessage);
-          res.writeHead(500, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ success: false, message: "Database error", error: error.sqlMessage }));
-        } else {
-          const problemId = results.insertId;
-          res.writeHead(200, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ success: true, id: problemId }));
+      const query =
+        "INSERT INTO probleme (Titlu, Descriere, ProfesorID, Dificultate, Materie, Capitol) VALUES (?, ?, ?, ?, ?, ?)";
+      pool.query(
+        query,
+        [titlu, descriere, profesorID, dificultate, materie, capitol],
+        (error, results) => {
+          if (error) {
+            console.error("Error inserting data:", error.sqlMessage);
+            res.writeHead(500, { "Content-Type": "application/json" });
+            res.end(
+              JSON.stringify({
+                success: false,
+                message: "Database error",
+                error: error.sqlMessage,
+              })
+            );
+          } else {
+            const problemId = results.insertId;
+            res.writeHead(200, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ success: true, id: problemId }));
+          }
         }
-      });
+      );
     } catch (err) {
       console.error("Error parsing JSON:", err);
       res.writeHead(400, { "Content-Type": "application/json" });
@@ -210,7 +236,7 @@ const handleAddProblem = (req, res) => {
 
 // Funcție pentru obținerea tuturor problemelor
 const getAllProblems = (res) => {
-  pool.query('SELECT * FROM probleme', (error, results) => {
+  pool.query("SELECT * FROM probleme where stare=1", (error, results) => {
     if (error) {
       res.writeHead(500, { "Content-Type": "application/json" });
       res.end(JSON.stringify({ error: error.message }));
@@ -223,19 +249,74 @@ const getAllProblems = (res) => {
 
 // Funcție pentru obținerea unei probleme după ID
 function getProblemById(res, id) {
-  connection.query('SELECT * FROM probleme WHERE ID = ?', [id], (error, results) => {
+  connection.query(
+    "SELECT * FROM probleme WHERE ID = ?",
+    [id],
+    (error, results) => {
       if (error) {
-          res.statusCode = 500;
-          res.end(JSON.stringify({ error: error.message }));
-          return;
+        res.statusCode = 500;
+        res.end(JSON.stringify({ error: error.message }));
+        return;
       }
       if (results.length === 0) {
-          res.statusCode = 404;
-          res.end(JSON.stringify({ error: 'Problem not found' }));
-          return;
+        res.statusCode = 404;
+        res.end(JSON.stringify({ error: "Problem not found" }));
+        return;
       }
       res.statusCode = 200;
       res.end(JSON.stringify(results[0]));
+    }
+  );
+}
+
+// Controller function for searching problems
+function searchProblems(req, res) {
+  let body = "";
+  req.on("data", (chunk) => {
+    body += chunk.toString();
+  });
+
+  req.on("end", () => {
+    try {
+      const { text = "", difficulty = "all", category = "all" } = JSON.parse(body);
+
+      let sqlQuery = "SELECT * FROM probleme WHERE Stare=1";
+      const queryParams = [];
+
+      if (text) {
+        sqlQuery += " AND (Titlu LIKE ? OR Descriere LIKE ?)";
+        queryParams.push(`%${text}%`, `%${text}%`);
+      }
+
+      if (difficulty !== "all") {
+        let difficultyInt;
+        if (difficulty === "easy") {
+          difficultyInt = 0;
+        } else if (difficulty === "medium") {
+          difficultyInt = 1;
+        } else if (difficulty === "hard") {
+          difficultyInt = 2;
+        }
+        if (difficultyInt !== undefined) {
+          sqlQuery += " AND Dificultate = ?";
+          queryParams.push(difficultyInt);
+        }
+      }
+
+      if (category !== "all") {
+        sqlQuery += " AND Capitol = ?";
+        queryParams.push(category);
+      }
+
+      pool.query(sqlQuery, queryParams, (error, results) => {
+        if (error) return sendErrorResponse(res, 500, "Database error");
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify(results));
+      });
+    } catch (err) {
+      console.error("Error parsing JSON:", err);
+      sendErrorResponse(res, 400, "Invalid JSON");
+    }
   });
 }
 
@@ -321,11 +402,13 @@ const server = http.createServer((req, res) => {
       handleLogin(req, res);
     } else if (req.url === "/problems/add") {
       handleAddProblem(req, res);
-    } else if (pathname === '/problems/all') {
+    } else if (pathname === "/problems/all") {
       getAllProblems(res);
-    } else if (req.url.startsWith('/problems/id=')) {
-      const id = pathname.split('=')[1];
+    } else if (req.url.startsWith("/problems/id=")) {
+      const id = pathname.split("=")[1];
       getProblemById(res, id);
+    } else if (pathname === "/problems/search") {
+      searchProblems(req, res);
     } else {
       res.writeHead(404, { "Content-Type": "application/json" });
       res.end(JSON.stringify({ success: false, message: "Not Found" }));
