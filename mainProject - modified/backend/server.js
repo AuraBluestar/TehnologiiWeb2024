@@ -20,6 +20,13 @@ const pool = mysql.createPool(dbConfig);
 const ip = "localhost";
 const port = 3000;
 
+// Adăugarea header-elor CORS
+const setCorsHeaders = (res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+};
+
 // Functie pentru a manevra cererile de autentificare
 const handleLogin = (req, res) => {
   let body = "";
@@ -184,7 +191,7 @@ const handleAddProblem = (req, res) => {
 
   req.on("end", () => {
     try {
-      const { titlu, descriere, profesorID, dificultate, materie, capitol } =
+      const { titlu, descriere, profesorID, dificultate, capitol } =
         JSON.parse(body);
 
       // Verificarea validității datelor
@@ -193,7 +200,6 @@ const handleAddProblem = (req, res) => {
         !descriere ||
         !profesorID ||
         !dificultate ||
-        !materie ||
         !capitol
       ) {
         res.writeHead(400, { "Content-Type": "application/json" });
@@ -204,10 +210,10 @@ const handleAddProblem = (req, res) => {
       }
 
       const query =
-        "INSERT INTO probleme (Titlu, Descriere, ProfesorID, Dificultate, Materie, Capitol) VALUES (?, ?, ?, ?, ?, ?)";
+        "INSERT INTO probleme (Titlu, Descriere, ProfesorID, Dificultate, Capitol) VALUES (?, ?, ?, ?, ?)";
       pool.query(
         query,
-        [titlu, descriere, profesorID, dificultate, materie, capitol],
+        [titlu, descriere, profesorID, dificultate, capitol],
         (error, results) => {
           if (error) {
             console.error("Error inserting data:", error.sqlMessage);
@@ -284,8 +290,8 @@ function searchProblems(req, res) {
       const queryParams = [];
 
       if (text) {
-        sqlQuery += " AND (Titlu LIKE ? OR Descriere LIKE ?)";
-        queryParams.push(`%${text}%`, `%${text}%`);
+        sqlQuery += " AND (Titlu LIKE ? OR Descriere LIKE ? OR ID LIKE ?)";
+        queryParams.push(`%${text}%`, `%${text}%`, `%${text}%`);
       }
 
       if (difficulty !== "all") {
