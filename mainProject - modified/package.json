@@ -1,0 +1,15 @@
+{
+  "name": "tehnologii-web-proiect",
+  "version": "1.0.0",
+  "description": "Proiect pentru cursul de Tehnologii Web 2024",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js"
+  },
+  "keywords": [],
+  "author": "Informatix",
+  "license": "ISC",
+  "dependencies": {
+    "mysql": "^2.18.1"
+  }
+}

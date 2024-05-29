@@ -42,8 +42,8 @@
         <div class="navright">
 
             <ul>
-                <li><a href="notLogged.html">Home</a></li>
-                <li><a href="signupPage.html">Sign Up</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="/signup">Sign Up</a></li>
                 <li><a href="#">Contact</a></li>
             </ul>
         </div>
@@ -59,23 +59,23 @@
             <i class='bx bx-menu' id="btn"></i>
         </div>
         <ul>
-            <li><a href="notLogged.html"><i class='bx bxs-home'></i><span class="navitem">Home</span></a></li>
-            <li><a href="signupPage.html"><i class='bx bxs-edit-alt'></i><span class="navitem">Sign Up</span></a></li>
+            <li><a href="/"><i class='bx bxs-home'></i><span class="navitem">Home</span></a></li>
+            <li><a href="/signup"><i class='bx bxs-edit-alt'></i><span class="navitem">Sign Up</span></a></li>
             <li><a href="#"><i class='bx bxs-contact'></i><span class="navitem">Contact</span></a></li>
         </ul>
     </nav>
     <div class="authcontent" style="left: 60px; width:calc(100dvw - 160px);">
         <div class="authForm">
             <h1>Login</h1>
-            <form>
+            <form id="loginForm">
                 <div class="text-field">
-                    <input type="text" required><span></span><label>Username</label>
+                    <input type="text" id="username" name="username" required><span></span><label>Username</label>
                 </div>
                 <div class="text-field">
-                    <input type="password" required><span></span><label>Password</label>
+                    <input type="password" id="password" name="password" required><span></span><label>Password</label>
                 </div>
                 <input type="submit" value="Login">
-                <div class="signup-link">Not Signed Up? <a href="#">Sign Up</a>
+                <div class="signup-link">Not Signed Up? <a href="/signup">Sign Up</a>
                 </div>
             </form>
         </div>
@@ -83,6 +83,44 @@
 
 
     <script src="../scripts/script.js"></script>
+    <script>document.getElementById('loginForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        console.log('Username:', username);
+        console.log('Password:', password);
+
+        fetch('http://localhost:3000/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Response:', data);
+            if (data.success) {
+                // Storing userType and id in localStorage
+                localStorage.setItem('userType', data.userType);
+                localStorage.setItem('id', data.id);
+
+                // Redirecting based on userType
+                if (data.userType === 'elev') {
+                    window.location.href = '/loggedStudent';
+                } else if (data.userType === 'profesor') {
+                    window.location.href = '/loggedTeacher';
+                }
+            } else {
+                alert('Login failed: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });</script>
 
 </body>
 
