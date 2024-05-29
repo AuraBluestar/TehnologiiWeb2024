@@ -41,8 +41,8 @@
     <div class="navright">
 
       <ul>
-        <li><a href="loginPage.html">Login</a></li>
-        <li><a href="signupPage.html">Sign Up</a></li>
+        <li><a href="/login">Login</a></li>
+        <li><a href="/signup">Sign Up</a></li>
         <li><a href="#">Contact</a></li>
       </ul>
     </div>
@@ -58,8 +58,8 @@
       <i class='bx bx-menu' id="btn"></i>
     </div>
     <ul>
-      <li><a href="loginPage.html"><i class='bx bx-log-in'></i><span class="navitem">Login</span></a></li>
-      <li><a href="signupPage.html"><i class='bx bxs-edit-alt'></i><span class="navitem">Sign Up</span></a></li>
+      <li><a href="/login"><i class='bx bx-log-in'></i><span class="navitem">Login</span></a></li>
+      <li><a href="/signup"><i class='bx bxs-edit-alt'></i><span class="navitem">Sign Up</span></a></li>
       <li><a href="#"><i class='bx bxs-contact'></i><span class="navitem">Contact</span></a></li>
     </ul>
   </nav>
@@ -90,17 +90,17 @@
           <header>Difficulty</header>
           <div class="diffButtons">
 
-            <input type="radio" id="radio-1" name="diffButons" checked>
-            <label class="diff" for="radio-1">All</label>
+            <input type="radio" id="radio-all" name="diffButtons" value="all" checked>
+            <label class="diff" for="radio-all">All</label>
 
-            <input type="radio" id="radio-2" name="diffButons" checked>
-            <label class="diff" for="radio-2">Easy</label>
+            <input type="radio" id="radio-easy" name="diffButtons" value="easy">
+            <label class="diff" for="radio-easy">Easy</label>
 
-            <input type="radio" id="radio-3" name="diffButons" checked>
-            <label class="diff" for="radio-3">Medium</label>
+            <input type="radio" id="radio-medium" name="diffButtons" value="medium">
+            <label class="diff" for="radio-medium">Medium</label>
 
-            <input type="radio" id="radio-4" name="diffButons" checked>
-            <label class="diff" for="radio-4">Hard</label>
+            <input type="radio" id="radio-hard" name="diffButtons" value="hard">
+            <label class="diff" for="radio-hard">Hard</label>
 
           </div>
 
@@ -112,11 +112,11 @@
             </div>
 
             <ul class="dmenu">
-              <li class="option"><span class="option-text">None</span></li>
-              <li class="option"><span class="option-text">Basic Principles Of The Language</span></li>
-              <li class="option"><span class="option-text">Basic Algorithms</span></li>
-              <li class="option"><span class="option-text">Vectors</span></li>
-              <li class="option"><span class="option-text">Matrix</span></li>
+              <li class="option" data-value="all"><span class="option-text">None</span></li>
+              <li class="option" data-value="Basic Principles Of The Language"><span class="option-text">Basic Principles Of The Language</span></li>
+              <li class="option" data-value="algoritmi"><span class="option-text">Basic Algorithms</span></li>
+              <li class="option" data-value="Vectors"><span class="option-text">Vectors</span></li>
+              <li class="option" data-value="Matrix"><span class="option-text">Matrix</span></li>
             </ul>
 
           </div>
@@ -129,78 +129,7 @@
     </div>
 
     <div class="ProblemsPage">
-
-      <div class="problem">
-        <h2 class="problem-name">Problem Name</h2>
-        <p class="problem-id"><strong>ID:</strong> 12</p>
-        <p class="problem-category"><strong>Category:</strong> Algorithms</p>
-        <p class="problem-difficulty"><strong>Difficulty:</strong> Hard</p>
-        <p class="problem-description">This is a detailed description of the problem, explaining what needs to be
-          solved, any specific constraints, and possibly providing examples.</p>
-      </div>
-
-      <div class="problem">
-        <h2 class="problem-name">Problem Name</h2>
-        <p class="problem-id"><strong>ID:</strong> 12</p>
-        <p class="problem-category"><strong>Category:</strong> Algorithms</p>
-        <p class="problem-difficulty"><strong>Difficulty:</strong> Hard</p>
-        <p class="problem-description">This is a detailed description of the problem, explaining what needs to be
-          solved, any specific constraints, and possibly providing examples.</p>
-      </div>
-
-      <div class="problem">
-        <h2 class="problem-name">Problem Name</h2>
-        <p class="problem-id"><strong>ID:</strong> 12</p>
-        <p class="problem-category"><strong>Category:</strong> Algorithms</p>
-        <p class="problem-difficulty"><strong>Difficulty:</strong> Hard</p>
-        <p class="problem-description">This is a detailed description of the problem, explaining what needs to be
-          solved, any specific constraints, and possibly providing examples.</p>
-      </div>
-
-      <div class="problem">
-        <h2 class="problem-name">Problem Name</h2>
-        <p class="problem-id"><strong>ID:</strong> 12</p>
-        <p class="problem-category"><strong>Category:</strong> Algorithms</p>
-        <p class="problem-difficulty"><strong>Difficulty:</strong> Hard</p>
-        <p class="problem-description">This is a detailed description of the problem, explaining what needs to be
-          solved, any specific constraints, and possibly providing examples.</p>
-      </div>
-
-      <div class="problem">
-        <h2 class="problem-name">Problem Name</h2>
-        <p class="problem-id"><strong>ID:</strong> 12</p>
-        <p class="problem-category"><strong>Category:</strong> Algorithms</p>
-        <p class="problem-difficulty"><strong>Difficulty:</strong> Hard</p>
-        <p class="problem-description">This is a detailed description of the problem, explaining what needs to be
-          solved, any specific constraints, and possibly providing examples.</p>
-      </div>
-
-      <div class="paginare">
-
-        <button class="button" id="startBtn" disabled>
-          <i class='bx bx-first-page'></i>
-        </button>
-        <button class="button prevNext" id="prev" disabled>
-          <i class='bx bxs-chevron-left'></i>
-        </button>
-
-        <div class="links">
-          <a href="#" class="link active">1</a>
-          <a href="#" class="link">2</a>
-          <a href="#" class="link">3</a>
-          <a href="#" class="link">4</a>
-          <a href="#" class="link">5</a>
-        </div>
-
-        <button class="button prevNext" id="next">
-          <i class='bx bxs-chevron-right'></i>
-        </button>
-        <button class="button" id="endBtn">
-          <i class='bx bx-last-page'></i>
-        </button>
-
-      </div>
-
+<!-- Problem list will be dynamically inserted here -->
     </div>
   </div>
 
