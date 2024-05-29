@@ -1,2 +1,1 @@
-
 mysql --user avnadmin --password=AVNS_1u_r2mfq1FxPl9dd3yX --host informatix-informatix.h.aivencloud.com --port 22933 defaultdb
