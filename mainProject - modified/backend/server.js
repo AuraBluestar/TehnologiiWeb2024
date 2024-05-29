@@ -20,12 +20,6 @@ const pool = mysql.createPool(dbConfig);
 const ip = "localhost";
 const port = 3000;
 
-// Adăugarea header-elor CORS
-const setCorsHeaders = (res) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-};
 
 // Functie pentru a manevra cererile de autentificare
 const handleLogin = (req, res) => {
@@ -195,13 +189,7 @@ const handleAddProblem = (req, res) => {
         JSON.parse(body);
 
       // Verificarea validității datelor
-      if (
-        !titlu ||
-        !descriere ||
-        !profesorID ||
-        !dificultate ||
-        !capitol
-      ) {
+      if (!titlu || !descriere || !profesorID || !dificultate || !capitol) {
         res.writeHead(400, { "Content-Type": "application/json" });
         res.end(
           JSON.stringify({ success: false, message: "Missing required fields" })
@@ -255,24 +243,20 @@ const getAllProblems = (res) => {
 
 // Funcție pentru obținerea unei probleme după ID
 function getProblemById(res, id) {
-  connection.query(
-    "SELECT * FROM probleme WHERE ID = ?",
-    [id],
-    (error, results) => {
-      if (error) {
-        res.statusCode = 500;
-        res.end(JSON.stringify({ error: error.message }));
-        return;
-      }
-      if (results.length === 0) {
-        res.statusCode = 404;
-        res.end(JSON.stringify({ error: "Problem not found" }));
-        return;
-      }
-      res.statusCode = 200;
-      res.end(JSON.stringify(results[0]));
+  pool.query("SELECT * FROM probleme WHERE ID = ?", [id], (error, results) => {
+    if (error) {
+      res.statusCode = 500;
+      res.end(JSON.stringify({ error: error.message }));
+      return;
     }
-  );
+    if (results.length === 0) {
+      res.statusCode = 404;
+      res.end(JSON.stringify({ error: "Problem not found" }));
+      return;
+    }
+    res.statusCode = 200;
+    res.end(JSON.stringify(results[0]));
+  });
 }
 
 // Controller function for searching problems
@@ -312,6 +296,146 @@ function searchProblems(req, res) {
       if (category !== "all") {
         sqlQuery += " AND Capitol = ?";
         queryParams.push(category);
+      }
+
+      pool.query(sqlQuery, queryParams, (error, results) => {
+        if (error) return sendErrorResponse(res, 500, "Database error");
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify(results));
+      });
+    } catch (err) {
+      console.error("Error parsing JSON:", err);
+      sendErrorResponse(res, 400, "Invalid JSON");
+    }
+  });
+}
+
+// Functie pentru a manevra cererile de adăugare clasă
+const handleAddClass = (req, res) => {
+  let body = "";
+
+  req.on("data", (chunk) => {
+    body += chunk.toString();
+  });
+
+  req.on("end", () => {
+    try {
+      const { nume, profesorID, materie } = JSON.parse(body);
+
+      const query =
+        "INSERT INTO clase (Nume, ProfesorID, Materie) VALUES (?, ?, ?)";
+      pool.query(query, [nume, profesorID, materie], (error, results) => {
+        if (error) {
+          console.error("Error inserting data:", error);
+          res.writeHead(500, { "Content-Type": "application/json" });
+          res.end(
+            JSON.stringify({ success: false, message: "Database error" })
+          );
+        } else {
+          const classId = results.insertId;
+          res.writeHead(200, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ success: true, id: classId }));
+        }
+      });
+    } catch (err) {
+      console.error("Error parsing JSON:", err);
+      res.writeHead(400, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ success: false, message: "Invalid JSON" }));
+    }
+  });
+};
+
+// Functie pentru a manevra cererile de adăugare elev în clasă
+const handleAddStudentToClass = (req, res) => {
+  let body = "";
+
+  req.on("data", (chunk) => {
+    body += chunk.toString();
+  });
+
+  req.on("end", () => {
+    try {
+      const { classId, studentId } = JSON.parse(body);
+
+      const query = "INSERT INTO claseelevi (ClasaID, ElevID) VALUES (?, ?)";
+      pool.query(query, [classId, studentId], (error, results) => {
+        if (error) {
+          console.error("Error inserting data:", error);
+          res.writeHead(500, { "Content-Type": "application/json" });
+          res.end(
+            JSON.stringify({ success: false, message: "Database error" })
+          );
+        } else {
+          res.writeHead(200, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ success: true }));
+        }
+      });
+    } catch (err) {
+      console.error("Error parsing JSON:", err);
+      res.writeHead(400, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ success: false, message: "Invalid JSON" }));
+    }
+  });
+};
+
+// Functie pentru a obține toate clasele pentru un anumit ProfesorID
+function getAllClassesForProfesor(req, res) {
+  let body = "";
+
+  req.on("data", (chunk) => {
+    body += chunk.toString();
+  });
+
+  req.on("end", () => {
+    try {
+      const { profesorID } = JSON.parse(body);
+
+      // Verificare dacă profesorID este furnizat
+      if (!profesorID) {
+        return sendErrorResponse(res, 400, "ProfesorID is required");
+      }
+
+      // Interogare pentru a obține toate clasele pentru profesorul dat
+      const query = "SELECT * FROM clase WHERE ProfesorID = ?";
+      pool.query(query, [profesorID], (error, results) => {
+        if (error) {
+          console.error("Error querying database:", error);
+          return sendErrorResponse(res, 500, "Database error");
+        }
+
+        // Returnare rezultate în format JSON
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify(results));
+      });
+    } catch (err) {
+      console.error("Error parsing JSON:", err);
+      sendErrorResponse(res, 400, "Invalid JSON");
+    }
+  });
+}
+
+// Controller function for searching problems
+function searchClasses(req, res) {
+  let body = "";
+  req.on("data", (chunk) => {
+    body += chunk.toString();
+  });
+
+  req.on("end", () => {
+    try {
+      const { text = "", subject = "none" } = JSON.parse(body);
+
+      let sqlQuery = "SELECT * FROM clase WHERE 1=1";
+      const queryParams = [];
+
+      if (text) {
+        sqlQuery += " AND Grupa LIKE ?";
+        queryParams.push(`%${text}%`);
+      }
+
+      if (subject !== "none") {
+        sqlQuery += " AND Materie = ?";
+        queryParams.push(subject);
       }
 
       pool.query(sqlQuery, queryParams, (error, results) => {
@@ -399,26 +523,32 @@ const server = http.createServer((req, res) => {
         res.end(content, "utf-8");
       }
     });
-  } else if (req.method === "POST") {
-    if (req.url === "/addStudent") {
-      handleAddStudent(req, res);
-    } else if (req.url === "/addTeacher") {
-      handleAddTeacher(req, res);
-    } else if (req.url === "/login") {
-      handleLogin(req, res);
-    } else if (req.url === "/problems/add") {
-      handleAddProblem(req, res);
-    } else if (pathname === "/problems/all") {
-      getAllProblems(res);
-    } else if (req.url.startsWith("/problems/id=")) {
-      const id = pathname.split("=")[1];
-      getProblemById(res, id);
-    } else if (pathname === "/problems/search") {
-      searchProblems(req, res);
-    } else {
-      res.writeHead(404, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({ success: false, message: "Not Found" }));
-    }
+  } else if (req.method === "POST" && pathname === "/login") {
+    handleLogin(req, res);
+  } else if (req.method === "POST" && pathname === "/addStudent") {
+    handleAddStudent(req, res);
+  } else if (req.method === "POST" && pathname === "/addTeacher") {
+    handleAddTeacher(req, res);
+  } else if (req.method === "POST" && pathname === "/problems/add") {
+    handleAddProblem(req, res);
+  } else if (req.method === "POST" && pathname === "/classes/add") {
+    handleAddClass(req, res);
+  } else if (req.method === "POST" && pathname === "/problems/all") {
+    getAllProblems(res);
+  } else if (req.method === "POST" && pathname.startsWith("/problems/search")) {
+    searchProblems(req, res);
+  } else if ( req.method === "POST" && pathname.startsWith("/classes/search/Teacher")) {
+    searchClasses(req, res);
+  } else if (req.method === "POST" && pathname.startsWith("/problems/")) {
+    const problemId = pathname.split("/")[2];
+    getProblemById(res, problemId);
+  } else if (req.method === "POST" && pathname === "/classes/all/Teacher") {
+    getAllClassesForProfesor(req, res);
+  } else if (req.method === "POST" && pathname === "/classes/addStudent") {
+    handleAddStudentToClass(req, res);
+  } else {
+    res.writeHead(404, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ success: false, message: "Not Found" }));
   }
 });
 
