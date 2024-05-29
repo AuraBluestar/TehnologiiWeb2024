@@ -24,7 +24,9 @@
  });
 
  // Funcție pentru a converti valoarea dificultății în cuvinte corespunzătoare
- function getDifficultyText(difficulty) {
+
+
+function getDifficultyText(difficulty) {
   switch (difficulty) {
     case 0:
       return "Easy";
@@ -37,19 +39,45 @@
   }
 }
 
+function getDifficultyColor(difficulty) {
+  switch (difficulty) {
+      case 0:
+          return 'green';
+      case 1:
+          return 'orange';
+      case 2:
+          return 'red';
+      default:
+          return 'black';
+  }
+}
+
 // Funcție pentru a încărca și afișa lista de probleme din fișierul JSON
 function loadProblems(problems) {
   const problemsContainer = document.querySelector('.ProblemsPage');
   problemsContainer.innerHTML = ''; // Clear the container before inserting new elements
   problems.forEach(problem => {
     const problemElement = `
-      <div class="problem">
-        <h2 class="problem-name">${problem.Titlu}</h2>
-        <p class="problem-id"><strong>ID:</strong> ${problem.ID}</p>
-        <p class="problem-category"><strong>Category:</strong> ${problem.Capitol}</p>
-        <p class="problem-difficulty"><strong>Difficulty:</strong> ${getDifficultyText(problem.Dificultate)}</p>
+    <div class="problem">
+    <!-- Details section -->
+    <div class="details">
+        <!-- ID and Name -->
+        <div class="id-name">
+            <p class="problem-id"><strong>#</strong>${problem.ID}</p>
+            <p class="problem-name">${problem.Titlu}</h2>
+        </div>
+        <!-- Category and Difficulty -->
+        <div class="category-diff">
+            <p class="problem-category">${problem.Capitol}</p>
+            <p class="problem-diff" style="color: ${getDifficultyColor(problem.Dificultate)} ;">${getDifficultyText(problem.Dificultate)}</p>
+        </div>
+    </div>
+    <!-- Description section -->
+    <div class="description">
         <p class="problem-description">${problem.Descriere}</p>
-      </div>
+    </div>
+</div>
+
     `;
     problemsContainer.insertAdjacentHTML('beforeend', problemElement);
   });
