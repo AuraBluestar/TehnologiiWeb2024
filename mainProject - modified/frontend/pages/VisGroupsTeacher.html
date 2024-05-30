@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../styles/nav-bar.css">
-  <link rel="stylesheet" href="../styles/side-bar.css">
-  <link rel="stylesheet" href="../styles/main-content.css">
-  <link rel="stylesheet" href="../styles/searchmenu.css">
-  <link rel="stylesheet" href="../styles/listingsPage.css">
-  <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-  <title>GroupsTeacher</title>
-  <style>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/nav-bar.css">
+    <link rel="stylesheet" href="../styles/side-bar.css">
+    <link rel="stylesheet" href="../styles/main-content.css">
+    <link rel="stylesheet" href="../styles/searchmenu.css">
+    <link rel="stylesheet" href="../styles/listingsPage.css">
+    <link rel='stylesheet'
+      href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <title>GroupsTeacher</title>
+    <style>
     * {
       margin: 0;
       padding: 0;
@@ -28,107 +29,115 @@
     }
   </style>
 
-</head>
+  </head>
 
-<body>
+  <body>
 
-  <!-- This is the NavBar -->
-  <nav class="navbar">
-    <div class="navleft">
-      <div class="logo"><a href="#">In&lt;form&gt;atiX</a> </div>
-    </div>
-    <div class="navright">
+    <!-- This is the NavBar -->
+    <nav class="navbar">
+      <div class="navleft">
+        <div class="logo"><a href="#">In&lt;form&gt;atiX</a> </div>
+      </div>
+      <div class="navright">
 
+        <ul>
+          <li><a href="/loggedTeacher">Home</a></li>
+          <li><a href="/">LogOut</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- This is the SideBar -->
+    <nav class="sidebar">
+      <div class="top">
+        <div class="menu">
+          <i class='bx bx-code'></i>
+          <span>Menu</span>
+        </div>
+        <i class='bx bx-menu' id="btn"></i>
+      </div>
       <ul>
-        <li><a href="/loggedTeacher">Home</a></li>
-        <li><a href="/">LogOut</a></li>
-        <li><a href="#">Contact</a></li>
+        <li><a href="/loggedTeacher"><i class='bx bxs-home'></i><span
+              class="navitem">Home</span></a></li>
+        <li><a href="../../to be modified/ProfilProfesor.html"><i
+              class='bx bxs-user-circle'></i><span
+              class="navitem">Profile</span></a></li>
+        <li><a href="/VisGroupsTeacher"><i class='bx bxs-group'></i><span
+              class="navitem">Groups</span></a></li>
+        <li><a href="/VisHWTeacher"><i class='bx bxs-book-alt'></i><span
+              class="navitem">Homeworks</span></a></li>
+        <li><a href="../../to be modified/ProblemePropuse.html"><i
+              class='bx bxs-book-content'></i><span class="navitem">Proposed
+              Problems</span></a></li>
+        <li><a href="/createHW"><i class='bx bxs-edit'></i><span
+              class="navitem">New Problem</span></a></li>
+        <li><a href="#"><i class='bx bxs-contact'></i><span
+              class="navitem">Contact</span></a></li>
+        <li><a href="/"><i class='bx bx-log-out'></i><span
+              class="navitem">LogOut</span></a></li>
       </ul>
-    </div>
-  </nav>
+    </nav>
 
-  <!-- This is the SideBar -->
-  <nav class="sidebar">
-    <div class="top">
-      <div class="menu">
-        <i class='bx bx-code'></i>
-        <span>Menu</span>
-      </div>
-      <i class='bx bx-menu' id="btn"></i>
-    </div>
-    <ul>
-      <li><a href="/loggedTeacher"><i class='bx bxs-home'></i><span class="navitem">Home</span></a></li>
-      <li><a href="../../to be modified/ProfilProfesor.html"><i class='bx bxs-user-circle'></i><span class="navitem">Profile</span></a></li>
-      <li><a href="/VisGroupsTeacher"><i class='bx bxs-group'></i><span class="navitem">Groups</span></a></li>
-      <li><a href="/VisHWTeacher"><i class='bx bxs-book-alt'></i><span class="navitem">Homeworks</span></a></li>
-      <li><a href="../../to be modified/ProblemePropuse.html"><i class='bx bxs-book-content'></i><span class="navitem">Proposed Problems</span></a></li>
-      <li><a href="/createHW"><i class='bx bxs-edit'></i><span class="navitem">New Problem</span></a></li>
-      <li><a href="#"><i class='bx bxs-contact'></i><span class="navitem">Contact</span></a></li>
-      <li><a href="/"><i class='bx bx-log-out'></i><span class="navitem">LogOut</span></a></li>
-    </ul>
-  </nav>
+    <div class="maincontent">
 
-  <div class="maincontent">
+      <div class="searchmenu">
+        <div class="searchbox">
+          <header>Group Name</header>
+          <div class="searchfield">
+            <form id="search">
 
+              <div class="seachBar">
+                <input class="search-input" type="search" placeholder="Search">
+                <i class='bx bx-search-alt-2'></i>
+              </div>
 
-    <div class="searchmenu">
-      <div class="searchbox">
-        <header>Group Name</header>
-        <div class="searchfield">
-        <form id="search">
-
-          <div class="seachBar">
-            <input class="search-input" type="search" placeholder="Search">
-            <i class='bx bx-search-alt-2'></i>
+            </form>
           </div>
+        </div>
 
-        </form>
-      </div>
-      </div>
+        <div class="filterbox">
 
-      <div class="filterbox">
+          <form id="filtermenu">
 
-        <form id="filtermenu">
+            <header>Group</header>
+            <div class="dropdown">
+              <div class="selectbtn">
+                <span class="sBtn-text">Select your option</span>
+                <i class="bx bx-chevron-down"></i>
+              </div>
 
+              <ul class="dmenu">
+                <li class="option"><span class="option-text">None</span></li>
+                <li class="option"><span class="option-text">A1</span></li>
+                <li class="option"><span class="option-text">B1</span></li>
+                <li class="option"><span class="option-text">A2</span></li>
+              </ul>
 
-          <header>Group</header>
-          <div class="dropdown">
-            <div class="selectbtn">
-              <span class="sBtn-text">Select your option</span>
-              <i class="bx bx-chevron-down"></i>
             </div>
 
-            <ul class="dmenu">
-              <li class="option"><span class="option-text">None</span></li>
-              <li class="option"><span class="option-text">A1</span></li>
-              <li class="option"><span class="option-text">B1</span></li>
-              <li class="option"><span class="option-text">A2</span></li>
-            </ul>
+            <button type="submit" class="filter">Filter</button>
 
-          </div>
+            <div class="createnew">
+              <ul>
+                <li><a href="#"><i class='bx bx-group'></i></a></li>
+              </ul>
+              <i class='bx bx-plus'></i>
+              <header class="header">New Group</header>
+            </div>
 
-          <button type="submit" class="filter">Filter</button>
+          </form>
 
-          <div class="createnew">
-            <ul>
-              <li><a href="#"><i class='bx bx-group'></i></a></li>
-            </ul>
-            <i class='bx bx-plus'></i>
-            <header class="header">New Group</header>
-          </div>
+        </div>
+      </div>
 
-        </form>
+      <div class="GroupsPage">
 
       </div>
     </div>
 
-    <div class="GroupsPage">
-
-    </div>
-  </div>
-
-  <script src="../scripts/script.js"></script>
-  <script>
+    <script src="../scripts/script.js"></script>
+    <script>
   // Funcție pentru a încărca și afișa lista de grupe din fișierul JSON
   function loadGroups(groups) {
     const groupsContainer = document.querySelector('.GroupsPage');
@@ -136,7 +145,7 @@
     groups.forEach(group => {
       const problemElement = `
         <div class="group">
-          <h2 class="group-title">${group.Grupa}</h2>
+          <h1 class="group-title">${group.Grupa}</h1>
           <p class="group-label">${group.Materie}</p>
         </div>
       `;
@@ -172,5 +181,5 @@
   }
 };
   </script>
-</body>
+  </body>
 </html>
