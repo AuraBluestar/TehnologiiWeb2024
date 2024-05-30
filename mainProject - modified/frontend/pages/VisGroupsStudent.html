@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../styles/nav-bar.css">
-  <link rel="stylesheet" href="../styles/side-bar.css">
-  <link rel="stylesheet" href="../styles/main-content.css">
-  <link rel="stylesheet" href="../styles/searchmenu.css">
-  <link rel="stylesheet" href="../styles/listingsPage.css">
-  <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-  <title>Groups</title>
-  <style>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/nav-bar.css">
+    <link rel="stylesheet" href="../styles/side-bar.css">
+    <link rel="stylesheet" href="../styles/main-content.css">
+    <link rel="stylesheet" href="../styles/searchmenu.css">
+    <link rel="stylesheet" href="../styles/listingsPage.css">
+    <link rel='stylesheet'
+      href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <title>Groups</title>
+    <style>
     * {
       margin: 0;
       padding: 0;
@@ -28,167 +29,134 @@
     }
   </style>
 
+  </head>
 
+  <body>
 
-</head>
+    <!-- This is the NavBar -->
+    <nav class="navbar">
+      <div class="navleft">
+        <div class="logo"><a href="#">In&lt;form&gt;atiX</a> </div>
+      </div>
+      <div class="navright">
 
-<body>
+        <ul>
+          <li><a href="notLogged.html">Home</a></li>
+          <li><a href="notLogged.html">LogOut</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
 
-  <!-- This is the NavBar -->
-  <nav class="navbar">
-    <div class="navleft">
-      <div class="logo"><a href="#">In&lt;form&gt;atiX</a> </div>
-    </div>
-    <div class="navright">
-
+    <!-- This is the SideBar -->
+    <nav class="sidebar">
+      <div class="top">
+        <div class="menu">
+          <i class='bx bx-code'></i>
+          <span>Menu</span>
+        </div>
+        <i class='bx bx-menu' id="btn"></i>
+      </div>
       <ul>
-        <li><a href="notLogged.html">Home</a></li>
-        <li><a href="notLogged.html">LogOut</a></li>
-        <li><a href="#">Contact</a></li>
+        <li><a href="notLogged.html"><i class='bx bxs-home'></i><span
+              class="navitem">Home</span></a></li>
+        <li><a href="../../to be modified/ProfilStudent.html"><i
+              class='bx bxs-user-circle'></i><span
+              class="navitem">Profile</span></a></li>
+        <li><a href="VisGroupsStudent.html"><i class='bx bxs-group'></i><span
+              class="navitem">Groups</span></a></li>
+        <li><a href="VisHWStudent.html"><i class='bx bxs-book-alt'></i><span
+              class="navitem">Homeworks</span></a></li>
+        <li><a href="#"><i class='bx bxs-contact'></i><span
+              class="navitem">Contact</span></a></li>
+        <li><a href="notLogged.html"><i class='bx bx-log-out'></i><span
+              class="navitem">LogOut</span></a></li>
       </ul>
-    </div>
-  </nav>
+    </nav>
 
-  <!-- This is the SideBar -->
-  <nav class="sidebar">
-    <div class="top">
-      <div class="menu">
-        <i class='bx bx-code'></i>
-        <span>Menu</span>
-      </div>
-      <i class='bx bx-menu' id="btn"></i>
-    </div>
-    <ul>
-      <li><a href="notLogged.html"><i class='bx bxs-home'></i><span class="navitem">Home</span></a></li>
-      <li><a href="../../to be modified/ProfilStudent.html"><i class='bx bxs-user-circle'></i><span class="navitem">Profile</span></a></li>
-      <li><a href="VisGroupsStudent.html"><i class='bx bxs-group'></i><span class="navitem">Groups</span></a></li>
-      <li><a href="VisHWStudent.html"><i class='bx bxs-book-alt'></i><span class="navitem">Homeworks</span></a></li>
-      <li><a href="#"><i class='bx bxs-contact'></i><span class="navitem">Contact</span></a></li>
-      <li><a href="notLogged.html"><i class='bx bx-log-out'></i><span class="navitem">LogOut</span></a></li>
-    </ul>
-  </nav>
+    <div class="maincontent">
 
-  <div class="maincontent">
+      <div class="searchmenu">
+        <div class="searchbox">
+          <header>Group Name</header>
+          <div class="searchfield">
+            <form id="search">
 
+              <div class="seachBar">
+                <input class="search-input" type="search" placeholder="Search">
+                <i class='bx bx-search-alt-2'></i>
+              </div>
 
-    <div class="searchmenu">
-      <div class="searchbox">
-      <header>Group Name</header>
-      <div class="searchfield">
-        <form id="search">
-
-          <div class="seachBar">
-            <input class="search-input" type="search" placeholder="Search">
-            <i class='bx bx-search-alt-2'></i>
+            </form>
           </div>
-
-        </form>
-      </div>
-    </div>
-
-      <div class="filterbox">
-
-        <form id="filtermenu">
-
-
-          <header>Group</header>
-          <div class="dropdown">
-            <div class="selectbtn">
-              <span class="sBtn-text">Select your option</span>
-              <i class="bx bx-chevron-down"></i>
-            </div>
-
-            <ul class="dmenu">
-              <li class="option"><span class="option-text">None</span></li>
-              <li class="option"><span class="option-text">A1</span></li>
-              <li class="option"><span class="option-text">B1</span></li>
-              <li class="option"><span class="option-text">A2</span></li>
-            </ul>
-
-          </div>
-
-          <button type="submit" class="filter">Filter</button>
-
-        </form>
-
-      </div>
-    </div>
-
-    <div class="GroupsPage">
-
-      <div class="group">
-        <h2 class="group-title">Group: Web Technologies</h2>
-        <p class="group-id"><strong>ID:</strong> G101</p>
-        <p class="group-label"><strong>Group:</strong> A1</p>
-        <p class="group-professor"><strong>Professor:</strong> Dr. Alice Johnson</p>
-
-      </div>
-
-      <div class="group">
-        <h2 class="group-title">Group: SGBD</h2>
-        <p class="group-id"><strong>ID:</strong> G102</p>
-        <p class="group-label"><strong>Group:</strong> B2</p>
-        <p class="group-professor"><strong>Professor:</strong> Dr. Brian Smith</p>
-      </div>
-
-      <div class="group">
-        <h2 class="group-title">Group: Advanced Technologies</h2>
-        <p class="group-id"><strong>ID:</strong> G103</p>
-        <p class="group-label"><strong>Group:</strong> C1</p>
-        <p class="group-professor"><strong>Professor:</strong> Dr. Charles Brown</p>
-      </div>
-
-      <div class="group">
-        <h2 class="group-title">Group: Machine Learning</h2>
-        <p class="group-id"><strong>ID:</strong> G104</p>
-        <p class="group-label"><strong>Group:</strong> D2</p>
-        <p class="group-professor"><strong>Professor:</strong> Dr. Denise Martinez</p>
-      </div>
-
-      <div class="group">
-        <h2 class="group-title">Group: Network Security</h2>
-        <p class="group-id"><strong>ID:</strong> G105</p>
-        <p class="group-label"><strong>Group:</strong> E1</p>
-        <p class="group-professor"><strong>Professor:</strong> Dr. Eric Wilson</p>
-
-      </div>
-
-
-
-
-      <div class="paginare">
-
-        <button class="button" id="startBtn" disabled>
-          <i class='bx bx-first-page'></i>
-        </button>
-        <button class="button prevNext" id="prev" disabled>
-          <i class='bx bxs-chevron-left'></i>
-        </button>
-
-        <div class="links">
-          <a href="#" class="link active">1</a>
-          <a href="#" class="link">2</a>
-          <a href="#" class="link">3</a>
-          <a href="#" class="link">4</a>
-          <a href="#" class="link">5</a>
         </div>
 
-        <button class="button prevNext" id="next">
-          <i class='bx bxs-chevron-right'></i>
-        </button>
-        <button class="button" id="endBtn">
-          <i class='bx bx-last-page'></i>
-        </button>
+        <div class="filterbox">
 
+          <form id="filtermenu">
+
+            <header>Group</header>
+            <div class="dropdown">
+              <div class="selectbtn">
+                <span class="sBtn-text">Select your option</span>
+                <i class="bx bx-chevron-down"></i>
+              </div>
+
+              <ul class="dmenu">
+                <li class="option"><span class="option-text">None</span></li>
+                <li class="option"><span class="option-text">A1</span></li>
+                <li class="option"><span class="option-text">B1</span></li>
+                <li class="option"><span class="option-text">A2</span></li>
+              </ul>
+
+            </div>
+
+            <button type="submit" class="filter">Filter</button>
+
+          </form>
+
+        </div>
       </div>
 
+      <div class="GroupsPage">
+
+        <div class="group">
+          <h1 class="group-title">A1</h1>
+          <p class="group-label">Web Technologies</p>
+          <p class="group-professor">Cosmin Varlan</p>
+
+        </div>
+
+        <div class="group">
+          <h1 class="group-title">B2</h1>
+          <p class="group-label">SGBD</p>
+          <p class="group-professor">Cosmin Varlan</p>
+        </div>
+
+        <div class="group">
+          <h1 class="group-title">A1</h1>
+          <p class="group-label">Advanced Technologies</h1>
+          <p class="group-professor">Andrei Scutelnicu</p>
+        </div>
+
+        <div class="group">
+          <h1 class="group-title">E2</h1>
+          <p class="group-label">Machine Learning</p>
+          <p class="group-professor">Anca Vitcu</p>
+        </div>
+
+        <div class="group">
+          <h1 class="group-title">E1</h1>
+          <p class="group-label">Network Security</p>
+          <p class="group-professor">Andrei Panu</p>
+
+        </div>
+
+      </div>
     </div>
-  </div>
 
-  <script src="../scripts/script.js"></script>
+    <script src="../scripts/script.js"></script>
 
-
-</body>
-
+  </body>
 
 </html>
