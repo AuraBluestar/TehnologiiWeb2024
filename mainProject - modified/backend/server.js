@@ -20,7 +20,6 @@ const pool = mysql.createPool(dbConfig);
 const ip = "localhost";
 const port = 3000;
 
-
 // Functie pentru a manevra cererile de autentificare
 const handleLogin = (req, res) => {
   let body = "";
@@ -345,7 +344,6 @@ const handleAddClass = (req, res) => {
   });
 };
 
-// Functie pentru a manevra cererile de adăugare elev în clasă
 const handleAddStudentToClass = (req, res) => {
   let body = "";
 
@@ -361,22 +359,28 @@ const handleAddStudentToClass = (req, res) => {
       pool.query(query, [classId, studentId], (error, results) => {
         if (error) {
           console.error("Error inserting data:", error);
-          res.writeHead(500, { "Content-Type": "application/json" });
-          res.end(
-            JSON.stringify({ success: false, message: "Database error" })
-          );
+          if (!res.headersSent) {
+            res.writeHead(500, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ success: false, message: "Database error" }));
+          }
+          return;
         } else {
-          res.writeHead(200, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ success: true }));
+          if (!res.headersSent) {
+            res.writeHead(200, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ success: true }));
+          }
         }
       });
     } catch (err) {
       console.error("Error parsing JSON:", err);
-      res.writeHead(400, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({ success: false, message: "Invalid JSON" }));
+      if (!res.headersSent) {
+        res.writeHead(400, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ success: false, message: "Invalid JSON" }));
+      }
     }
   });
 };
+
 
 // Functie pentru a obține toate grupele pentru un anumit ProfesorID
 function getAllGroupsForProfesor(req, res) {
@@ -453,6 +457,44 @@ function searchClassesTeacher(req, res) {
     }
   });
 }
+
+// Funcție pentru obținerea ID-ului unui elev după nume
+const getStudentIdByName = (req, res) => {
+  let body = "";
+
+  req.on("data", (chunk) => {
+    body += chunk.toString();
+  });
+
+  req.on("end", () => {
+    try {
+      const { nume } = JSON.parse(body);
+
+      if (!nume) {
+        return sendErrorResponse(res, 400, "Name is required");
+      }
+
+      const query = "SELECT id FROM elevi WHERE nume = ?";
+      pool.query(query, [nume], (error, results) => {
+        if (error) {
+          console.error("Error querying database:", error);
+          return sendErrorResponse(res, 500, "Database error");
+        }
+
+        if (results.length > 0) {
+          res.writeHead(200, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ success: true, id: results[0].id }));
+        } else {
+          res.writeHead(404, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ success: false, message: "Student not found" }));
+        }
+      });
+    } catch (err) {
+      console.error("Error parsing JSON:", err);
+      sendErrorResponse(res, 400, "Invalid JSON");
+    }
+  });
+};
 
 function sendErrorResponse(res, statusCode, message) {
   res.writeHead(statusCode, { "Content-Type": "application/json" });
@@ -556,6 +598,8 @@ const server = http.createServer((req, res) => {
     getAllGroupsForProfesor(req, res);
   } else if (req.method === "POST" && pathname === "/classes/addStudent") {
     handleAddStudentToClass(req, res);
+  } else if (req.method === "POST" && pathname === "/student/id") {
+    getStudentIdByName(req, res);
   } else {
     res.writeHead(404, { "Content-Type": "application/json" });
     res.end(JSON.stringify({ success: false, message: "Not Found" }));

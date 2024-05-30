@@ -25,12 +25,10 @@
       position: relative;
       height: 100%;
       font-family: Lato, normal;
-
     }
   </style>
 
 </head>
-
 
 <body>
 
@@ -40,10 +38,9 @@
       <div class="logo"><a href="#">In&lt;form&gt;atiX</a> </div>
     </div>
     <div class="navright">
-
       <ul>
-        <li><a href="loggedTeacher.html">Home</a></li>
-        <li><a href="notLogged.html">LogOut</a></li>
+        <li><a href="/loggedTeacher">Home</a></li>
+        <li><a href="/">LogOut</a></li>
         <li><a href="#">Contact</a></li>
       </ul>
     </div>
@@ -59,14 +56,14 @@
       <i class='bx bx-menu' id="btn"></i>
     </div>
     <ul>
-      <li><a href="loggedTeacher.html"><i class='bx bxs-home'></i><span class="navitem">Home</span></a></li>
+      <li><a href="/loggedTeacher"><i class='bx bxs-home'></i><span class="navitem">Home</span></a></li>
       <li><a href="../../to be modified/ProfilProfesor.html"><i class='bx bxs-user-circle'></i><span class="navitem">Profile</span></a></li>
-      <li><a href="VisGroupsTeacher.html"><i class='bx bxs-group'></i><span class="navitem">Groups</span></a></li>
-      <li><a href="VisHWTeacher.html"><i class='bx bxs-book-alt'></i><span class="navitem">Homeworks</span></a></li>
+      <li><a href="/VisGroupsTeacher"><i class='bx bxs-group'></i><span class="navitem">Groups</span></a></li>
+      <li><a href="/VisHWTeacher"><i class='bx bxs-book-alt'></i><span class="navitem">Homeworks</span></a></li>
       <li><a href="../../to be modified/ProblemePropuse.html"><i class='bx bxs-book-content'></i><span class="navitem">Proposed Problems</span></a></li>
-      <li><a href="createHW.html"><i class='bx bxs-edit'></i><span class="navitem">New Problem</span></a></li>
+      <li><a href="/createHW"><i class='bx bxs-edit'></i><span class="navitem">New Problem</span></a></li>
       <li><a href="#"><i class='bx bxs-contact'></i><span class="navitem">Contact</span></a></li>
-      <li><a href="notLogged.html"><i class='bx bx-log-out'></i><span class="navitem">LogOut</span></a></li>
+      <li><a href="/"><i class='bx bx-log-out'></i><span class="navitem">LogOut</span></a></li>
     </ul>
   </nav>
 
@@ -75,12 +72,12 @@
     <div class="search">
       <div class="createForm">
         <h1>New Group</h1>
-        <form>
+        <form id="createGroupForm">
           <div class="text-field">
-            <input type="text" required><span></span><label>Group</label>
+            <input type="text" id="classInput" required><span></span><label>Class</label>
           </div>
           <div class="text-field">
-            <input type="text" required><span></span><label>Group Name</label>
+            <input type="text" id="subjectInput" required><span></span><label>Subject</label>
           </div>
           <input type="submit" value="Create">
         </form>
@@ -88,166 +85,125 @@
     </div>
 
     <div class="add">
-      <form class="addForm">
+      <form class="addForm" id="addStudentForm">
         <h1>Add Student</h1>
 
         <div class="searchbox">
           <header id="add-header">Student Name</header>
           <div class="searchfield">
-          <form id="search">
-
-           <div class="searchBar">
-              <input class="search-input" type="search" placeholder="Type Student Name...">
-              <i class='bx bx-plus'></i>
-           </div>
-
-          </form>
+            <div class="searchBar">
+              <input class="search-input" type="search" placeholder="Type Student Name..." id="studentNameInput">
+              <i class='bx bx-plus' id="addStudentBtn"></i>
+            </div>
           </div>
         </div>
-
       </form>
 
       <div class="added">
-        <ul class="added-flex">
-          <li>Vatamaniuc Eusebiu</li>
-          <li>Onisor Patricia</li>
-          <li>Mandrea Radu</li>
-          <li>Vatamaniuc Eusebiu</li>
-          <li>Onisor Patricia</li>
-          <li>Mandrea Radu</li>
-          <li>Vatamaniuc Eusebiu</li>
-          <li>Onisor Patricia</li>
-          <li>Mandrea Radu</li>
-          <li>Vatamaniuc Eusebiu</li>
-          <li>Onisor Patricia</li>
-          <li>Mandrea Radu</li>
-          <li>Vatamaniuc Eusebiu</li>
-          <li>Onisor Patricia</li>
-          <li>Mandrea Radu</li>
-          <li>Vatamaniuc Eusebiu</li>
-          <li>Onisor Patricia</li>
-          <li>Mandrea Radu</li>
-          <li>Vatamaniuc Eusebiu</li>
-          <li>Onisor Patricia</li>
-          <li>Mandrea Radu</li>
-          <li>Vatamaniuc Eusebiu</li>
-          <li>Onisor Patricia</li>
-          <li>Mandrea Radu</li>
-          <li>Vatamaniuc Eusebiu</li>
-          <li>Onisor Patricia</li>
-          <li>Mandrea Radu</li>
-          <li>Vatamaniuc Eusebiu</li>
-          <li>Onisor Patricia</li>
-          <li>Mandrea Radu</li>
-          <li>Vatamaniuc Eusebiu</li>
-          <li>Onisor Patricia</li>
-          <li>Mandrea Radu</li>
-          <li>Vatamaniuc Eusebiu</li>
-          <li>Onisor Patricia</li>
-          <li>Mandrea Radu</li>
-          <li>Vatamaniuc Eusebiu</li>
-          <li>Onisor Patricia</li>
-          <li>Mandrea Radu</li>
-          <li>Vatamaniuc Eusebiu</li>
-          <li>Onisor Patricia</li>
-          <li>Mandrea Radu</li>
-          <li>Vatamaniuc Eusebiu</li>
-          <li>Onisor Patricia</li>
-          <li>Mandrea Radu</li>
-          <li>Vatamaniuc Eusebiu</li>
-          <li>Onisor Patricia</li>
-          <li>Mandrea Radu</li>
-          <li>Vatamaniuc Eusebiu</li>
-          <li>Onisor Patricia</li>
-          <li>Mandrea Radu</li>
-          <li>Vatamaniuc Eusebiu</li>
-          <li>Onisor Patricia</li>
-          <li>Mandrea Radu</li>
-          <li>Vatamaniuc Eusebiu</li>
-          <li>Onisor Patricia</li>
-          <li>Mandrea Radu</li>
-
-
-
+        <ul class="added-flex" id="addedStudentsList">
+          <!-- Dynamic student list will be appended here -->
         </ul>
       </div>
-
-    
     </div>
-
-      <!-- <div class="GroupsPage">
-
-      <div class="group">
-        <h2 class="group-title">Group: Web Technologies</h2>
-        <p class="group-id"><strong>ID:</strong> G101</p>
-        <p class="group-label"><strong>Group:</strong> A1</p>
-      </div>
-
-      <div class="group">
-        <h2 class="group-title">Group: SGBD</h2>
-        <p class="group-id"><strong>ID:</strong> G102</p>
-        <p class="group-label"><strong>Group:</strong> B2</p>
-      </div>
-
-      <div class="group">
-        <h2 class="group-title">Group: SGBD</h2>
-        <p class="group-id"><strong>ID:</strong> G103</p>
-        <p class="group-label"><strong>Group:</strong> E1</p>
-      </div>
-
-      <div class="group">
-        <h2 class="group-title">Group: Web Technologies</h2>
-        <p class="group-id"><strong>ID:</strong> G104</p>
-        <p class="group-label"><strong>Group:</strong> A2</p>
-      </div>
-
-      <div class="group">
-        <h2 class="group-title">Group: Web Technologies</h2>
-        <p class="group-id"><strong>ID:</strong> G105</p>
-        <p class="group-label"><strong>Group:</strong> E1</p>
-
-      </div>
-
-
-
-
-      <div class="paginare">
-
-        <button class="button" id="startBtn" disabled>
-          <i class='bx bx-first-page'></i>
-        </button>
-        <button class="button prevNext" id="prev" disabled>
-          <i class='bx bxs-chevron-left'></i>
-        </button>
-
-        <div class="links">
-          <a href="#" class="link active">1</a>
-          <a href="#" class="link">2</a>
-          <a href="#" class="link">3</a>
-          <a href="#" class="link">4</a>
-          <a href="#" class="link">5</a>
-        </div>
-
-        <button class="button prevNext" id="next">
-          <i class='bx bxs-chevron-right'></i>
-        </button>
-        <button class="button" id="endBtn">
-          <i class='bx bx-last-page'></i>
-
-        </button>
-
-      </div> -->
-
-    
   </div>
 
   <script src="../scripts/script.js"></script>
+  <script>
+    document.getElementById('createGroupForm').addEventListener('submit', function (event) {
+      event.preventDefault();
 
+      const grupa = document.getElementById('classInput').value;
+      const materie = document.getElementById('subjectInput').value;
+      const profesorID = localStorage.getItem('id'); // Assuming the ID is stored in localStorage
 
+      const requestBody = JSON.stringify({
+        grupa: grupa,
+        profesorID: parseInt(profesorID),
+        materie: materie
+      });
 
+      fetch('http://localhost:3000/classes/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: requestBody
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          alert('Group created successfully!');
+          localStorage.setItem('classId', data.id);
+          // Optionally, redirect to another page or reset the form
+          document.getElementById('createGroupForm').reset();
+        } else {
+          alert('Failed to create group');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Error creating group');
+      });
+    });
 
+    document.getElementById('addStudentBtn').addEventListener('click', function () {
+      const studentName = document.getElementById('studentNameInput').value;
+      if (studentName.trim() === '') {
+        alert('Please enter a student name.');
+        return;
+      }
 
+      fetch('http://localhost:3000/student/id', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ nume: studentName })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          const studentId = data.id;
+          const classId = localStorage.getItem('classId');
+          if (!classId) {
+            alert('No class created yet. Please create a class first.');
+            return;
+          }
+
+          fetch('http://localhost:3000/classes/addStudent', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ classId: parseInt(classId), studentId: parseInt(studentId) })
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              const addedStudentsList = document.getElementById('addedStudentsList');
+              const listItem = document.createElement('li');
+              listItem.textContent = studentName;
+              addedStudentsList.appendChild(listItem);
+              document.getElementById('studentNameInput').value = '';
+              alert('Student added to class successfully!');
+            } else {
+              alert('Failed to add student to class');
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert('Error adding student to class');
+          });
+        } else {
+          alert('Student not found');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Error fetching student ID');
+      });
+    });
+  </script>
 </body>
-
 
 </html>
