@@ -28,11 +28,11 @@
 
 function getDifficultyText(difficulty) {
   switch (difficulty) {
-    case 0:
-      return "Easy";
     case 1:
-      return "Medium";
+      return "Easy";
     case 2:
+      return "Medium";
+    case 3:
       return "Hard";
     default:
       return "Unknown";
@@ -41,11 +41,11 @@ function getDifficultyText(difficulty) {
 
 function getDifficultyColor(difficulty) {
   switch (difficulty) {
-      case 0:
-          return 'green';
       case 1:
-          return 'orange';
+          return 'green';
       case 2:
+          return 'orange';
+      case 3:
           return 'red';
       default:
           return 'black';
