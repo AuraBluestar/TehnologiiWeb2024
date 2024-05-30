@@ -24,21 +24,17 @@
       position: relative;
       height: 100%;
       font-family: Lato, normal;
-
     }
   </style>
-
 </head>
 
 <body>
-
   <!-- This is the NavBar -->
   <nav class="navbar">
     <div class="navleft">
       <div class="logo"><a href="#">In&lt;form&gt;atiX</a> </div>
     </div>
     <div class="navright">
-
       <ul>
         <li><a href="/loggedTeacher">Home</a></li>
         <li><a href="/">LogOut</a></li>
@@ -69,108 +65,106 @@
   </nav>
 
   <div class="maincontent">
-
-
     <div class="searchmenu">
       <div class="searchbox">
         <header>Group Name</header>
         <div class="searchfield">
-        <form id="search">
-
-          <div class="seachBar">
-            <input class="search-input" type="search" placeholder="Search">
-            <i class='bx bx-search-alt-2'></i>
-          </div>
-
-        </form>
+          <form id="search">
+            <div class="seachBar">
+              <input class="search-input" type="search" placeholder="Search">
+              <i class='bx bx-search-alt-2'></i>
+            </div>
+          </form>
+        </div>
       </div>
-      </div>
-
       <div class="filterbox">
-
         <form id="filtermenu">
-
-
           <header>Group</header>
           <div class="dropdown">
             <div class="selectbtn">
               <span class="sBtn-text">Select your option</span>
               <i class="bx bx-chevron-down"></i>
             </div>
-
-            <ul class="dmenu">
-              <li class="option"><span class="option-text">None</span></li>
-              <li class="option"><span class="option-text">A1</span></li>
-              <li class="option"><span class="option-text">B1</span></li>
-              <li class="option"><span class="option-text">A2</span></li>
+            <ul class="dmenu" id="groupDropdown">
+              <!-- Dropdown options will be populated here dynamically -->
             </ul>
-
           </div>
-
           <button type="submit" class="filter">Filter</button>
-
           <div class="createnew">
             <ul>
               <li><a href="#"><i class='bx bx-group'></i></a></li>
             </ul>
             <i class='bx bx-plus'></i>
-            <header class="header">New Group</header>
+            <header class="header" href="/createGroup">New Group</header>
           </div>
-
         </form>
-
       </div>
     </div>
-
-    <div class="GroupsPage">
-
-    </div>
+    <div class="GroupsPage"></div>
   </div>
 
   <script src="../scripts/script.js"></script>
   <script>
-  // Funcție pentru a încărca și afișa lista de grupe din fișierul JSON
-  function loadGroups(groups) {
-    const groupsContainer = document.querySelector('.GroupsPage');
-    groupsContainer.innerHTML = '';
-    groups.forEach(group => {
-      const problemElement = `
-        <div class="group">
-          <h2 class="group-title">${group.Grupa}</h2>
-          <p class="group-label">${group.Materie}</p>
-        </div>
-      `;
-      groupsContainer.insertAdjacentHTML('beforeend', problemElement);
-    });
-  }
+  
+    // Function to load and display the list of groups
+    function loadGroups(groups) {
+      const groupsContainer = document.querySelector('.GroupsPage');
+      groupsContainer.innerHTML = '';
+      groups.forEach(group => {
+        const problemElement = `
+          <div class="group">
+            <h2 class="group-title">${group.Grupa}</h2>
+            <p class="group-label">${group.Materie}</p>
+          </div>
+        `;
+        groupsContainer.insertAdjacentHTML('beforeend', problemElement);
+      });
+    }
 
-  // Apelăm funcția pentru a încărca și afișa lista de grupe la încărcarea paginii
-  window.onload = function() {
-  // Obținem ID-ul profesorului din stocarea locală
-  const profesorID = localStorage.getItem('id');
+    // Function to populate the dropdown menu with fetched groups (unique options only)
+    function populateDropdown(groups) {
+      const groupDropdown = document.getElementById('groupDropdown');
+      groupDropdown.innerHTML = ''; // Clear existing options
 
-  // Verificăm dacă ID-ul profesorului există în stocarea locală
-  if (profesorID) {
-    // Construim corpul JSON pentru cererea POST
-    const requestBody = JSON.stringify({ "profesorID": parseInt(profesorID) });
+      // Create a Set to store unique group names
+      const uniqueGroups = new Set(groups.map(group => group.Grupa));
 
-    // Facem cererea către backend cu corpul JSON
-    fetch('http://localhost:3000/classes/all/Teacher', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: requestBody
-    })
-    .then(response => response.json())
-    .then(data => {
-      loadGroups(data);
-    })
-    .catch(error => console.error('Error loading groups:', error));
-  } else {
-    console.error('profesorID is not available in local storage');
-  }
-};
+      // Populate dropdown with unique group names
+      uniqueGroups.forEach(groupName => {
+        const option = document.createElement('li');
+        option.innerHTML = `<span class="option-text">${groupName}</span>`;
+        option.classList.add('option');
+        option.dataset.value = groupName; // Store group value in dataset
+        groupDropdown.appendChild(option);
+      });
+    }
+
+    // Load groups and populate dropdown when the page loads
+    window.onload = function () {
+      const profesorID = localStorage.getItem('id');
+
+      if (profesorID) {
+        const requestBody = JSON.stringify({ "profesorID": parseInt(profesorID) });
+
+        fetch('http://localhost:3000/classes/all/Teacher', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: requestBody
+        })
+          .then(response => response.json())
+          .then(data => {
+            loadGroups(data); // Call the function to load groups
+            populateDropdown(data); // Call the function to populate dropdown
+          })
+          .catch(error => console.error('Error loading groups:', error));
+      } else {
+        console.error('profesorID is not available in local storage');
+      }
+    };
   </script>
+  
 </body>
+
 </html>

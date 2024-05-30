@@ -320,11 +320,11 @@ const handleAddClass = (req, res) => {
 
   req.on("end", () => {
     try {
-      const { nume, profesorID, materie } = JSON.parse(body);
+      const { grupa, profesorID, materie } = JSON.parse(body);
 
       const query =
-        "INSERT INTO clase (Nume, ProfesorID, Materie) VALUES (?, ?, ?)";
-      pool.query(query, [nume, profesorID, materie], (error, results) => {
+        "INSERT INTO clase (Grupa, ProfesorID, Materie) VALUES (?, ?, ?)";
+      pool.query(query, [grupa, profesorID, materie], (error, results) => {
         if (error) {
           console.error("Error inserting data:", error);
           res.writeHead(500, { "Content-Type": "application/json" });
@@ -378,8 +378,8 @@ const handleAddStudentToClass = (req, res) => {
   });
 };
 
-// Functie pentru a obține toate clasele pentru un anumit ProfesorID
-function getAllClassesForProfesor(req, res) {
+// Functie pentru a obține toate grupele pentru un anumit ProfesorID
+function getAllGroupsForProfesor(req, res) {
   let body = "";
 
   req.on("data", (chunk) => {
@@ -396,7 +396,7 @@ function getAllClassesForProfesor(req, res) {
       }
 
       // Interogare pentru a obține toate clasele pentru profesorul dat
-      const query = "SELECT * FROM clase WHERE ProfesorID = ?";
+      const query = "SELECT Materie, Grupa, Id FROM clase WHERE ProfesorID = ?";
       pool.query(query, [profesorID], (error, results) => {
         if (error) {
           console.error("Error querying database:", error);
@@ -414,8 +414,8 @@ function getAllClassesForProfesor(req, res) {
   });
 }
 
-// Controller function for searching problems
-function searchClasses(req, res) {
+// Controller function for searching groups
+function searchClassesTeacher(req, res) {
   let body = "";
   req.on("data", (chunk) => {
     body += chunk.toString();
@@ -423,10 +423,14 @@ function searchClasses(req, res) {
 
   req.on("end", () => {
     try {
-      const { text = "", subject = "none" } = JSON.parse(body);
+      const { text = "", subject = "none", profesorID } = JSON.parse(body);
 
-      let sqlQuery = "SELECT * FROM clase WHERE 1=1";
-      const queryParams = [];
+      if (!profesorID) {
+        return sendErrorResponse(res, 400, "Missing profesorID");
+      }
+
+      let sqlQuery = "SELECT * FROM clase WHERE ProfesorID = ?";
+      const queryParams = [profesorID];
 
       if (text) {
         sqlQuery += " AND Grupa LIKE ?";
@@ -449,6 +453,12 @@ function searchClasses(req, res) {
     }
   });
 }
+
+function sendErrorResponse(res, statusCode, message) {
+  res.writeHead(statusCode, { "Content-Type": "application/json" });
+  res.end(JSON.stringify({ error: message }));
+}
+
 
 const server = http.createServer((req, res) => {
   const baseDir = path.join(__dirname, "..", "frontend");
@@ -538,12 +548,12 @@ const server = http.createServer((req, res) => {
   } else if (req.method === "POST" && pathname.startsWith("/problems/search")) {
     searchProblems(req, res);
   } else if ( req.method === "POST" && pathname.startsWith("/classes/search/Teacher")) {
-    searchClasses(req, res);
+    searchClassesTeacher(req, res);
   } else if (req.method === "POST" && pathname.startsWith("/problems/")) {
     const problemId = pathname.split("/")[2];
     getProblemById(res, problemId);
   } else if (req.method === "POST" && pathname === "/classes/all/Teacher") {
-    getAllClassesForProfesor(req, res);
+    getAllGroupsForProfesor(req, res);
   } else if (req.method === "POST" && pathname === "/classes/addStudent") {
     handleAddStudentToClass(req, res);
   } else {
