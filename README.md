@@ -13,7 +13,7 @@ Echipa:
 - signup
 - landingPage pt user neloggat, profesor si elev
 - filtrarea postarilor
-- creare grupe + adaugare elevi(atat pe be cat si pe fe dar fara integrare)
+- creare grupe + adaugare elevi
 - popularea cu grupe la profesori
 - creare tema(doar pe frontend)
 
