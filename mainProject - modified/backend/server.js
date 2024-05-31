@@ -258,6 +258,24 @@ function getProblemById(res, id) {
   });
 }
 
+// Funcție pentru obținerea usernameului a unui prof după ID
+function getTeacherById(res, id) {
+  pool.query("SELECT nume FROM profesori WHERE ID = ?", [id], (error, results) => {
+    if (error) {
+      res.statusCode = 500;
+      res.end(JSON.stringify({ error: error.message }));
+      return;
+    }
+    if (results.length === 0) {
+      res.statusCode = 404;
+      res.end(JSON.stringify({ error: "Teacher not found" }));
+      return;
+    }
+    res.statusCode = 200;
+    res.end(JSON.stringify(results[0]));
+  });
+}
+
 // Controller function for searching problems
 function searchProblems(req, res) {
   let body = "";
@@ -531,6 +549,8 @@ const server = http.createServer((req, res) => {
       filePath = path.join(baseDir, "pages", "VisHWStudent.html");
     } else if (req.url === "/VisHWTeacher") {
       filePath = path.join(baseDir, "pages", "VisHWTeacher.html");
+    } else if (req.url === "/VisProblemGuest") {
+      filePath = path.join(baseDir, "pages", "VisProblemGuest.html");
     } else {
       // Serve static files (CSS, images, etc.)
       filePath = path.join(baseDir, req.url);
@@ -594,6 +614,9 @@ const server = http.createServer((req, res) => {
   } else if (req.method === "POST" && pathname.startsWith("/problems/")) {
     const problemId = pathname.split("/")[2];
     getProblemById(res, problemId);
+  } else if (req.method === "POST" && pathname.startsWith("/Teacher/")) {
+    const teacherId = pathname.split("/")[2];
+    getTeacherById(res, teacherId);
   } else if (req.method === "POST" && pathname === "/classes/all/Teacher") {
     getAllGroupsForProfesor(req, res);
   } else if (req.method === "POST" && pathname === "/classes/addStudent") {
