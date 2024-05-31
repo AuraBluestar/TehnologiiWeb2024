@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../styles/nav-bar.css">
-    <link rel="stylesheet" href="../styles/side-bar.css">
-    <link rel="stylesheet" href="../styles/main-content.css">
-    <link rel="stylesheet" href="../styles/searchmenu.css">
-    <link rel="stylesheet" href="../styles/listingsPage.css">
-    <link rel='stylesheet'
-      href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-    <title>Groups</title>
-    <style>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../styles/nav-bar.css">
+  <link rel="stylesheet" href="../styles/side-bar.css">
+  <link rel="stylesheet" href="../styles/main-content.css">
+  <link rel="stylesheet" href="../styles/searchmenu.css">
+  <link rel="stylesheet" href="../styles/listingsPage.css">
+  <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+  <title>Groups</title>
+  <style>
     * {
       margin: 0;
       padding: 0;
@@ -25,138 +24,172 @@
       position: relative;
       height: 100%;
       font-family: Lato, normal;
-
     }
   </style>
+</head>
 
-  </head>
+<body>
 
-  <body>
-
-    <!-- This is the NavBar -->
-    <nav class="navbar">
-      <div class="navleft">
-        <div class="logo"><a href="/loggedStudent">In&lt;form&gt;atiX</a> </div>
-      </div>
-      <div class="navright">
-
-        <ul>
-          <li><a href="/loggedStudent">Home</a></li>
-          <li><a href="/">LogOut</a></li>
-          <li><a href="#">Contact</a></li>
-        </ul>
-      </div>
-    </nav>
-
-    <!-- This is the SideBar -->
-    <nav class="sidebar">
-      <div class="top">
-        <div class="menu">
-          <i class='bx bx-code'></i>
-          <span>Menu</span>
-        </div>
-        <i class='bx bx-menu' id="btn"></i>
-      </div>
+  <!-- This is the NavBar -->
+  <nav class="navbar">
+    <div class="navleft">
+      <div class="logo"><a href="/loggedStudent">In&lt;form&gt;atiX</a></div>
+    </div>
+    <div class="navright">
       <ul>
-        <li><a href="/loggedStudent"><i class='bx bxs-home'></i><span
-              class="navitem">Home</span></a></li>
-        <li><a href="../../to be modified/ProfilStudent.html"><i
-              class='bx bxs-user-circle'></i><span
-              class="navitem">Profile</span></a></li>
-        <li><a href="/VisGroupsStudent"><i class='bx bxs-group'></i><span
-              class="navitem">Groups</span></a></li>
-        <li><a href="/VisHWStudent"><i class='bx bxs-book-alt'></i><span
-              class="navitem">Homeworks</span></a></li>
-        <li><a href="#"><i class='bx bxs-contact'></i><span
-              class="navitem">Contact</span></a></li>
-        <li><a href="/"><i class='bx bx-log-out'></i><span
-              class="navitem">LogOut</span></a></li>
+        <li><a href="/loggedStudent">Home</a></li>
+        <li><a href="/">LogOut</a></li>
+        <li><a href="#">Contact</a></li>
       </ul>
-    </nav>
+    </div>
+  </nav>
 
-    <div class="maincontent">
+  <!-- This is the SideBar -->
+  <nav class="sidebar">
+    <div class="top">
+      <div class="menu">
+        <i class='bx bx-code'></i>
+        <span>Menu</span>
+      </div>
+      <i class='bx bx-menu' id="btn"></i>
+    </div>
+    <ul>
+      <li><a href="/loggedStudent"><i class='bx bxs-home'></i><span class="navitem">Home</span></a></li>
+      <li><a href="../../to be modified/ProfilStudent.html"><i class='bx bxs-user-circle'></i><span class="navitem">Profile</span></a></li>
+      <li><a href="/VisGroupsStudent"><i class='bx bxs-group'></i><span class="navitem">Groups</span></a></li>
+      <li><a href="/VisHWStudent"><i class='bx bxs-book-alt'></i><span class="navitem">Homeworks</span></a></li>
+      <li><a href="#"><i class='bx bxs-contact'></i><span class="navitem">Contact</span></a></li>
+      <li><a href="/"><i class='bx bx-log-out'></i><span class="navitem">LogOut</span></a></li>
+    </ul>
+  </nav>
 
-      <div class="searchmenu">
-        <div class="searchbox">
-          <header>Group Name</header>
-          <div class="searchfield">
-            <form id="search">
-
-              <div class="seachBar">
-                <input class="search-input" type="search" placeholder="Search">
-                <i class='bx bx-search-alt-2'></i>
-              </div>
-
-            </form>
-          </div>
-        </div>
-
-        <div class="filterbox">
-
-          <form id="filtermenu">
-
-            <header>Group</header>
-            <div class="dropdown">
-              <div class="selectbtn">
-                <span class="sBtn-text">Select your option</span>
-                <i class="bx bx-chevron-down"></i>
-              </div>
-
-              <ul class="dmenu">
-                <li class="option"><span class="option-text">None</span></li>
-                <li class="option"><span class="option-text">A1</span></li>
-                <li class="option"><span class="option-text">B1</span></li>
-                <li class="option"><span class="option-text">A2</span></li>
-              </ul>
-
+  <div class="maincontent">
+    <div class="searchmenu">
+      <div class="searchbox">
+        <header>Subject</header>
+        <div class="searchfield">
+          <form id="search">
+            <div class="seachBar">
+              <input class="search-input" type="search" placeholder="Search" id="subjectInput">
+              <i class='bx bx-search-alt-2' id="searchButton"></i>
             </div>
-
-            <button type="submit" class="filter">Filter</button>
-
           </form>
-
         </div>
       </div>
-
-      <div class="GroupsPage">
-
-        <div class="group">
-          <h1 class="group-title">A1</h1>
-          <p class="group-label">Web Technologies</p>
-          <p class="group-professor">Cosmin Varlan</p>
-
-        </div>
-
-        <div class="group">
-          <h1 class="group-title">B2</h1>
-          <p class="group-label">SGBD</p>
-          <p class="group-professor">Cosmin Varlan</p>
-        </div>
-
-        <div class="group">
-          <h1 class="group-title">A1</h1>
-          <p class="group-label">Advanced Technologies</h1>
-          <p class="group-professor">Andrei Scutelnicu</p>
-        </div>
-
-        <div class="group">
-          <h1 class="group-title">E2</h1>
-          <p class="group-label">Machine Learning</p>
-          <p class="group-professor">Anca Vitcu</p>
-        </div>
-
-        <div class="group">
-          <h1 class="group-title">E1</h1>
-          <p class="group-label">Network Security</p>
-          <p class="group-professor">Andrei Panu</p>
-
-        </div>
-
+      <div class="filterbox">
+        <form id="filtermenu">
+          <header>Class</header>
+          <div class="dropdown">
+            <div class="selectbtn" id="selectBtn">
+              <span class="sBtn-text">Select your option</span>
+              <i class="bx bx-chevron-down"></i>
+            </div>
+            <ul class="dmenu" id="groupDropdown"></ul>
+          </div>
+          <button type="submit" class="filter">Filter</button>
+        </form>
       </div>
     </div>
+    <div class="GroupsPage"></div>
+  </div>
 
-    <script src="../scripts/script.js"></script>
+  <script src="../scripts/script.js"></script>
+  <script>
+    // Function to load and display the list of groups
+    function loadGroups(groups) {
+      const groupsContainer = document.querySelector('.GroupsPage');
+      groupsContainer.innerHTML = '';
+      groups.forEach(group => {
+        const problemElement = `
+          <div class="group">
+            <h2 class="group-title">${group.Grupa}</h2>
+            <p class="group-label">${group.Materie}</p>
+          </div>
+        `;
+        groupsContainer.insertAdjacentHTML('beforeend', problemElement);
+      });
+    }
 
-  </body>
+    // Function to populate the dropdown menu with fetched groups (unique options only)
+    function populateDropdown(groups) {
+      const groupDropdown = document.getElementById('groupDropdown');
+      groupDropdown.innerHTML = ''; // Clear existing options
+
+      // Create a Set to store unique group names
+      const uniqueGroups = new Set(groups.map(group => group.Grupa));
+
+      // Populate dropdown with unique group names
+      uniqueGroups.forEach(groupName => {
+        const option = document.createElement('li');
+        option.innerHTML = `<span class="option-text">${groupName}</span>`;
+        option.classList.add('option');
+        option.dataset.value = groupName; // Store group value in dataset
+        groupDropdown.appendChild(option);
+
+        // Add click event listener to each option
+        option.addEventListener('click', () => {
+          document.querySelector('.sBtn-text').innerText = groupName;
+          document.getElementById('selectBtn').dataset.value = groupName;
+        });
+      });
+    }
+
+    // Load groups and populate dropdown when the page loads
+    window.onload = function () {
+      const elevID = localStorage.getItem('id');
+
+      if (elevID) {
+        const requestBody = JSON.stringify({ "elevID": parseInt(elevID) });
+
+        fetch('http://localhost:3000/classes/all/Student', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: requestBody
+        })
+          .then(response => response.json())
+          .then(data => {
+            loadGroups(data); // Call the function to load groups
+            populateDropdown(data); // Call the function to populate dropdown
+          })
+          .catch(error => console.error('Error loading groups:', error));
+      } else {
+        console.error('elevID is not available in local storage');
+      }
+    };
+
+    document.getElementById('filtermenu').addEventListener('submit', function (event) {
+      event.preventDefault();
+      const text = document.getElementById('subjectInput').value;
+      const selectBtn = document.getElementById('selectBtn');
+      const group = selectBtn.getAttribute('data-value');
+      const elevID = localStorage.getItem('id');
+
+      if (elevID) {
+        const requestBody = JSON.stringify({
+          "elevID": parseInt(elevID),
+          "text": text,
+          "subject": group
+        });
+
+        fetch('http://localhost:3000/classes/search/Student', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: requestBody
+        })
+          .then(response => response.json())
+          .then(data => {
+            loadGroups(data);
+          })
+          .catch(error => console.error('Error loading groups:', error));
+      } else {
+        console.error('elevID is not available in local storage');
+      }
+    });
+  </script>
+</body>
 
 </html>

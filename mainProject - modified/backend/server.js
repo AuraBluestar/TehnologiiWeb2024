@@ -472,6 +472,42 @@ function getAllGroupsForProfesor(req, res) {
   });
 }
 
+// Functie pentru a obține toate grupele pentru un anumit ElevID
+function getAllGroupsForStudent(req, res) {
+  let body = "";
+
+  req.on("data", (chunk) => {
+    body += chunk.toString();
+  });
+
+  req.on("end", () => {
+    try {
+      const { elevID } = JSON.parse(body);
+
+      // Verificare dacă elevID este furnizat
+      if (!elevID) {
+        return sendErrorResponse(res, 400, "ElevID is required");
+      }
+
+      // Interogare pentru a obține toate clasele pentru profesorul dat
+      const query = "SELECT distinct Materie, Grupa, clase.ID FROM clase join claseelevi on clase.ID=claseelevi.ClasaID WHERE ElevID = ?";
+      pool.query(query, [elevID], (error, results) => {
+        if (error) {
+          console.error("Error querying database:", error);
+          return sendErrorResponse(res, 500, "Database error");
+        }
+
+        // Returnare rezultate în format JSON
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify(results));
+      });
+    } catch (err) {
+      console.error("Error parsing JSON:", err);
+      sendErrorResponse(res, 400, "Invalid JSON");
+    }
+  });
+}
+
 // Controller function for searching groups
 function searchClassesTeacher(req, res) {
   let body = "";
@@ -496,8 +532,48 @@ function searchClassesTeacher(req, res) {
       }
 
       if (subject !== "none") {
-        sqlQuery += " AND Materie = ?";
-        queryParams.push(subject);
+        sqlQuery += " AND Materie LIKE ?";
+        queryParams.push(`%${subject}%`);
+      }
+
+      pool.query(sqlQuery, queryParams, (error, results) => {
+        if (error) return sendErrorResponse(res, 500, "Database error");
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify(results));
+      });
+    } catch (err) {
+      console.error("Error parsing JSON:", err);
+      sendErrorResponse(res, 400, "Invalid JSON");
+    }
+  });
+}
+
+// Controller function for searching groups
+function searchClassesStudent(req, res) {
+  let body = "";
+  req.on("data", (chunk) => {
+    body += chunk.toString();
+  });
+
+  req.on("end", () => {
+    try {
+      const { text = "", subject = "none", elevID } = JSON.parse(body);
+
+      if (!elevID) {
+        return sendErrorResponse(res, 400, "Missing elevID");
+      }
+
+      let sqlQuery = "SELECT distinct Materie, Grupa, clase.ID, profesorID FROM clase join claseelevi on clase.ID=claseelevi.ClasaID WHERE ElevID=  ?";
+      const queryParams = [elevID];
+
+      if (text) {
+        sqlQuery += " AND Grupa LIKE ?";
+        queryParams.push(`%${text}%`);
+      }
+
+      if (subject !== "none") {
+        sqlQuery += " AND Materie LIKE ?";
+        queryParams.push(`%${subject}%`);
       }
 
       pool.query(sqlQuery, queryParams, (error, results) => {
@@ -610,6 +686,8 @@ const server = http.createServer((req, res) => {
     searchProblems(req, res);
   } else if (req.method === "POST" && pathname.startsWith("/classes/search/Teacher")) {
     searchClassesTeacher(req, res);
+  } else if (req.method === "POST" && pathname.startsWith("/classes/search/Student")) {
+    searchClassesStudent(req, res);
   } else if (req.method === "POST" && pathname.startsWith("/problems/")) {
     const problemId = pathname.split("/")[2];
     getProblemById(res, problemId);
@@ -618,6 +696,8 @@ const server = http.createServer((req, res) => {
     getTeacherById(res, teacherId);
   } else if (req.method === "POST" && pathname === "/classes/all/Teacher") {
     getAllGroupsForProfesor(req, res);
+  } else if (req.method === "POST" && pathname === "/classes/all/Student") {
+    getAllGroupsForStudent(req, res);
   } else if (req.method === "POST" && pathname === "/classes/addStudent") {
     handleAddStudentToClass(req, res);
   } else if (req.method === "POST" && pathname === "/student/id") {
