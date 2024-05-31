@@ -14,17 +14,17 @@ Echipa:
 - landingPage pt user neloggat, profesor si elev
 - filtrarea postarilor
 - creare grupe + adaugare elevi
-- popularea cu grupe la profesori
+- popularea cu grupe la profesori si la studenti
 - creare tema(doar pe frontend)
+- pagina problemei pt guest si pt studenti(lipseste formularul pt rezolvare)
 
 # Ce mai e de facut:
-- filtrare grupe
+- filtrare grupe(facut la studenti dar nu merge)
 - filtrare teme
 - populare cu teme create de profesor
 - populare cu teme asignate unui elev
 - user page(prof + elev + admin)
 - creare problema(+ cu import json)
-- pagina problemei(cu rezolvarile elevilor/pt prof si rezolvarea userului/pt elev + exportarea problemei sub forma de json)
 
 # Important de facut: 
 - modificarea link-uirii dintre pagini astfel incat sa fie dupa structura din server.js
