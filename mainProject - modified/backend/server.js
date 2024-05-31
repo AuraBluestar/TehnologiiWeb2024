@@ -581,7 +581,11 @@ const server = http.createServer((req, res) => {
       filePath = path.join(baseDir, "pages", "VisHWTeacher.html");
     } else if (req.url.startsWith("/VisProblemGuest")) {
       filePath = path.join(baseDir, "pages", "VisProblemGuest.html");
-    } else {
+    } else if (req.url.startsWith("/VisProblemStudent")) {
+      filePath = path.join(baseDir, "pages", "VisProblemStudent.html");
+    } else if (req.url.startsWith("/VisProblemTeacher")) {
+      filePath = path.join(baseDir, "pages", "VisProblemTeacher.html");
+    }else {
       // Serve static files (CSS, images, etc.)
       filePath = path.join(baseDir, req.url);
     }
