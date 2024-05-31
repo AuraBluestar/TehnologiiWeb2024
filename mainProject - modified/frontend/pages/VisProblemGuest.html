@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="../styles/listingsPage.css">
   <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-  <title>NotLogged</title>
+  <title>Problem Details</title>
   <style>
     * {
       margin: 0;
@@ -24,11 +24,8 @@
       position: relative;
       height: 100%;
       font-family: Lato, normal;
-
     }
   </style>
-
-
 </head>
 
 <body>
@@ -39,7 +36,6 @@
       <div class="logo"><a href="#">In&lt;form&gt;atiX</a> </div>
     </div>
     <div class="navright">
-
       <ul>
         <li><a href="/login">Login</a></li>
         <li><a href="/signup">Sign Up</a></li>
@@ -65,55 +61,97 @@
   </nav>
 
   <div class="maincontent">
-
-
     <div class="ProblemPage" style="font-size:20px;">
-       
-        <div class="problem-container" style="cursor:default;">
-            <!-- Left Section -->
-            <div class="up-section">
-            <div class="left-section">
-                <!-- Details section -->
-                <div class="details" style="margin-left:0px;">
-                    <!-- ID and Name -->
-                    <div class="id-name">
-                        <p class="problem-id">#ID</p>
-                        <p class="problem-name">titlu</p>
-                    </div>
-                    <!-- Category and Difficulty -->
-                    <div class="category-diff">
-                        <p class="problem-category">Cateogrie</p>
-                        <p class="problem-diff">Dificultate</p>
-                    </div>
-                    
-                </div>
+      <div class="problem-container" style="cursor:default;">
+        <!-- Left Section -->
+        <div class="up-section">
+          <div class="left-section">
+            <!-- Details section -->
+            <div class="details" style="margin-left:0px;">
+              <!-- ID and Name -->
+              <div class="id-name">
+                <p class="problem-id">#ID</p>
+                <p class="problem-name">Title</p>
+              </div>
+              <!-- Category and Difficulty -->
+              <div class="category-diff">
+                <p class="problem-category">Category</p>
+                <p class="problem-diff">Difficulty</p>
+              </div>
             </div>
-        
-            <!-- Right Section -->
-            <div class="right-section">
-                <div class="author">
-                    <p>Author: Cosmin Varlan</p>
-                </div>
+          </div>
+          <!-- Right Section -->
+          <div class="right-section">
+            <div class="author">
+              <p>Author: <span id="author-name">Author Name</span></p>
             </div>
-    
+          </div>
         </div>
-        
-            <!-- Description section -->
-            <div class="description-section">
-                <h3 style="font-weight: bolder;">Description</h3>
-                <div class="description">
-                    <p class="problem-description">Write functions to perform various string manipulation tasks such as reversal, concatenation, and substring extraction.</p>
-                </div>
-            </div>
+        <!-- Description section -->
+        <div class="description-section">
+          <h3 style="font-weight: bolder;">Description</h3>
+          <div class="description">
+            <p class="problem-description">Description text</p>
+          </div>
         </div>
-    
+      </div>
     </div>
   </div>
 
   <script src="../scripts/script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const params = new URLSearchParams(window.location.search);
+      const problemId = params.get('problemId');
 
+      if (problemId) {
+        fetchProblemDetails(problemId);
+      }
+    });
 
+    function fetchProblemDetails(problemId) {
+      fetch(`http://localhost:3000/problems/${problemId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => response.json())
+      .then(problem => {
+        document.querySelector('.problem-id').textContent = `#${problem.ID}`;
+        document.querySelector('.problem-name').textContent = problem.Titlu;
+        document.querySelector('.problem-category').textContent = problem.Capitol;
+        document.querySelector('.problem-diff').textContent = getDifficultyText(problem.Dificultate);
+        document.querySelector('.problem-description').textContent = problem.Descriere;
+
+        return fetch(`http://localhost:3000/Teacher/${problem.ProfesorID}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+      })
+      .then(response => response.json())
+      .then(teacher => {
+        document.getElementById('author-name').textContent = teacher.nume;
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    }
+
+    function getDifficultyText(difficulty) {
+      switch (difficulty) {
+        case 1:
+          return 'Easy';
+        case 2:
+          return 'Medium';
+        case 3:
+          return 'Hard';
+        default:
+          return 'Unknown';
+      }
+    }
+  </script>
 </body>
-
-
 </html>
