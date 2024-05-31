@@ -24,8 +24,6 @@
  });
 
  // Funcție pentru a converti valoarea dificultății în cuvinte corespunzătoare
-
-
 function getDifficultyText(difficulty) {
   switch (difficulty) {
     case 1:
@@ -58,28 +56,35 @@ function loadProblems(problems) {
   problemsContainer.innerHTML = ''; // Clear the container before inserting new elements
   problems.forEach(problem => {
     const problemElement = `
-    <div class="problem">
-    <!-- Details section -->
-    <div class="details">
-        <!-- ID and Name -->
-        <div class="id-name">
-            <p class="problem-id"><strong>#</strong>${problem.ID}</p>
-            <p class="problem-name">${problem.Titlu}</h2>
+      <div class="problem" data-id="${problem.ID}" style="cursor: pointer;">
+        <!-- Details section -->
+        <div class="details">
+            <!-- ID and Name -->
+            <div class="id-name">
+                <p class="problem-id"><strong>#</strong>${problem.ID}</p>
+                <p class="problem-name">${problem.Titlu}</h2>
+            </div>
+            <!-- Category and Difficulty -->
+            <div class="category-diff">
+                <p class="problem-category">${problem.Capitol}</p>
+                <p class="problem-diff" style="color: ${getDifficultyColor(problem.Dificultate)} ;">${getDifficultyText(problem.Dificultate)}</p>
+            </div>
         </div>
-        <!-- Category and Difficulty -->
-        <div class="category-diff">
-            <p class="problem-category">${problem.Capitol}</p>
-            <p class="problem-diff" style="color: ${getDifficultyColor(problem.Dificultate)} ;">${getDifficultyText(problem.Dificultate)}</p>
+        <!-- Description section -->
+        <div class="description">
+            <p class="problem-description">${problem.Descriere}</p>
         </div>
-    </div>
-    <!-- Description section -->
-    <div class="description">
-        <p class="problem-description">${problem.Descriere}</p>
-    </div>
-</div>
-
+      </div>
     `;
     problemsContainer.insertAdjacentHTML('beforeend', problemElement);
+  });
+
+  // Add click event listener to each problem element
+  document.querySelectorAll('.problem').forEach(problemElement => {
+    problemElement.addEventListener('click', () => {
+      const problemId = problemElement.dataset.id;
+      window.location.href = `VisProblemGuest.html?problemId=${problemId}`;
+    });
   });
 }
 
@@ -126,5 +131,3 @@ window.onload = function() {
   })
   .catch(error => console.error('Error loading problems:', error));
 };
-
- 

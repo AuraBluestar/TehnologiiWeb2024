@@ -20,6 +20,42 @@ const pool = mysql.createPool(dbConfig);
 const ip = "localhost";
 const port = 3000;
 
+// Helper function to serve static files
+function serveFile(filePath, res, contentType) {
+  fs.readFile(filePath, (error, content) => {
+    if (error) {
+      if (error.code === "ENOENT") {
+        res.writeHead(404, { "Content-Type": "text/html" });
+        res.end("<h1>404 Not Found</h1>", "utf-8");
+      } else {
+        res.writeHead(500);
+        res.end(`Sorry, there was an error: ${error.code} ..\n`);
+      }
+    } else {
+      res.writeHead(200, { "Content-Type": contentType });
+      res.end(content, "utf-8");
+    }
+  });
+}
+
+// Mime types mapping
+const mimeTypes = {
+  ".html": "text/html",
+  ".js": "text/javascript",
+  ".css": "text/css",
+  ".json": "application/json",
+  ".png": "image/png",
+  ".jpg": "image/jpg",
+  ".gif": "image/gif",
+  ".wav": "audio/wav",
+  ".mp4": "video/mp4",
+  ".woff": "application/font-woff",
+  ".ttf": "application/font-ttf",
+  ".eot": "application/vnd.ms-fontobject",
+  ".otf": "application/font-otf",
+  ".svg": "application/image/svg+xml",
+};
+
 // Functie pentru a manevra cererile de autentificare
 const handleLogin = (req, res) => {
   let body = "";
@@ -514,12 +550,6 @@ const getStudentIdByName = (req, res) => {
   });
 };
 
-function sendErrorResponse(res, statusCode, message) {
-  res.writeHead(statusCode, { "Content-Type": "application/json" });
-  res.end(JSON.stringify({ error: message }));
-}
-
-
 const server = http.createServer((req, res) => {
   const baseDir = path.join(__dirname, "..", "frontend");
   const parsedUrl = url.parse(req.url, true);
@@ -549,7 +579,7 @@ const server = http.createServer((req, res) => {
       filePath = path.join(baseDir, "pages", "VisHWStudent.html");
     } else if (req.url === "/VisHWTeacher") {
       filePath = path.join(baseDir, "pages", "VisHWTeacher.html");
-    } else if (req.url === "/VisProblemGuest") {
+    } else if (req.url.startsWith("/VisProblemGuest")) {
       filePath = path.join(baseDir, "pages", "VisProblemGuest.html");
     } else {
       // Serve static files (CSS, images, etc.)
@@ -558,43 +588,8 @@ const server = http.createServer((req, res) => {
 
     // Get the file extension
     const extname = String(path.extname(filePath)).toLowerCase();
-
-    // Mime types
-    const mimeTypes = {
-      ".html": "text/html",
-      ".js": "text/javascript",
-      ".css": "text/css",
-      ".json": "application/json",
-      ".png": "image/png",
-      ".jpg": "image/jpg",
-      ".gif": "image/gif",
-      ".wav": "audio/wav",
-      ".mp4": "video/mp4",
-      ".woff": "application/font-woff",
-      ".ttf": "application/font-ttf",
-      ".eot": "application/vnd.ms-fontobject",
-      ".otf": "application/font-otf",
-      ".svg": "application/image/svg+xml",
-    };
-
-    // Default to html if no extension is found
     const contentType = mimeTypes[extname] || "application/octet-stream";
-
-    // Read the file
-    fs.readFile(filePath, (error, content) => {
-      if (error) {
-        if (error.code === "ENOENT") {
-          res.writeHead(404, { "Content-Type": "text/html" });
-          res.end("<h1>404 Not Found</h1>", "utf-8");
-        } else {
-          res.writeHead(500);
-          res.end(`Sorry, there was an error: ${error.code} ..\n`);
-        }
-      } else {
-        res.writeHead(200, { "Content-Type": contentType });
-        res.end(content, "utf-8");
-      }
-    });
+    serveFile(filePath, res, contentType);
   } else if (req.method === "POST" && pathname === "/login") {
     handleLogin(req, res);
   } else if (req.method === "POST" && pathname === "/addStudent") {
@@ -609,7 +604,7 @@ const server = http.createServer((req, res) => {
     getAllProblems(res);
   } else if (req.method === "POST" && pathname.startsWith("/problems/search")) {
     searchProblems(req, res);
-  } else if ( req.method === "POST" && pathname.startsWith("/classes/search/Teacher")) {
+  } else if (req.method === "POST" && pathname.startsWith("/classes/search/Teacher")) {
     searchClassesTeacher(req, res);
   } else if (req.method === "POST" && pathname.startsWith("/problems/")) {
     const problemId = pathname.split("/")[2];
