@@ -294,6 +294,69 @@ function getProblemById(res, id) {
   });
 }
 
+// Functie pentru a manevra cererile de adăugare temă
+const handleAddHomework = (req, res) => {
+  let body = "";
+
+  req.on("data", (chunk) => {
+    body += chunk.toString();
+  });
+
+  req.on("end", () => {
+    try {
+      const { ClasaID, ProfesorID } = JSON.parse(body);
+
+      const query = "INSERT INTO teme (ClasaID, ProfesorID) VALUES (?, ?)";
+      pool.query(query, [ClasaID, ProfesorID], (error, results) => {
+        if (error) {
+          console.error("Error inserting data:", error);
+          res.writeHead(500, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ success: false, message: "Database error" }));
+        } else {
+          const homeworkId = results.insertId;
+          res.writeHead(200, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ success: true, id: homeworkId }));
+        }
+      });
+    } catch (err) {
+      console.error("Error parsing JSON:", err);
+      res.writeHead(400, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ success: false, message: "Invalid JSON" }));
+    }
+  });
+};
+
+// Functie pentru a manevra cererile de adăugare problemă la temă
+const handleAddProblemToHomework = (req, res) => {
+  let body = "";
+
+  req.on("data", (chunk) => {
+    body += chunk.toString();
+  });
+
+  req.on("end", () => {
+    try {
+      const { HomeworkID, ProblemID } = JSON.parse(body);
+
+      const query = "INSERT INTO problemeteme (TemaID, ProblemaID) VALUES (?, ?)";
+      pool.query(query, [HomeworkID, ProblemID], (error, results) => {
+        if (error) {
+          console.error("Error inserting data:", error);
+          res.writeHead(500, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ success: false, message: "Database error" }));
+        } else {
+          res.writeHead(200, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ success: true }));
+        }
+      });
+    } catch (err) {
+      console.error("Error parsing JSON:", err);
+      res.writeHead(400, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ success: false, message: "Invalid JSON" }));
+    }
+  });
+};
+
 // Funcție pentru obținerea usernameului a unui prof după ID
 function getTeacherById(res, id) {
   pool.query("SELECT nume FROM profesori WHERE ID = ?", [id], (error, results) => {
@@ -794,6 +857,10 @@ const server = http.createServer((req, res) => {
     handleGetHomeworkByTeacher(req, res);
   } else if (req.method === "POST" && pathname === "/homeworks/student") {
     handleGetHomeworkForStudent(req, res);
+  } else if (req.method === "POST" && pathname === "/homework/add") {
+    handleAddHomework(req, res);
+  } else if (req.method === "POST" && pathname === "/homework/addProblem") {
+    handleAddProblemToHomework(req, res);
   } else {
     res.writeHead(404, { "Content-Type": "application/json" });
     res.end(JSON.stringify({ success: false, message: "Not Found" }));

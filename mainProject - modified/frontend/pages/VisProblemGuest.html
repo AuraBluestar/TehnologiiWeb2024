@@ -96,6 +96,9 @@
           </div>
         </div>
       </div>
+      <div class="export-button">
+        <button class="json-export">Export to JSON</button>
+    </div>
     </div>
   </div>
 
@@ -110,6 +113,14 @@
       }
     });
 
+    document.querySelector('.json-export').addEventListener('click', function () {
+        if (problemData) {
+            exportToJsonFile(problemData);
+        } else {
+            alert('Problem data is not available to export.');
+        }
+    });
+
     function fetchProblemDetails(problemId) {
       fetch(`http://localhost:3000/problems/${problemId}`, {
         method: 'POST',
@@ -119,6 +130,7 @@
       })
       .then(response => response.json())
       .then(problem => {
+        problemData = problem;
         document.querySelector('.problem-id').textContent = `#${problem.ID}`;
         document.querySelector('.problem-name').textContent = problem.Titlu;
         document.querySelector('.problem-category').textContent = problem.Capitol;
@@ -152,6 +164,16 @@
         default:
           return 'Unknown';
       }
+    }
+
+    function exportToJsonFile(jsonData) {
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(jsonData));
+        const downloadAnchorNode = document.createElement('a');
+        downloadAnchorNode.setAttribute("href", dataStr);
+        downloadAnchorNode.setAttribute("download", `problem_${jsonData.ID}.json`);
+        document.body.appendChild(downloadAnchorNode); // Required for Firefox
+        downloadAnchorNode.click();
+        downloadAnchorNode.remove();
     }
   </script>
 </body>
