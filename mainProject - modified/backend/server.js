@@ -626,6 +626,94 @@ const getStudentIdByName = (req, res) => {
   });
 };
 
+// Funcție pentru obținerea temei date de un profesor
+const handleGetHomeworkByTeacher = (req, res) => {
+  let body = "";
+
+  req.on("data", (chunk) => {
+    body += chunk.toString();
+  });
+
+  req.on("end", () => {
+    try {
+      const { profesorID } = JSON.parse(body);
+
+      if (!profesorID) {
+        res.writeHead(400, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ success: false, message: "ProfesorID is required" }));
+        return;
+      }
+
+      const query = `
+        SELECT t.profesorID, t.ID AS temaID, t.clasaID, COUNT(pt.ID) AS nrProbleme
+        FROM teme t
+        JOIN clase c ON t.clasaid = c.id
+        JOIN problemeteme pt ON pt.temaid = t.id
+        WHERE t.profesorid = ?
+        GROUP BY t.id;
+      `;
+
+      pool.query(query, [profesorID], (error, results) => {
+        if (error) {
+          console.error("Error querying database:", error);
+          res.writeHead(500, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ success: false, message: "Database error" }));
+          return;
+        }
+
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ success: true, data: results }));
+      });
+    } catch (err) {
+      console.error("Error parsing JSON:", err);
+      res.writeHead(400, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ success: false, message: "Invalid JSON" }));
+    }
+  });
+};
+
+// Funcție pentru obținerea temei unui student
+const handleGetHomeworkForStudent = (req, res) => {
+  let body = "";
+
+  req.on("data", (chunk) => {
+    body += chunk.toString();
+  });
+
+  req.on("end", () => {
+    try {
+      const { elevID } = JSON.parse(body);
+
+      if (!elevID) {
+        res.writeHead(400, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ success: false, message: "elevID is required" }));
+        return;
+      }
+
+      const query = `
+      SELECT t.profesorID, t.ID AS temaID, t.clasaID, COUNT(distinct pt.ID) AS nrProbleme 
+      FROM teme t JOIN clase c ON t.clasaid = c.id JOIN problemeteme pt ON pt.temaid = t.id 
+      join claseelevi ce on ce.clasaid=c.id WHERE ce.elevid = ? GROUP BY t.id;`;
+
+      pool.query(query, [elevID], (error, results) => {
+        if (error) {
+          console.error("Error querying database:", error);
+          res.writeHead(500, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ success: false, message: "Database error" }));
+          return;
+        }
+
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ success: true, data: results }));
+      });
+    } catch (err) {
+      console.error("Error parsing JSON:", err);
+      res.writeHead(400, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ success: false, message: "Invalid JSON" }));
+    }
+  });
+};
+
 const server = http.createServer((req, res) => {
   const baseDir = path.join(__dirname, "..", "frontend");
   const parsedUrl = url.parse(req.url, true);
@@ -702,6 +790,10 @@ const server = http.createServer((req, res) => {
     handleAddStudentToClass(req, res);
   } else if (req.method === "POST" && pathname === "/student/id") {
     getStudentIdByName(req, res);
+  } else if (req.method === "POST" && pathname === "/homeworks/teacher") {
+    handleGetHomeworkByTeacher(req, res);
+  } else if (req.method === "POST" && pathname === "/homeworks/student") {
+    handleGetHomeworkForStudent(req, res);
   } else {
     res.writeHead(404, { "Content-Type": "application/json" });
     res.end(JSON.stringify({ success: false, message: "Not Found" }));

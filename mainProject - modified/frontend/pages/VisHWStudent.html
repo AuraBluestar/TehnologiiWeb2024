@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,37 +8,29 @@
     <link rel="stylesheet" href="../styles/main-content.css">
     <link rel="stylesheet" href="../styles/searchmenu.css">
     <link rel="stylesheet" href="../styles/listingsPage.css">
-    <link rel='stylesheet'
-      href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+    <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
     <title>Homeworks</title>
     <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body,
-    html {
-      position: relative;
-      height: 100%;
-      font-family: Lato, normal;
-
-    }
-  </style>
-
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body, html {
+        position: relative;
+        height: 100%;
+        font-family: Lato, normal;
+      }
+    </style>
   </head>
-
   <body>
-
     <!-- This is the NavBar -->
     <nav class="navbar">
       <div class="navleft">
-        <div class="logo"><a href="/loggedStudent">In&lt;form&gt;atiX</a> </div>
+        <div class="logo"><a href="/loggedStudent">In&lt;form&gt;atiX</a></div>
       </div>
       <div class="navright">
-
         <ul>
           <li><a href="/loggedStudent">Home</a></li>
           <li><a href="/">LogOut</a></li>
@@ -58,74 +49,100 @@
         <i class='bx bx-menu' id="btn"></i>
       </div>
       <ul>
-        <li><a href="../../to be modified/ProfilStudent.html"><i
-              class='bx bxs-user-circle'></i><span
-              class="navitem">Profile</span></a></li>
-        <li><a href="/VisGroupsStudent"><i class='bx bxs-group'></i><span
-              class="navitem">Groups</span></a></li>
-        <li><a href="/VisHWStudent"><i class='bx bxs-book-alt'></i><span
-              class="navitem">Homeworks</span></a></li>
-        <li><a href="#"><i class='bx bxs-contact'></i><span
-              class="navitem">Contact</span></a></li>
-        <li><a href="/"><i class='bx bx-log-out'></i><span
-              class="navitem">LogOut</span></a></li>
+        <li><a href="../../to be modified/ProfilStudent.html"><i class='bx bxs-user-circle'></i><span class="navitem">Profile</span></a></li>
+        <li><a href="/VisGroupsStudent"><i class='bx bxs-group'></i><span class="navitem">Groups</span></a></li>
+        <li><a href="/VisHWStudent"><i class='bx bxs-book-alt'></i><span class="navitem">Homeworks</span></a></li>
+        <li><a href="#"><i class='bx bxs-contact'></i><span class="navitem">Contact</span></a></li>
+        <li><a href="/"><i class='bx bx-log-out'></i><span class="navitem">LogOut</span></a></li>
       </ul>
     </nav>
 
     <div class="maincontent">
-
       <div class="searchmenu">
         <div class="searchbox">
           <header>Homework ID</header>
           <div class="searchfield">
             <form id="search">
-
               <div class="seachBar">
                 <input class="search-input" type="search" placeholder="Search">
                 <i class='bx bx-search-alt-2'></i>
               </div>
-
             </form>
           </div>
         </div>
-
         <div class="filterbox">
-
           <form id="filtermenu">
-
             <header>Group</header>
             <div class="dropdown">
               <div class="selectbtn">
                 <span class="sBtn-text">Select your option</span>
                 <i class="bx bx-chevron-down"></i>
               </div>
-
               <ul class="dmenu">
                 <li class="option"><span class="option-text">None</span></li>
-                <li class="option"><span class="option-text">A1-Advanced
-                    Programming</span></li>
+                <li class="option"><span class="option-text">A1-Advanced Programming</span></li>
                 <li class="option"><span class="option-text">B1-SGBD</span></li>
-                <li class="option"><span class="option-text">A1-Sofware
-                    Inginering</span></li>
-                <li class="option"><span class="option-text">A4-Web
-                    Technologies</span></li>
+                <li class="option"><span class="option-text">A1-Sofware Inginering</span></li>
+                <li class="option"><span class="option-text">A4-Web Technologies</span></li>
               </ul>
-
             </div>
-
             <button type="submit" class="filter">Filter</button>
-
           </form>
-
         </div>
       </div>
-
-      <div class="HomeworksPage">
-      </div>
+      <div class="HomeworksPage"></div>
     </div>
-
     <script src="../scripts/script.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        fetch("http://localhost:3000/homeworks/student", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ elevID: 9 })
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            const homeworksContainer = document.querySelector('.HomeworksPage');
+            homeworksContainer.innerHTML = ""; // Clear any existing content
 
+            data.data.forEach(homework => {
+              const homeworkDiv = document.createElement('div');
+              homeworkDiv.classList.add('homework');
+              
+              const title = document.createElement('h2');
+              title.classList.add('homework-title');
+              title.textContent = `Homework ID: ${homework.temaID}`;
+              
+              const homeworkId = document.createElement('p');
+              homeworkId.classList.add('homework-id');
+              homeworkId.innerHTML = `<strong>ID:</strong> ${homework.temaID}`;
+              
+              const group = document.createElement('p');
+              group.classList.add('homework-group');
+              group.innerHTML = `<strong>Class ID:</strong> ${homework.clasaID}`;
+              
+              const problemCount = document.createElement('p');
+              problemCount.classList.add('homework-problem-count');
+              problemCount.innerHTML = `<strong>Number of Problems:</strong> ${homework.nrProbleme}`;
+
+              homeworkDiv.appendChild(title);
+              homeworkDiv.appendChild(homeworkId);
+              homeworkDiv.appendChild(group);
+              homeworkDiv.appendChild(problemCount);
+              
+              homeworksContainer.appendChild(homeworkDiv);
+            });
+          } else {
+            console.error("Failed to fetch homeworks data");
+          }
+        })
+        .catch(error => {
+          console.error("Error:", error);
+        });
+      });
+    </script>
   </body>
-
 </html>
