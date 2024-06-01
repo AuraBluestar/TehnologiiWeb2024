@@ -60,6 +60,13 @@
         margin:5%;
       }
 
+      .GroupsPage,
+      .HomeworksPage,
+      .ProblemsPage,
+      .ProblemPage {
+        margin-left: 0px;
+      }
+
       .paginare{
         width:100%;
       }
@@ -82,13 +89,21 @@
         align-items: center;
         margin:5%;
       }
+
+      .GroupsPage,
+      .HomeworksPage,
+      .ProblemsPage,
+      .ProblemPage {
+        margin-left: 0px;
+      }
+
 .group,
 .homework,
 .problem {
     display: none;
     height: 10dvh;
 }
-        .add{
+.add{
       margin:5%;
     }
 }
@@ -117,6 +132,14 @@
         flex-direction: column;
         width:564px;
       }
+
+      .GroupsPage,
+      .HomeworksPage,
+      .ProblemsPage,
+      .ProblemPage {
+        margin-left: 50px;
+      }
+
     .add{
       margin: 0px;
       margin-left: 50px;

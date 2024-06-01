@@ -9,8 +9,11 @@
   position: relative;
   width: 100%;
   min-height: 300px;
-  margin-left: 50px;
-  margin-right: 50px;
+}
+
+.GroupsPage{
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 /*Item*/
 .group,
@@ -25,6 +28,13 @@
   border-radius: 24px;
   margin-bottom: 5px;
   text-overflow: hidden;
+}
+
+.group{
+  min-width: 240px;
+  width:32%;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 
@@ -55,6 +65,7 @@
 }
 
 .description{
+  display: flex;
   margin:0px 15px 15px 15px;
   padding:6px;
   background-color:white;
@@ -81,12 +92,20 @@
 }
 
 .group-label{
-  margin:25px;
+  margin:10px;
   padding: 10px;
+  max-width:55%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   background-color: white;
   border-radius: 14px;
   font-size:36px;
   font-weight: bolder;
+}
+
+.group-label.overflowing{
+  font-size: 80%; 
 }
 
 
@@ -96,6 +115,7 @@
   cursor: pointer;
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   position: relative;
   width: 100%;
   min-height:10em ;
@@ -123,8 +143,18 @@
 }
 
 .json-export{
+  align-self: flex-start;
   padding:5px;
+  border: none;
+  background-color: #c9c6c6;
   border-radius: 28px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.json-export:hover{
+  background-color: #6d6c6c;
+  transition: 0.3s;
 }
 
 .right-section{
@@ -133,10 +163,111 @@
   align-items: center;
 }
 
+.description-section {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
 .description-section .description{
+  flex-grow: 1;
   border:5px;
   margin:5px;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.75);
+}
+/*Submit solution*/
+.submit-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.solution-box {
+  width: 100%;
+  height: 400px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 14px;
+  border: 1px solid #ccc;
+  resize: none; 
+  overflow: auto; 
+}
+
+.submit-button {
+  align-self: center;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 28px;
+  background-color: #ffac1c;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.submit-button:hover {
+  background-color: #FBCEB1;
+  transition: 0.3s;
+}
+
+/*see submissions*/
+
+.submissions-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.submissions-section h3 {
+  margin-bottom: 10px;
+}
+
+.submissions{
+  display: flex;
+  flex-direction: row;
+}
+
+.submission-box {
+  cursor: pointer;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.submitter-name {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.class-subject {
+  color: #555;
+}
+
+/*grading*/
+
+
+.star-rating {
+  display: flex;
+  flex-direction: row;
+  align-items:center;
+  font-size: 40px; 
+}
+
+.star {
+  cursor: pointer;
+  color: #ccc; /* Default star color */
+}
+
+.star:hover,
+.star.selected {
+  color: #ffac1c; /* Highlighted star color */
 }
 
 /*Paginare*/
