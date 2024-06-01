@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,37 +8,29 @@
     <link rel="stylesheet" href="../styles/main-content.css">
     <link rel="stylesheet" href="../styles/searchmenu.css">
     <link rel="stylesheet" href="../styles/listingsPage.css">
-    <link rel='stylesheet'
-      href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+    <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
     <title>HomeworksTeacher</title>
     <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body,
-    html {
-      position: relative;
-      height: 100%;
-      font-family: Lato, normal;
-
-    }
-  </style>
-
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body, html {
+        position: relative;
+        height: 100%;
+        font-family: Lato, normal;
+      }
+    </style>
   </head>
-
   <body>
-
     <!-- This is the NavBar -->
     <nav class="navbar">
       <div class="navleft">
-        <div class="logo"><a href="/loggedTeacher">In&lt;form&gt;atiX</a> </div>
+        <div class="logo"><a href="/loggedTeacher">In&lt;form&gt;atiX</a></div>
       </div>
       <div class="navright">
-
         <ul>
           <li><a href="/loggedTeacher">Home</a></li>
           <li><a href="/">LogOut</a></li>
@@ -58,70 +49,47 @@
         <i class='bx bx-menu' id="btn"></i>
       </div>
       <ul>
-        <li><a href="/loggedTeacher"><i class='bx bxs-home'></i><span
-              class="navitem">Home</span></a></li>
-        <li><a href="../../to be modified/ProfilProfesor.html"><i
-              class='bx bxs-user-circle'></i><span
-              class="navitem">Profile</span></a></li>
-        <li><a href="/VisGroupsTeacher"><i class='bx bxs-group'></i><span
-              class="navitem">Groups</span></a></li>
-        <li><a href="/VisHWTeacher"><i class='bx bxs-book-alt'></i><span
-              class="navitem">Homeworks</span></a></li>
-        <li><a href="../../to be modified/ProblemePropuse.html"><i
-              class='bx bxs-book-content'></i><span class="navitem">Proposed
-              Problems</span></a></li>
-        <li><a href="/createHW"><i class='bx bxs-edit'></i><span
-              class="navitem">New Problem</span></a></li>
-        <li><a href="#"><i class='bx bxs-contact'></i><span
-              class="navitem">Contact</span></a></li>
-        <li><a href="/"><i class='bx bx-log-out'></i><span
-              class="navitem">LogOut</span></a></li>
+        <li><a href="/loggedTeacher"><i class='bx bxs-home'></i><span class="navitem">Home</span></a></li>
+        <li><a href="../../to be modified/ProfilProfesor.html"><i class='bx bxs-user-circle'></i><span class="navitem">Profile</span></a></li>
+        <li><a href="/VisGroupsTeacher"><i class='bx bxs-group'></i><span class="navitem">Groups</span></a></li>
+        <li><a href="/VisHWTeacher"><i class='bx bxs-book-alt'></i><span class="navitem">Homeworks</span></a></li>
+        <li><a href="../../to be modified/ProblemePropuse.html"><i class='bx bxs-book-content'></i><span class="navitem">Proposed Problems</span></a></li>
+        <li><a href="/createHW"><i class='bx bxs-edit'></i><span class="navitem">New Problem</span></a></li>
+        <li><a href="#"><i class='bx bxs-contact'></i><span class="navitem">Contact</span></a></li>
+        <li><a href="/"><i class='bx bx-log-out'></i><span class="navitem">LogOut</span></a></li>
       </ul>
     </nav>
 
     <div class="maincontent">
-
       <div class="searchmenu">
         <div class="searchbox">
           <header>Homework ID</header>
           <div class="searchfield">
             <form id="search">
-
               <div class="seachBar">
                 <input class="search-input" type="search" placeholder="Search">
                 <i class='bx bx-search-alt-2'></i>
               </div>
-
             </form>
           </div>
         </div>
-
         <div class="filterbox">
-
           <form id="filtermenu">
-
             <header>Group</header>
             <div class="dropdown">
               <div class="selectbtn">
                 <span class="sBtn-text">Select your option</span>
                 <i class="bx bx-chevron-down"></i>
               </div>
-
               <ul class="dmenu">
                 <li class="option"><span class="option-text">None</span></li>
-                <li class="option"><span class="option-text">A1-Advanced
-                    Programming</span></li>
+                <li class="option"><span class="option-text">A1-Advanced Programming</span></li>
                 <li class="option"><span class="option-text">B1-SGBD</span></li>
-                <li class="option"><span class="option-text">A1-Sofware
-                    Inginering</span></li>
-                <li class="option"><span class="option-text">A4-Web
-                    Technologies</span></li>
+                <li class="option"><span class="option-text">A1-Software Engineering</span></li>
+                <li class="option"><span class="option-text">A4-Web Technologies</span></li>
               </ul>
-
             </div>
-
             <button type="submit" class="filter">Filter</button>
-
             <div class="createnew">
               <ul>
                 <li><a href="/createHW"><i class='bx bxs-book-add'></i></a></li>
@@ -129,74 +97,62 @@
               <i class='bx bx-plus'></i>
               <header class="header">New Homework</header>
             </div>
-
           </form>
-
         </div>
       </div>
-
-      <div class="HomeworksPage">
-
-        <div class="homework">
-          <h2 class="homework-title">Homework: Algorithms Introduction</h2>
-          <p class="homework-id"><strong>ID:</strong> 201</p>
-          <p class="homework-group"><strong>Group:</strong> A</p>
-
-        </div>
-
-        <div class="homework">
-          <h2 class="homework-title">Homework: Data Structures Fundamentals</h2>
-          <p class="homework-id"><strong>ID:</strong> 202</p>
-          <p class="homework-group"><strong>Group:</strong> B</p>
-          <p class="homework-number"><strong>Homework Number:</strong> 2</p>
-          <p class="homework-problem-count"><strong>Number of Problems:</strong>
-            5</p>
-          <p class="homework-description">Explore the basics of data structures
-            like arrays, linked lists, and trees
-            through this set of problems.</p>
-        </div>
-
-        <div class="homework">
-          <h2 class="homework-title">Homework: Complexity Analysis</h2>
-          <p class="homework-id"><strong>ID:</strong> 203</p>
-          <p class="homework-group"><strong>Group:</strong> C</p>
-          <p class="homework-number"><strong>Homework Number:</strong> 3</p>
-          <p class="homework-problem-count"><strong>Number of Problems:</strong>
-            4</p>
-          <p class="homework-description">This homework assignment asks you to
-            analyze the time and space complexity of
-            various algorithms.</p>
-        </div>
-
-        <div class="homework">
-          <h2 class="homework-title">Homework: Graph Theory</h2>
-          <p class="homework-id"><strong>ID:</strong> 204</p>
-          <p class="homework-group"><strong>Group:</strong> D</p>
-          <p class="homework-number"><strong>Homework Number:</strong> 4</p>
-          <p class="homework-problem-count"><strong>Number of Problems:</strong>
-            2</p>
-          <p class="homework-description">Dive into graph theory, covering
-            topics like graph traversal and shortest paths
-            algorithms.</p>
-        </div>
-
-        <div class="homework">
-          <h2 class="homework-title">Homework: Dynamic Programming</h2>
-          <p class="homework-id"><strong>ID:</strong> 205</p>
-          <p class="homework-group"><strong>Group:</strong> E</p>
-          <p class="homework-number"><strong>Homework Number:</strong> 5</p>
-          <p class="homework-problem-count"><strong>Number of Problems:</strong>
-            6</p>
-          <p class="homework-description">Solve complex problems using dynamic
-            programming techniques, focusing on
-            optimization and combinatorial problems.</p>
-        </div>
-
-      </div>
+      <div class="HomeworksPage"></div>
     </div>
-
     <script src="../scripts/script.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        fetch("http://localhost:3000/homeworks/teacher", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ profesorID: 2 })
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            const homeworksContainer = document.querySelector('.HomeworksPage');
+            homeworksContainer.innerHTML = ""; // Clear any existing content
 
+            data.data.forEach(homework => {
+              const homeworkDiv = document.createElement('div');
+              homeworkDiv.classList.add('homework');
+              
+              const title = document.createElement('h2');
+              title.classList.add('homework-title');
+              title.textContent = `Homework ID: ${homework.temaID}`;
+              
+              const homeworkId = document.createElement('p');
+              homeworkId.classList.add('homework-id');
+              homeworkId.innerHTML = `<strong>ID:</strong> ${homework.temaID}`;
+              
+              const group = document.createElement('p');
+              group.classList.add('homework-group');
+              group.innerHTML = `<strong>Class ID:</strong> ${homework.clasaID}`;
+              
+              const problemCount = document.createElement('p');
+              problemCount.classList.add('homework-problem-count');
+              problemCount.innerHTML = `<strong>Number of Problems:</strong> ${homework.nrProbleme}`;
+
+              homeworkDiv.appendChild(title);
+              homeworkDiv.appendChild(homeworkId);
+              homeworkDiv.appendChild(group);
+              homeworkDiv.appendChild(problemCount);
+              
+              homeworksContainer.appendChild(homeworkDiv);
+            });
+          } else {
+            console.error("Failed to fetch homeworks data");
+          }
+        })
+        .catch(error => {
+          console.error("Error:", error);
+        });
+      });
+    </script>
   </body>
-
 </html>
