@@ -25,24 +25,17 @@
       position: relative;
       height: 100%;
       font-family: Lato, normal;
-
     }
   </style>
-
-
-
-
 </head>
 
 <body>
-
   <!-- This is the NavBar -->
   <nav class="navbar">
     <div class="navleft">
       <div class="logo"><a href="#">In&lt;form&gt;atiX</a> </div>
     </div>
     <div class="navright">
-
       <ul>
         <li><a href="loggedTeacher.html">Home</a></li>
         <li><a href="notLogged.html">LogOut</a></li>
@@ -73,141 +66,38 @@
   </nav>
 
   <div class="maincontent">
-
     <div class="search">
       <div class="createForm">
         <h1>New Homework</h1>
-      <form>
-
-        <header style="margin:5px;">Group</header>
-        <div class="dropdown">
-          <div class="selectbtn">
-            <span class="sBtn-text">Select your option</span>
-            <i class="bx bx-chevron-down"></i>
+        <form id="createHomeworkForm">
+          <header style="margin:5px;">Group</header>
+          <div class="dropdown">
+            <div class="selectbtn">
+              <span class="sBtn-text">Select your option</span>
+              <i class="bx bx-chevron-down"></i>
+            </div>
+            <ul class="dmenu" id="groupDropdown"></ul>
           </div>
-
-          <ul class="dmenu">
-            <li class="option"><span class="option-text">None</span></li>
-            <li class="option"><span class="option-text">A1-Advanced Programming</span></li>
-            <li class="option"><span class="option-text">B1-SGBD</span></li>
-            <li class="option"><span class="option-text">A1-Sofware Inginering</span></li>
-            <li class="option"><span class="option-text">A4-Web Technologies</span></li>
-          </ul>
-
-        </div>
-
-        <input type="submit" value="Create">
-
-      </form>
+          <input type="submit" value="Create">
+        </form>
+      </div>
     </div>
-
-  
-
-    <!-- <div class="GroupsPage">
-
-      <div class="group">
-        <h2 class="group-title">Group: Web Technologies</h2>
-        <p class="group-id"><strong>ID:</strong> G101</p>
-        <p class="group-label"><strong>Group:</strong> A1</p>
-      </div>
-
-      <div class="group">
-        <h2 class="group-title">Group: SGBD</h2>
-        <p class="group-id"><strong>ID:</strong> G102</p>
-        <p class="group-label"><strong>Group:</strong> B2</p>
-      </div>
-
-      <div class="group">
-        <h2 class="group-title">Group: SGBD</h2>
-        <p class="group-id"><strong>ID:</strong> G103</p>
-        <p class="group-label"><strong>Group:</strong> E1</p>
-      </div>
-
-      <div class="group">
-        <h2 class="group-title">Group: Web Technologies</h2>
-        <p class="group-id"><strong>ID:</strong> G104</p>
-        <p class="group-label"><strong>Group:</strong> A2</p>
-      </div>
-
-      <div class="group">
-        <h2 class="group-title">Group: Web Technologies</h2>
-        <p class="group-id"><strong>ID:</strong> G105</p>
-        <p class="group-label"><strong>Group:</strong> E1</p>
-
-      </div>
-
-
-
-
-      <div class="paginare">
-
-        <button class="button" id="startBtn" disabled>
-          <i class='bx bx-first-page'></i>
-        </button>
-        <button class="button prevNext" id="prev" disabled>
-          <i class='bx bxs-chevron-left'></i>
-        </button>
-
-        <div class="links">
-          <a href="#" class="link active">1</a>
-          <a href="#" class="link">2</a>
-          <a href="#" class="link">3</a>
-          <a href="#" class="link">4</a>
-          <a href="#" class="link">5</a>
-        </div>
-
-        <button class="button prevNext" id="next">
-          <i class='bx bxs-chevron-right'></i>
-        </button>
-        <button class="button" id="endBtn">
-          <i class='bx bx-last-page'></i>
-
-        </button>
-
-      </div> -->
-
-    </div>
-
     <div class="add">
-      <form class="addForm">
+      <form class="addForm" id="addProblemForm">
         <h1>Add Problem</h1>
-
         <div class="searchbox">
           <header id="add-header">Problem ID</header>
           <div class="searchfield">
-          <form id="search">
-
-           <div class="searchBar">
-              <input class="search-input" type="search" placeholder="Type Problem ID...">
-              <i class='bx bx-plus'></i>
-           </div>
-
-          </form>
+            <input class="search-input" type="search" placeholder="Type Problem ID..." id="problemIdInput">
+            <i class='bx bx-plus' id="addProblemButton"></i>
           </div>
         </div>
-
       </form>
-
       <div class="added">
-        <ul class="added-flex">
-          <li>12</li>
-          <li>10</li>
-          <li>1012</li>
-          <li>7</li>
-          <li>91</li>
-          <li>119</li>
-          <li>3</li>
-        </ul>
+        <ul class="added-flex" id="addedProblemsList"></ul>
       </div>
-
-    
     </div>
   </div>
-  
-  <script src="../scripts/script.js"></script>
-
-
+  <script src="../scripts/createHW.js"></script>
 </body>
-
-
 </html>
