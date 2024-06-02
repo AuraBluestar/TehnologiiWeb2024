@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,26 +17,20 @@
       padding: 0;
       box-sizing: border-box;
     }
-
-    body,
-    html {
+    body, html {
       position: relative;
       height: 100%;
       font-family: Lato, normal;
-
     }
   </style>
 </head>
-
 <body>
-
   <!-- This is the NavBar -->
   <nav class="navbar">
     <div class="navleft">
-      <div class="logo"><a href="/loggedStudent">In&lt;form&gt;atiX</a> </div>
+      <div class="logo"><a href="/loggedStudent">In&lt;form&gt;atiX</a></div>
     </div>
     <div class="navright">
-
       <ul>
         <li><a href="/loggedStudent">Home</a></li>
         <li><a href="/">LogOut</a></li>
@@ -45,7 +38,6 @@
       </ul>
     </div>
   </nav>
-
   <!-- This is the SideBar -->
   <nav class="sidebar">
     <div class="top">
@@ -64,56 +56,55 @@
       <li><a href="/"><i class='bx bx-log-out'></i><span class="navitem">LogOut</span></a></li>
     </ul>
   </nav>
-
   <div class="maincontent" style="margin-top:10px;">
     <div class="ProblemPage" style="font-size:20px;">
-        <div class="problem-container" style="cursor:default;">
-           <!-- Left Section -->
-            <div class="up-section">
-            <div class="left-section">
-              <!-- Details section -->
-                <div class="details" style="margin-left:0px;">
-                  <!-- ID and Name -->
-                    <div class="id-name">
-                        <p class="problem-id">#ID</p>
-                        <p class="problem-name">titlu</p>
-                    </div>
-                     <!-- Category and Difficulty -->
-                    <div class="category-diff">
-                        <p class="problem-category">Cateogrie</p>
-                        <p class="problem-diff">Dificultate</p>
-                    </div>  
-                </div>
+      <div class="problem-container" style="cursor:default;">
+        <!-- Left Section -->
+        <div class="up-section">
+          <div class="left-section">
+            <!-- Details section -->
+            <div class="details" style="margin-left:0px;">
+              <!-- ID and Name -->
+              <div class="id-name">
+                <p class="problem-id">#ID</p>
+                <p class="problem-name">titlu</p>
+              </div>
+              <!-- Category and Difficulty -->
+              <div class="category-diff">
+                <p class="problem-category">Cateogrie</p>
+                <p class="problem-diff">Dificultate</p>
+              </div>
+            </div>
 
-                <div class="grading-section">
-                  <div class="star-rating">
-                      <span class="star" data-value="1">&#9733;</span>
-                      <span class="star" data-value="2">&#9733;</span>
-                      <span class="star" data-value="3">&#9733;</span>
-                      <span class="star" data-value="4">&#9733;</span>
-                      <span class="star" data-value="5">&#9733;</span>
-                  </div>
-                </div> 
+            <div class="grading-section">
+              <div class="star-rating">
+                <span class="star" data-value="1">&#9733;</span>
+                <span class="star" data-value="2">&#9733;</span>
+                <span class="star" data-value="3">&#9733;</span>
+                <span class="star" data-value="4">&#9733;</span>
+                <span class="star" data-value="5">&#9733;</span>
+              </div>
             </div>
-            <div class="right-section">
-                <div class="author">
-                  <p>Author: <span id="author-name">Author Name</span></p>
-                </div>
+          </div>
+          <div class="right-section">
+            <div class="author">
+              <p>Author: <span id="author-name">Author Name</span></p>
             </div>
+          </div>
         </div>
-            <div class="description-section">
-                <h3 style="font-weight: bolder;">Description</h3>
-                <div class="description">
-                    <p class="problem-description">Write functions to perform various string manipulation tasks such as reversal, concatenation, and substring extraction.</p>
-                </div>
-            </div>
+        <div class="description-section">
+          <h3 style="font-weight: bolder;">Description</h3>
+          <div class="description">
+            <p class="problem-description">Write functions to perform various string manipulation tasks such as reversal, concatenation, and substring extraction.</p>
+          </div>
         </div>
-        <div class="export-button">
-            <button class="json-export">Export to JSON</button>
-        </div>
-        <div class="submit-section">
-          <textarea class="solution-box" placeholder="Enter your solution here..."></textarea>
-          <button class="submit-button">Submit</button>
+      </div>
+      <div class="export-button">
+        <button class="json-export">Export to JSON</button>
+      </div>
+      <div class="submit-section" style="display: none;">
+        <textarea class="solution-box" placeholder="Enter your solution here..."></textarea>
+        <button class="submit-button">Submit</button>
       </div>
     </div>
   </div>
@@ -121,10 +112,11 @@
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       const params = new URLSearchParams(window.location.search);
-      const problemId = params.get('problemId');
+      const problemId = parseInt(params.get('problemId'), 10);
+      const studentId = parseInt(params.get('studentId'), 10); // Assuming studentId is passed in the URL
 
-      if (problemId) {
-        fetchProblemDetails(problemId);
+      if (problemId && studentId) {
+        fetchProblemDetails(problemId, studentId);
       }
     });
 
@@ -136,7 +128,7 @@
         }
     });
 
-    function fetchProblemDetails(problemId) {
+    function fetchProblemDetails(problemId, studentId) {
       fetch(`http://localhost:3000/problems/${problemId}`, {
         method: 'POST',
         headers: {
@@ -162,6 +154,23 @@
       .then(response => response.json())
       .then(teacher => {
         document.getElementById('author-name').textContent = teacher.nume;
+
+        // Check if the problem is part of the student's homework
+        return fetch(`http://localhost:3000/homeworks/checkProblem`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ elevID: studentId, problemaID: problemData.ID })
+        });
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success && data.isAssigned) {
+          document.querySelector('.submit-section').style.display = 'block';
+        } else {
+          document.querySelector('.submit-section').style.display = 'none';
+        }
       })
       .catch(error => {
         console.error('Error:', error);
@@ -180,14 +189,15 @@
           return 'Unknown';
       }
     }
+
     function exportToJsonFile(jsonData) {
-        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(jsonData));
-        const downloadAnchorNode = document.createElement('a');
-        downloadAnchorNode.setAttribute("href", dataStr);
-        downloadAnchorNode.setAttribute("download", `problem_${jsonData.ID}.json`);
-        document.body.appendChild(downloadAnchorNode); // Required for Firefox
-        downloadAnchorNode.click();
-        downloadAnchorNode.remove();
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(jsonData));
+      const downloadAnchorNode = document.createElement('a');
+      downloadAnchorNode.setAttribute("href", dataStr);
+      downloadAnchorNode.setAttribute("download", `problem_${jsonData.ID}.json`);
+      document.body.appendChild(downloadAnchorNode); // Required for Firefox
+      downloadAnchorNode.click();
+      downloadAnchorNode.remove();
     }
   </script>
 </body>
