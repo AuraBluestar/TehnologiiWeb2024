@@ -48,7 +48,6 @@ const mimeTypes = {
   ".jpg": "image/jpg",
   ".gif": "image/gif",
   ".wav": "audio/wav",
- 
   ".mp4": "video/mp4",
   ".woff": "application/font-woff",
   ".ttf": "application/font-ttf",
@@ -264,6 +263,132 @@ const handleAddProblem = (req, res) => {
           }
         }
       );
+    } catch (err) {
+      console.error("Error parsing JSON:", err);
+      res.writeHead(400, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ success: false, message: "Invalid JSON" }));
+    }
+  });
+};
+
+// Functie pentru a manevra cererile de adăugare notă
+const handleAddGrade = (req, res) => {
+  let body = "";
+
+  req.on("data", (chunk) => {
+    body += chunk.toString();
+  });
+
+  req.on("end", () => {
+    try {
+      const { TemaID, ElevID, ProfesorID, Valoare } = JSON.parse(body);
+
+      // Verificarea validității datelor
+      if (!TemaID || !ElevID || !ProfesorID || !Valoare || Valoare < 1 || Valoare > 10) {
+        res.writeHead(400, { "Content-Type": "application/json" });
+        res.end(
+          JSON.stringify({ success: false, message: "Missing or invalid required fields" })
+        );
+        return;
+      }
+
+      const query =
+        "INSERT INTO note (TemaID, ElevID, ProfesorID, Valoare) VALUES (?, ?, ?, ?)";
+      pool.query(
+        query,
+        [TemaID, ElevID, ProfesorID, Valoare],
+        (error, results) => {
+          if (error) {
+            console.error("Error inserting data:", error.sqlMessage);
+            res.writeHead(500, { "Content-Type": "application/json" });
+            res.end(
+              JSON.stringify({
+                success: false,
+                message: "Database error",
+                error: error.sqlMessage,
+              })
+            );
+          } else {
+            const gradeId = results.insertId;
+            res.writeHead(200, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ success: true, id: gradeId }));
+          }
+        }
+      );
+    } catch (err) {
+      console.error("Error parsing JSON:", err);
+      res.writeHead(400, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ success: false, message: "Invalid JSON" }));
+    }
+  });
+};
+
+// Funcție pentru obținerea tuturor notelor date de un profesor
+const getGradesByTeacher = (req, res) => {
+  let body = "";
+
+  req.on("data", (chunk) => {
+    body += chunk.toString();
+  });
+
+  req.on("end", () => {
+    try {
+      const { ProfesorID } = JSON.parse(body);
+
+      if (!ProfesorID) {
+        res.writeHead(400, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ success: false, message: "ProfesorID is required" }));
+        return;
+      }
+
+      const query = "SELECT * FROM note WHERE ProfesorID = ?";
+      pool.query(query, [ProfesorID], (error, results) => {
+        if (error) {
+          console.error("Error querying database:", error);
+          res.writeHead(500, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ success: false, message: "Database error" }));
+        } else {
+          res.writeHead(200, { "Content-Type": "application/json" });
+          res.end(JSON.stringify(results));
+        }
+      });
+    } catch (err) {
+      console.error("Error parsing JSON:", err);
+      res.writeHead(400, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ success: false, message: "Invalid JSON" }));
+    }
+  });
+};
+
+// Funcție pentru obținerea tuturor notelor primite de un elev
+const getGradesByStudent = (req, res) => {
+  let body = "";
+
+  req.on("data", (chunk) => {
+    body += chunk.toString();
+  });
+
+  req.on("end", () => {
+    try {
+      const { ElevID } = JSON.parse(body);
+
+      if (!ElevID) {
+        res.writeHead(400, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ success: false, message: "ElevID is required" }));
+        return;
+      }
+
+      const query = "SELECT * FROM note WHERE ElevID = ?";
+      pool.query(query, [ElevID], (error, results) => {
+        if (error) {
+          console.error("Error querying database:", error);
+          res.writeHead(500, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ success: false, message: "Database error" }));
+        } else {
+          res.writeHead(200, { "Content-Type": "application/json" });
+          res.end(JSON.stringify(results));
+        }
+      });
     } catch (err) {
       console.error("Error parsing JSON:", err);
       res.writeHead(400, { "Content-Type": "application/json" });
@@ -920,15 +1045,16 @@ const handleProblemApproval = (req, res) => {
 
   req.on("end", () => {
     try {
-      const { problemID, status } = JSON.parse(body);
+      const { problemId, status } = JSON.parse(body);
 
-      if (!problemID || !status) {
+      if (!problemId || !status) {
         res.writeHead(400, { "Content-Type": "application/json" });
         res.end(JSON.stringify({ success: false, message: "Missing required fields" }));
         return;
       }
 
-      pool.query("SELECT ID FROM probleme WHERE ID = ?" , [problemID], (err, results) => {
+      const queryProblemExist = "SELECT ID FROM probleme WHERE ID = ?";
+      pool.query(queryProblemExist, [problemId], (err, results) => {
         if (err) {
           console.error("Error querying database:", err);
           res.writeHead(500, { "Content-Type": "application/json" });
@@ -943,7 +1069,8 @@ const handleProblemApproval = (req, res) => {
         }
 
         if (status === "accepted") {
-          pool.query("UPDATE probleme SET Stare = 1 WHERE ID = ?", [problemID], (error, results) => {
+          const query = "UPDATE probleme SET Stare = 1 WHERE ID = ?";
+          pool.query(query, [problemId], (error, results) => {
             if (error) {
               console.error("Error updating data:", error);
               res.writeHead(500, { "Content-Type": "application/json" });
@@ -955,7 +1082,7 @@ const handleProblemApproval = (req, res) => {
           });
         } else if (status === "denied") {
           const query = "DELETE FROM probleme WHERE ID = ?";
-          pool.query(query, [problemID], (error, results) => {
+          pool.query(query, [problemId], (error, results) => {
             if (error) {
               console.error("Error deleting data:", error);
               res.writeHead(500, { "Content-Type": "application/json" });
@@ -1034,21 +1161,6 @@ const server = http.createServer((req, res) => {
     handleAddClass(req, res);
   } else if (req.method === "POST" && pathname === "/problems/all") {
     getAllProblems(res);
-  } else if (req.method === "POST" && pathname.startsWith("/problems/search")) {
-    searchProblems(req, res);
-  } else if (
-    req.method === "POST" &&
-    pathname.startsWith("/classes/search/Teacher")
-  ) {
-    searchClassesTeacher(req, res);
-  } else if (
-    req.method === "POST" &&
-    pathname.startsWith("/classes/search/Student")
-  ) {
-    searchClassesStudent(req, res);
-  } else if (req.method === "POST" && pathname.startsWith("/Teacher/")) {
-    const teacherId = pathname.split("/")[2];
-    getTeacherById(res, teacherId);
   } else if (req.method === "POST" && pathname === "/classes/all/Teacher") {
     getAllGroupsForProfesor(req, res);
   } else if (req.method === "POST" && pathname === "/classes/all/Student") {
@@ -1071,9 +1183,24 @@ const server = http.createServer((req, res) => {
     handleCheckProblemInHomework(req, res);
   } else if (req.method === "POST" && pathname === "/problems/approval") {
     handleProblemApproval(req, res);
+  } else if (req.method === "POST" && pathname === "/grades/add") {
+    handleAddGrade(req, res);
+  } else if (req.method === "POST" && pathname === "/grades/teacher") {
+    getGradesByTeacher(req, res);
+  } else if (req.method === "POST" && pathname === "/grades/student") {
+    getGradesByStudent(req, res);
+  } else if (req.method === "POST" && pathname.startsWith("/problems/search")) {
+    searchProblems(req, res);
+  } else if (req.method === "POST" && pathname.startsWith("/classes/search/Teacher")) {
+    searchClassesTeacher(req, res);
+  } else if (req.method === "POST" && pathname.startsWith("/classes/search/Student")) {
+    searchClassesStudent(req, res);
   } else if (req.method === "POST" && pathname.startsWith("/problems/")) {
     const problemId = pathname.split("/")[2];
     getProblemById(res, problemId);
+  } else if (req.method === "POST" && pathname.startsWith("/Teacher/")) {
+    const teacherId = pathname.split("/")[2];
+    getTeacherById(res, teacherId);
   } else {
     res.writeHead(404, { "Content-Type": "application/json" });
     res.end(JSON.stringify({ success: false, message: "Not Found" }));
