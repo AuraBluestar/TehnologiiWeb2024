@@ -521,7 +521,10 @@ const getProblemReports = (req, res) => {
       const query = `
         SELECT 
           (SELECT COUNT(*) FROM rezolvari WHERE ProblemaID = ?) AS users_tried,
-          (SELECT COUNT(*) FROM rezolvari WHERE ProblemaID = ? AND Corecta = 1) AS users_succeeded
+          (SELECT COUNT(*)
+          FROM rezolvari r
+          JOIN note n ON n.ProblemaID = r.ProblemaID AND n.valoare >= 5
+          WHERE r.ProblemaID = 11) AS users_succeeded;
       `;
       pool.query(query, [ProblemID, ProblemID], (error, results) => {
         if (error) {
