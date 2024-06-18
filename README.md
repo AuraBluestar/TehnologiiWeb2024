@@ -16,7 +16,8 @@ Echipa:
 - creare grupe + adaugare elevi
 - popularea cu grupe la profesori si la studenti
 - creare tema(doar pe frontend)
-- pagina problemei pt guest si pt studenti(lipseste formularul pt rezolvare)
+- pagina problemei pt guest si pt studenti(lipseste formularul pt rezolvare) si pt profesori(doar front)
+- exportarea problemei
 
 # Ce mai e de facut:
 - filtrare grupe(facut la studenti dar nu merge)
@@ -25,6 +26,7 @@ Echipa:
 - populare cu teme asignate unui elev
 - user page(prof + elev + admin)
 - creare problema(+ cu import json)
+- landing page + pagina problema pt admin
 
 # Important de facut: 
 - modificarea link-uirii dintre pagini astfel incat sa fie dupa structura din server.js
