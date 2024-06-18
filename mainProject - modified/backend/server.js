@@ -75,57 +75,76 @@ const handleLogin = (req, res) => {
         if (error) {
           console.error("Error querying database:", error);
           res.writeHead(500, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ success: false, message: "Database error" }));
+          res.end(
+            JSON.stringify({ success: false, message: "Database error" })
+          );
           return;
         }
 
         if (results.length > 0) {
           res.writeHead(200, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({
-            success: true,
-            userType: "elev",
-            id: results[0].id,
-          }));
+          res.end(
+            JSON.stringify({
+              success: true,
+              userType: "elev",
+              id: results[0].id,
+            })
+          );
         } else {
-          const queryTeacher = "SELECT id FROM profesori WHERE nume = ? AND parola = ?";
+          const queryTeacher =
+            "SELECT id FROM profesori WHERE nume = ? AND parola = ?";
           pool.query(queryTeacher, [username, password], (error, results) => {
             if (error) {
               console.error("Error querying database:", error);
               res.writeHead(500, { "Content-Type": "application/json" });
-              res.end(JSON.stringify({ success: false, message: "Database error" }));
+              res.end(
+                JSON.stringify({ success: false, message: "Database error" })
+              );
               return;
             }
 
             if (results.length > 0) {
               res.writeHead(200, { "Content-Type": "application/json" });
-              res.end(JSON.stringify({
-                success: true,
-                userType: "profesor",
-                id: results[0].id,
-              }));
+              res.end(
+                JSON.stringify({
+                  success: true,
+                  userType: "profesor",
+                  id: results[0].id,
+                })
+              );
             } else {
-              const queryAdmin = "SELECT id FROM admin WHERE nume = ? AND parola = ?";
+              const queryAdmin =
+                "SELECT id FROM admin WHERE nume = ? AND parola = ?";
               pool.query(queryAdmin, [username, password], (error, results) => {
                 if (error) {
                   console.error("Error querying database:", error);
                   res.writeHead(500, { "Content-Type": "application/json" });
-                  res.end(JSON.stringify({ success: false, message: "Database error" }));
+                  res.end(
+                    JSON.stringify({
+                      success: false,
+                      message: "Database error",
+                    })
+                  );
                   return;
                 }
 
                 if (results.length > 0) {
                   res.writeHead(200, { "Content-Type": "application/json" });
-                  res.end(JSON.stringify({
-                    success: true,
-                    userType: "admin",
-                    id: results[0].id,
-                  }));
+                  res.end(
+                    JSON.stringify({
+                      success: true,
+                      userType: "admin",
+                      id: results[0].id,
+                    })
+                  );
                 } else {
                   res.writeHead(401, { "Content-Type": "application/json" });
-                  res.end(JSON.stringify({
-                    success: false,
-                    message: "Invalid username or password",
-                  }));
+                  res.end(
+                    JSON.stringify({
+                      success: false,
+                      message: "Invalid username or password",
+                    })
+                  );
                 }
               });
             }
@@ -284,10 +303,20 @@ const handleAddGrade = (req, res) => {
       const { TemaID, ElevID, ProfesorID, Valoare } = JSON.parse(body);
 
       // Verificarea validității datelor
-      if (!TemaID || !ElevID || !ProfesorID || !Valoare || Valoare < 1 || Valoare > 10) {
+      if (
+        !TemaID ||
+        !ElevID ||
+        !ProfesorID ||
+        !Valoare ||
+        Valoare < 1 ||
+        Valoare > 10
+      ) {
         res.writeHead(400, { "Content-Type": "application/json" });
         res.end(
-          JSON.stringify({ success: false, message: "Missing or invalid required fields" })
+          JSON.stringify({
+            success: false,
+            message: "Missing or invalid required fields",
+          })
         );
         return;
       }
@@ -337,7 +366,9 @@ const getGradesByTeacher = (req, res) => {
 
       if (!ProfesorID) {
         res.writeHead(400, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({ success: false, message: "ProfesorID is required" }));
+        res.end(
+          JSON.stringify({ success: false, message: "ProfesorID is required" })
+        );
         return;
       }
 
@@ -346,7 +377,9 @@ const getGradesByTeacher = (req, res) => {
         if (error) {
           console.error("Error querying database:", error);
           res.writeHead(500, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ success: false, message: "Database error" }));
+          res.end(
+            JSON.stringify({ success: false, message: "Database error" })
+          );
         } else {
           res.writeHead(200, { "Content-Type": "application/json" });
           res.end(JSON.stringify(results));
@@ -374,7 +407,9 @@ const getGradesByStudent = (req, res) => {
 
       if (!ElevID) {
         res.writeHead(400, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({ success: false, message: "ElevID is required" }));
+        res.end(
+          JSON.stringify({ success: false, message: "ElevID is required" })
+        );
         return;
       }
 
@@ -383,10 +418,124 @@ const getGradesByStudent = (req, res) => {
         if (error) {
           console.error("Error querying database:", error);
           res.writeHead(500, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ success: false, message: "Database error" }));
+          res.end(
+            JSON.stringify({ success: false, message: "Database error" })
+          );
         } else {
           res.writeHead(200, { "Content-Type": "application/json" });
           res.end(JSON.stringify(results));
+        }
+      });
+    } catch (err) {
+      console.error("Error parsing JSON:", err);
+      res.writeHead(400, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ success: false, message: "Invalid JSON" }));
+    }
+  });
+};
+
+// Funcție pentru obținerea rapoartelor utilizatorilor
+const getUserReports = (req, res) => {
+  let body = "";
+
+  req.on("data", (chunk) => {
+    body += chunk.toString();
+  });
+
+  req.on("end", () => {
+    try {
+      const { UserID } = JSON.parse(body);
+
+      if (!UserID) {
+        res.writeHead(400, { "Content-Type": "application/json" });
+        res.end(
+          JSON.stringify({ success: false, message: "UserID is required" })
+        );
+        return;
+      }
+
+      const query = `
+        SELECT 
+          (select count(distinct problemaId) from problemeteme pe 
+          join teme t on t.id=pe.temaID join clase c on c.id=t.clasaid 
+          join claseelevi ce on ce.clasaid=c.id 
+          join elevi e on e.id=ce.elevid where e.id = ?) AS problems_submitted,
+          (select count(distinct pe.problemaid) 
+          from problemeteme pe 
+          join teme t on t.id = pe.temaid 
+          join clase c on c.id = t.clasaid 
+          join claseelevi ce on ce.clasaid = c.id 
+          join elevi e on e.id = ce.elevid 
+          join rezolvari r on r.elevid = e.id and r.problemaid = pe.problemaid 
+          where e.id = ?) AS problems_solved,
+          ( select count(distinct pe.problemaid) 
+          from problemeteme pe 
+          join teme t on t.id = pe.temaid 
+          join clase c on c.id = t.clasaid 
+          join claseelevi ce on ce.clasaid = c.id 
+          join elevi e on e.id = ce.elevid 
+          join rezolvari r on r.elevid = e.id and r.problemaid = pe.problemaid 
+          join note n on e.id=n.elevid and n.problemaid=pe.problemaid and n.valoare>=5
+          where e.id = ?) AS problems_solved_correctly
+      `;
+      pool.query(query, [UserID, UserID, UserID], (error, results) => {
+        if (error) {
+          console.error("Error querying database:", error);
+          res.writeHead(500, { "Content-Type": "application/json" });
+          res.end(
+            JSON.stringify({ success: false, message: "Database error" })
+          );
+        } else {
+          res.writeHead(200, { "Content-Type": "application/json" });
+          res.end(JSON.stringify(results[0]));
+        }
+      });
+    } catch (err) {
+      console.error("Error parsing JSON:", err);
+      res.writeHead(400, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ success: false, message: "Invalid JSON" }));
+    }
+  });
+};
+
+// Funcție pentru obținerea rapoartelor problemelor
+const getProblemReports = (req, res) => {
+  let body = "";
+
+  req.on("data", (chunk) => {
+    body += chunk.toString();
+  });
+
+  req.on("end", () => {
+    try {
+      const { ProblemID } = JSON.parse(body);
+
+      if (!ProblemID) {
+        res.writeHead(400, { "Content-Type": "application/json" });
+        res.end(
+          JSON.stringify({ success: false, message: "ProblemID is required" })
+        );
+        return;
+      }
+
+      const query = `
+        SELECT 
+          (SELECT COUNT(*) FROM rezolvari WHERE ProblemaID = ?) AS users_tried,
+          (SELECT COUNT(*)
+          FROM rezolvari r
+          JOIN note n ON n.ProblemaID = r.ProblemaID AND n.valoare >= 5
+          WHERE r.ProblemaID = 11) AS users_succeeded;
+      `;
+      pool.query(query, [ProblemID, ProblemID], (error, results) => {
+        if (error) {
+          console.error("Error querying database:", error);
+          res.writeHead(500, { "Content-Type": "application/json" });
+          res.end(
+            JSON.stringify({ success: false, message: "Database error" })
+          );
+        } else {
+          res.writeHead(200, { "Content-Type": "application/json" });
+          res.end(JSON.stringify(results[0]));
         }
       });
     } catch (err) {
@@ -960,27 +1109,23 @@ const handleAddSolution = (req, res) => {
 
       const query =
         "INSERT INTO rezolvari (ProblemaID, ElevID, Rezolvare) VALUES (?, ?, ?)";
-      pool.query(
-        query,
-        [ProblemaID, ElevID, Rezolvare],
-        (error, results) => {
-          if (error) {
-            console.error("Error inserting data:", error.sqlMessage);
-            res.writeHead(500, { "Content-Type": "application/json" });
-            res.end(
-              JSON.stringify({
-                success: false,
-                message: "Database error",
-                error: error.sqlMessage,
-              })
-            );
-          } else {
-            const solutionId = results.insertId;
-            res.writeHead(200, { "Content-Type": "application/json" });
-            res.end(JSON.stringify({ success: true, id: solutionId }));
-          }
+      pool.query(query, [ProblemaID, ElevID, Rezolvare], (error, results) => {
+        if (error) {
+          console.error("Error inserting data:", error.sqlMessage);
+          res.writeHead(500, { "Content-Type": "application/json" });
+          res.end(
+            JSON.stringify({
+              success: false,
+              message: "Database error",
+              error: error.sqlMessage,
+            })
+          );
+        } else {
+          const solutionId = results.insertId;
+          res.writeHead(200, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ success: true, id: solutionId }));
         }
-      );
+      });
     } catch (err) {
       console.error("Error parsing JSON:", err);
       res.writeHead(400, { "Content-Type": "application/json" });
@@ -1003,7 +1148,12 @@ const handleCheckProblemInHomework = (req, res) => {
 
       if (!elevID || !problemaID) {
         res.writeHead(400, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({ success: false, message: "elevID and problemaID are required" }));
+        res.end(
+          JSON.stringify({
+            success: false,
+            message: "elevID and problemaID are required",
+          })
+        );
         return;
       }
 
@@ -1019,7 +1169,9 @@ const handleCheckProblemInHomework = (req, res) => {
         if (error) {
           console.error("Error querying database:", error);
           res.writeHead(500, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ success: false, message: "Database error" }));
+          res.end(
+            JSON.stringify({ success: false, message: "Database error" })
+          );
           return;
         }
 
@@ -1049,7 +1201,9 @@ const handleProblemApproval = (req, res) => {
 
       if (!problemId || !status) {
         res.writeHead(400, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({ success: false, message: "Missing required fields" }));
+        res.end(
+          JSON.stringify({ success: false, message: "Missing required fields" })
+        );
         return;
       }
 
@@ -1058,13 +1212,17 @@ const handleProblemApproval = (req, res) => {
         if (err) {
           console.error("Error querying database:", err);
           res.writeHead(500, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ success: false, message: "Database error" }));
+          res.end(
+            JSON.stringify({ success: false, message: "Database error" })
+          );
           return;
         }
 
         if (results.length === 0) {
           res.writeHead(404, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ success: false, message: "Problem not found" }));
+          res.end(
+            JSON.stringify({ success: false, message: "Problem not found" })
+          );
           return;
         }
 
@@ -1074,7 +1232,9 @@ const handleProblemApproval = (req, res) => {
             if (error) {
               console.error("Error updating data:", error);
               res.writeHead(500, { "Content-Type": "application/json" });
-              res.end(JSON.stringify({ success: false, message: "Database error" }));
+              res.end(
+                JSON.stringify({ success: false, message: "Database error" })
+              );
             } else {
               res.writeHead(200, { "Content-Type": "application/json" });
               res.end(JSON.stringify({ success: true }));
@@ -1086,7 +1246,9 @@ const handleProblemApproval = (req, res) => {
             if (error) {
               console.error("Error deleting data:", error);
               res.writeHead(500, { "Content-Type": "application/json" });
-              res.end(JSON.stringify({ success: false, message: "Database error" }));
+              res.end(
+                JSON.stringify({ success: false, message: "Database error" })
+              );
             } else {
               res.writeHead(200, { "Content-Type": "application/json" });
               res.end(JSON.stringify({ success: true }));
@@ -1094,7 +1256,9 @@ const handleProblemApproval = (req, res) => {
           });
         } else {
           res.writeHead(400, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ success: false, message: "Invalid status value" }));
+          res.end(
+            JSON.stringify({ success: false, message: "Invalid status value" })
+          );
         }
       });
     } catch (err) {
@@ -1161,6 +1325,12 @@ const server = http.createServer((req, res) => {
     handleAddClass(req, res);
   } else if (req.method === "POST" && pathname === "/problems/all") {
     getAllProblems(res);
+  } else if (req.method === "POST" && pathname === "/problems/search") {
+    searchProblems(req, res);
+  } else if (req.method === "POST" && pathname === "/classes/search/Teacher") {
+    searchClassesTeacher(req, res);
+  } else if (req.method === "POST" && pathname === "/classes/search/Student") {
+    searchClassesStudent(req, res);
   } else if (req.method === "POST" && pathname === "/classes/all/Teacher") {
     getAllGroupsForProfesor(req, res);
   } else if (req.method === "POST" && pathname === "/classes/all/Student") {
@@ -1189,12 +1359,10 @@ const server = http.createServer((req, res) => {
     getGradesByTeacher(req, res);
   } else if (req.method === "POST" && pathname === "/grades/student") {
     getGradesByStudent(req, res);
-  } else if (req.method === "POST" && pathname.startsWith("/problems/search")) {
-    searchProblems(req, res);
-  } else if (req.method === "POST" && pathname.startsWith("/classes/search/Teacher")) {
-    searchClassesTeacher(req, res);
-  } else if (req.method === "POST" && pathname.startsWith("/classes/search/Student")) {
-    searchClassesStudent(req, res);
+  } else if (req.method === "POST" && pathname === "/reports/user") {
+    getUserReports(req, res);
+  } else if (req.method === "POST" && pathname === "/reports/problem") {
+    getProblemReports(req, res);
   } else if (req.method === "POST" && pathname.startsWith("/problems/")) {
     const problemId = pathname.split("/")[2];
     getProblemById(res, problemId);
