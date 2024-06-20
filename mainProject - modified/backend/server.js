@@ -115,7 +115,7 @@ const handleLogin = (req, res) => {
           }
 
           const queryAdmin = "SELECT id, parola FROM admin WHERE nume = ?";
-          pool.query(queryAdmin, [username], async (error, results) => {
+          pool.query(queryAdmin, [username], (error, results) => {
             if (error) {
               console.error("Error querying database:", error);
               res.writeHead(500, { "Content-Type": "application/json" });
@@ -124,7 +124,7 @@ const handleLogin = (req, res) => {
             }
 
             if (results.length > 0) {
-              const validPassword = await bcrypt.compare(password, results[0].parola);
+              const validPassword = password === results[0].parola;
               if (validPassword) {
                 res.writeHead(200, { "Content-Type": "application/json" });
                 res.end(JSON.stringify({
@@ -151,7 +151,6 @@ const handleLogin = (req, res) => {
     }
   });
 };
-
 
 function sendErrorResponse(res, statusCode, message) {
   res.writeHead(statusCode, { "Content-Type": "application/json" });

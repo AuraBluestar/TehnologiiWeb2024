@@ -31,7 +31,6 @@
       <div class="logo"><a href="/loggedTeacher">In&lt;form&gt;atiX</a> </div>
     </div>
     <div class="navright">
-
       <ul>
         <li><a href="/loggedTeacher">Home</a></li>
         <li><a href="/">LogOut</a></li>
@@ -51,22 +50,13 @@
     </div>
     <ul>
       <li><a href="/loggedTeacher"><i class='bx bxs-home'></i><span class="navitem">Home</span></a></li>
-      <li><a href="/ProfilProfesor"><i
-            class='bx bxs-user-circle'></i><span
-            class="navitem">Profile</span></a></li>
-      <li><a href="/VisGroupsTeacher"><i class='bx bxs-group'></i><span
-            class="navitem">Groups</span></a></li>
-      <li><a href="/VisHWTeacher"><i class='bx bxs-book-alt'></i><span
-            class="navitem">Homeworks</span></a></li>
-      <li><a href="../../to be modified/ProblemePropuse.html"><i
-            class='bx bxs-book-content'></i><span class="navitem">Proposed
-            Problems</span></a></li>
-      <li><a href="createProblem"><i class='bx bxs-edit'></i><span
-            class="navitem">New Problem</span></a></li>
-      <li><a href="mailto:assistance@informatix.com"><i class='bx bxs-contact'></i><span
-            class="navitem">Contact</span></a></li>
-      <li><a href="/"><i class='bx bx-log-out'></i><span
-            class="navitem">LogOut</span></a></li>
+      <li><a href="/ProfilProfesor"><i class='bx bxs-user-circle'></i><span class="navitem">Profile</span></a></li>
+      <li><a href="/VisGroupsTeacher"><i class='bx bxs-group'></i><span class="navitem">Groups</span></a></li>
+      <li><a href="/VisHWTeacher"><i class='bx bxs-book-alt'></i><span class="navitem">Homeworks</span></a></li>
+      <li><a href="../../to be modified/ProblemePropuse.html"><i class='bx bxs-book-content'></i><span class="navitem">Proposed Problems</span></a></li>
+      <li><a href="createProblem"><i class='bx bxs-edit'></i><span class="navitem">New Problem</span></a></li>
+      <li><a href="mailto:assistance@informatix.com"><i class='bx bxs-contact'></i><span class="navitem">Contact</span></a></li>
+      <li><a href="/"><i class='bx bx-log-out'></i><span class="navitem">LogOut</span></a></li>
     </ul>
   </nav>
   
@@ -92,38 +82,127 @@
         <div class="problemDifficultySection">
             <header>Difficulty:</header>
             <div class="diffButtons">
-
-                <input type="radio" id="radio-easy" name="diffButtons" value="easy">
+                <input type="radio" id="radio-easy" name="diffButtons" value="1">
                 <label class="diff" for="radio-easy">Easy</label>
     
-                <input type="radio" id="radio-medium" name="diffButtons" value="medium">
+                <input type="radio" id="radio-medium" name="diffButtons" value="2">
                 <label class="diff" for="radio-medium">Medium</label>
     
-                <input type="radio" id="radio-hard" name="diffButtons" value="hard">
+                <input type="radio" id="radio-hard" name="diffButtons" value="3">
                 <label class="diff" for="radio-hard">Hard</label>
-    
             </div>
         </div>
 
         <div class="createProblemButtons">
             <button id="submitButton" type="button">Submit</button>
             <button id="jsonImportButton" type="button">Import JSON</button>
-        </div>
-
+            <input type="file" id="jsonFileInput" style="display:none" accept=".json"/>
+          </div>
     </div>
   </div>
 
   <script src="../scripts/script.js"></script>
   <script>
-     document.getElementById('password').addEventListener('focus', function() {
-            this.type = 'text';
+    document.addEventListener('DOMContentLoaded', function () {
+        const submitButton = document.getElementById('submitButton');
+        const jsonImportButton = document.getElementById('jsonImportButton');
+        const jsonFileInput = document.getElementById('jsonFileInput');
+
+        submitButton.addEventListener('click', function () {
+            const problemName = document.getElementById('problemName').value;
+            const problemDescription = document.getElementById('problemDescription').value;
+            const problemCategory = document.getElementById('problemCategory').value;
+            const problemDifficulty = document.querySelector('input[name="diffButtons"]:checked').value;
+            const profesorID = localStorage.getItem('id');
+
+            const problemData = {
+                titlu: problemName,
+                descriere: problemDescription,
+                capitol: problemCategory,
+                dificultate: problemDifficulty,
+                profesorID: profesorID
+            };
+
+            fetch('http://localhost:3000/problems/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(problemData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    if (confirm('Problem created successfully!')) {
+                        window.location.href = '/loggedTeacher';
+                    }
+                    document.getElementById('problemName').value = '';
+                    document.getElementById('problemDescription').value = '';
+                    document.getElementById('problemCategory').value = '';
+                    document.querySelector('input[name="diffButtons"]:checked').checked = false;
+                } else {
+                    alert('Failed to create problem');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error creating problem');
+            });
+        });
+    });
+    jsonImportButton.addEventListener('click', function () {
+            jsonFileInput.click();
         });
 
-        // Event listener to hide password on blur
-        document.getElementById('password').addEventListener('blur', function() {
-            this.type = 'password';
+        jsonFileInput.addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    try {
+                        const jsonData = JSON.parse(e.target.result);
+                        const profesorID = localStorage.getItem('id');
+                        jsonData.profesorID = profesorID; // Adăugăm profesorID la datele JSON
+
+                        fetch('http://localhost:3000/problems/add', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(jsonData)
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(`HTTP error! status: ${response.status}`);
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (data.success) {
+                                if (confirm('Problem imported successfully!')) {
+                                    window.location.href = '/loggedTeacher';
+                                }
+                            } else {
+                                alert('Failed to import problem');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('Error importing problem');
+                        });
+                    } catch (error) {
+                        console.error('Error parsing JSON:', error);
+                        alert('Invalid JSON file');
+                    }
+                };
+                reader.readAsText(file);
+            }
         });
-  
   </script>
 </body>
 </html>
