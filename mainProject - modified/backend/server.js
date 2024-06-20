@@ -1362,8 +1362,14 @@ const server = http.createServer((req, res) => {
       filePath = path.join(baseDir, "pages", "VisHWStudent.html");
     } else if (req.url === "/VisHWTeacher") {
       filePath = path.join(baseDir, "pages", "VisHWTeacher.html");
+    } else if (req.url === "/createProblem") {
+      filePath = path.join(baseDir, "pages", "createProblem.html");
+    } else if (req.url === "/ProfilProfesor") {
+      filePath = path.join(baseDir, "pages", "ProfilProfesor.html");
     } else if (req.url.startsWith("/VisProblemGuest")) {
       filePath = path.join(baseDir, "pages", "VisProblemGuest.html");
+    } else if (req.url === "/ProfilStudent") {
+      filePath = path.join(baseDir, "pages", "ProfilStudent.html");
     } else if (req.url.startsWith("/VisProblemStudent")) {
       filePath = path.join(baseDir, "pages", "VisProblemStudent.html");
     } else if (req.url.startsWith("/VisProblemTeacher")) {
