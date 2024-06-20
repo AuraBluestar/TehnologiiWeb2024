@@ -39,3 +39,4 @@ Echipa:
 
 # Important de facut: 
 - modificarea link-uirii dintre pagini astfel incat sa fie dupa structura din server.js
+- La final testarea tuturor paginilor
