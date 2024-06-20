@@ -20,6 +20,7 @@ Echipa:
 - exportarea problemei
 - user page(prof(partial)+elev )
 - CreateProblemPage
+- landing page&pagina problemapt admin
 
 # Ce mai e de facut:
 - filtrare grupe(facut la studenti dar nu merge)
@@ -28,7 +29,9 @@ Echipa:
 - populare cu teme asignate unui elev
 - Probleme Propuse pt profesor
 - IMPORTJson la creare problema
-- landing page&pagina problemapt admin
+- la createHW acum nu mai merge dropdown-ul pt grupe + de facut pt materii
+- la pagina problemei pt student desi e parte dintr-o tema nu se afiseaza zona de rezolvare
+- partea de acordare stele la probleme 
 - Miscellaneous pentru responsivness
 - Grupa&Tema unica
 - Rezolvat filter probleme(la dificultate e cu una inainte - easy nu selecteaza nimic, medium = easy si hard = medium)
