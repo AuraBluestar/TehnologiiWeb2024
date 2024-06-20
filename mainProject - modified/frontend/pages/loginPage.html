@@ -35,14 +35,14 @@
     <!-- This is the NavBar -->
     <nav class="navbar">
         <div class="navleft">
-            <div class="logo"><a href="#">In&lt;form&gt;atiX</a> </div>
+            <div class="logo"><a href="/">In&lt;form&gt;atiX</a> </div>
         </div>
         <div class="navright">
 
             <ul>
                 <li><a href="/">Home</a></li>
                 <li><a href="/signup">Sign Up</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="mailto:assistance@informatix.com">Contact</a></li>
             </ul>
         </div>
     </nav>
@@ -59,7 +59,7 @@
         <ul>
             <li><a href="/"><i class='bx bxs-home'></i><span class="navitem">Home</span></a></li>
             <li><a href="/signup"><i class='bx bxs-edit-alt'></i><span class="navitem">Sign Up</span></a></li>
-            <li><a href="#"><i class='bx bxs-contact'></i><span class="navitem">Contact</span></a></li>
+            <li><a href="mailto:assistance@informatix.com"><i class='bx bxs-contact'></i><span class="navitem">Contact</span></a></li>
         </ul>
     </nav>
     <div class="authcontent" style="left: 60px; width:calc(100dvw - 160px);">
@@ -111,6 +111,8 @@
                     window.location.href = '/loggedStudent';
                 } else if (data.userType === 'profesor') {
                     window.location.href = '/loggedTeacher';
+                } else if (data.userType === 'admin') {
+                    window.location.href = '/loggedAdmin';
                 }
             } else {
                 alert('Login failed: ' + data.message);

@@ -3,6 +3,8 @@ const fs = require("fs");
 const path = require("path");
 const mysql = require("mysql");
 const url = require("url");
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 // Configurarea conexiunii la baza de date
 const dbConfig = {
@@ -19,6 +21,8 @@ const pool = mysql.createPool(dbConfig);
 // Serverul rulează pe localhost
 const ip = "localhost";
 const port = 3000;
+
+const secretKey = 'your_secret_key'; // Ar trebui să fie o variabilă de mediu
 
 // Helper function to serve static files
 function serveFile(filePath, res, contentType) {
@@ -64,92 +68,40 @@ const handleLogin = (req, res) => {
     body += chunk.toString();
   });
 
-  req.on("end", () => {
+  req.on("end", async () => {
     try {
       const { username, password } = JSON.parse(body);
       console.log("Username:", username);
       console.log("Password:", password);
 
-      const queryStudent = "SELECT id FROM elevi WHERE nume = ? AND parola = ?";
-      pool.query(queryStudent, [username, password], (error, results) => {
+      const queryUser = "SELECT id, parola, 'elev' AS userType FROM elevi WHERE nume = ? UNION SELECT id, parola, 'profesor' AS userType FROM profesori WHERE nume = ? UNION SELECT id, parola, 'admin' AS userType FROM admin WHERE nume = ?";
+      pool.query(queryUser, [username, username, username], async (error, results) => {
         if (error) {
           console.error("Error querying database:", error);
           res.writeHead(500, { "Content-Type": "application/json" });
-          res.end(
-            JSON.stringify({ success: false, message: "Database error" })
-          );
+          res.end(JSON.stringify({ success: false, message: "Database error" }));
           return;
         }
 
         if (results.length > 0) {
-          res.writeHead(200, { "Content-Type": "application/json" });
-          res.end(
-            JSON.stringify({
+          const user = results[0];
+          const validPassword = await bcrypt.compare(password, user.parola);
+          if (validPassword) {
+            const token = jwt.sign({ id: user.id, userType: user.userType }, secretKey, { expiresIn: '1h' });
+            res.writeHead(200, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({
               success: true,
-              userType: "elev",
-              id: results[0].id,
-            })
-          );
-        } else {
-          const queryTeacher =
-            "SELECT id FROM profesori WHERE nume = ? AND parola = ?";
-          pool.query(queryTeacher, [username, password], (error, results) => {
-            if (error) {
-              console.error("Error querying database:", error);
-              res.writeHead(500, { "Content-Type": "application/json" });
-              res.end(
-                JSON.stringify({ success: false, message: "Database error" })
-              );
-              return;
-            }
-
-            if (results.length > 0) {
-              res.writeHead(200, { "Content-Type": "application/json" });
-              res.end(
-                JSON.stringify({
-                  success: true,
-                  userType: "profesor",
-                  id: results[0].id,
-                })
-              );
-            } else {
-              const queryAdmin =
-                "SELECT id FROM admin WHERE nume = ? AND parola = ?";
-              pool.query(queryAdmin, [username, password], (error, results) => {
-                if (error) {
-                  console.error("Error querying database:", error);
-                  res.writeHead(500, { "Content-Type": "application/json" });
-                  res.end(
-                    JSON.stringify({
-                      success: false,
-                      message: "Database error",
-                    })
-                  );
-                  return;
-                }
-
-                if (results.length > 0) {
-                  res.writeHead(200, { "Content-Type": "application/json" });
-                  res.end(
-                    JSON.stringify({
-                      success: true,
-                      userType: "admin",
-                      id: results[0].id,
-                    })
-                  );
-                } else {
-                  res.writeHead(401, { "Content-Type": "application/json" });
-                  res.end(
-                    JSON.stringify({
-                      success: false,
-                      message: "Invalid username or password",
-                    })
-                  );
-                }
-              });
-            }
-          });
+              token: token
+            }));
+            return;
+          }
         }
+
+        res.writeHead(401, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({
+          success: false,
+          message: "Invalid username or password",
+        }));
       });
     } catch (err) {
       console.error("Error parsing JSON:", err);
@@ -172,12 +124,15 @@ const handleAddStudent = (req, res) => {
     body += chunk.toString();
   });
 
-  req.on("end", () => {
+  req.on("end", async () => {
     try {
       const { name, email, password } = JSON.parse(body);
 
+      // Hashing the password
+      const hashedPassword = await bcrypt.hash(password, 10);
+
       const query = "INSERT INTO elevi (nume, email, parola) VALUES (?, ?, ?)";
-      pool.query(query, [name, email, password], (error, results) => {
+      pool.query(query, [name, email, hashedPassword], (error, results) => {
         if (error) {
           console.error("Error inserting data:", error);
           res.writeHead(500, { "Content-Type": "application/json" });
@@ -208,13 +163,16 @@ const handleAddTeacher = (req, res) => {
     body += chunk.toString();
   });
 
-  req.on("end", () => {
+  req.on("end", async () => {
     try {
       const { name, email, password } = JSON.parse(body);
 
+      // Hashing the password
+      const hashedPassword = await bcrypt.hash(password, 10);
+
       const query =
         "INSERT INTO profesori (nume, email, parola) VALUES (?, ?, ?)";
-      pool.query(query, [name, email, password], (error, results) => {
+      pool.query(query, [name, email, hashedPassword], (error, results) => {
         if (error) {
           console.error("Error inserting data:", error);
           res.writeHead(500, { "Content-Type": "application/json" });
@@ -549,6 +507,19 @@ const getProblemReports = (req, res) => {
 // Funcție pentru obținerea tuturor problemelor
 const getAllProblems = (res) => {
   pool.query("SELECT * FROM probleme WHERE Stare=1", (error, results) => {
+    if (error) {
+      res.writeHead(500, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ error: error.message }));
+      return;
+    }
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.end(JSON.stringify(results));
+  });
+};
+
+// Funcție pentru obținerea tuturor problemelor
+const getPendingProblems = (res) => {
+  pool.query("SELECT * FROM probleme WHERE Stare=0", (error, results) => {
     if (error) {
       res.writeHead(500, { "Content-Type": "application/json" });
       res.end(JSON.stringify({ error: error.message }));
@@ -1269,6 +1240,24 @@ const handleProblemApproval = (req, res) => {
   });
 };
 
+// Middleware pentru verificarea JWT
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+
+  if (token == null) {
+    return res.sendStatus(401); // Unauthorized
+  }
+
+  jwt.verify(token, secretKey, (err, user) => {
+    if (err) {
+      return res.sendStatus(403); // Forbidden
+    }
+    req.user = user;
+    next();
+  });
+};
+
 const server = http.createServer((req, res) => {
   const baseDir = path.join(__dirname, "..", "frontend");
   const parsedUrl = url.parse(req.url, true);
@@ -1288,6 +1277,8 @@ const server = http.createServer((req, res) => {
       filePath = path.join(baseDir, "pages", "createHW.html");
     } else if (req.url === "/loggedStudent") {
       filePath = path.join(baseDir, "pages", "loggedStudent.html");
+    } else if (req.url === "/loggedAdmin") {
+      filePath = path.join(baseDir, "pages", "loggedAdmin.html");
     } else if (req.url === "/loggedTeacher") {
       filePath = path.join(baseDir, "pages", "loggedTeacher.html");
     } else if (req.url === "/VisGroupsStudent") {
@@ -1304,6 +1295,8 @@ const server = http.createServer((req, res) => {
       filePath = path.join(baseDir, "pages", "VisProblemStudent.html");
     } else if (req.url.startsWith("/VisProblemTeacher")) {
       filePath = path.join(baseDir, "pages", "VisProblemTeacher.html");
+    } else if (req.url.startsWith("/VisProblemAdmin")) {
+      filePath = path.join(baseDir, "pages", "VisProblemAdmin.html");
     } else {
       // Serve static files (CSS, images, etc.)
       filePath = path.join(baseDir, req.url);
@@ -1320,55 +1313,57 @@ const server = http.createServer((req, res) => {
   } else if (req.method === "POST" && pathname === "/addTeacher") {
     handleAddTeacher(req, res);
   } else if (req.method === "POST" && pathname === "/problems/add") {
-    handleAddProblem(req, res);
+    authenticateToken(req, res, () => handleAddProblem(req, res));
   } else if (req.method === "POST" && pathname === "/classes/add") {
-    handleAddClass(req, res);
+    authenticateToken(req, res, () => handleAddClass(req, res));
   } else if (req.method === "POST" && pathname === "/problems/all") {
-    getAllProblems(res);
+    authenticateToken(req, res, () => getAllProblems(res));
+  } else if (req.method === "POST" && pathname === "/problems/pending") {
+    authenticateToken(req, res, () => getPendingProblems(res));
   } else if (req.method === "POST" && pathname === "/problems/search") {
-    searchProblems(req, res);
+    authenticateToken(req, res, () => searchProblems(req, res));
   } else if (req.method === "POST" && pathname === "/classes/search/Teacher") {
-    searchClassesTeacher(req, res);
+    authenticateToken(req, res, () => searchClassesTeacher(req, res));
   } else if (req.method === "POST" && pathname === "/classes/search/Student") {
-    searchClassesStudent(req, res);
+    authenticateToken(req, res, () => searchClassesStudent(req, res));
   } else if (req.method === "POST" && pathname === "/classes/all/Teacher") {
-    getAllGroupsForProfesor(req, res);
+    authenticateToken(req, res, () => getAllGroupsForProfesor(req, res));
   } else if (req.method === "POST" && pathname === "/classes/all/Student") {
-    getAllGroupsForStudent(req, res);
+    authenticateToken(req, res, () => getAllGroupsForStudent(req, res));
   } else if (req.method === "POST" && pathname === "/classes/addStudent") {
-    handleAddStudentToClass(req, res);
+    authenticateToken(req, res, () => handleAddStudentToClass(req, res));
   } else if (req.method === "POST" && pathname === "/student/id") {
-    getStudentIdByName(req, res);
+    authenticateToken(req, res, () => getStudentIdByName(req, res));
   } else if (req.method === "POST" && pathname === "/homeworks/teacher") {
-    handleGetHomeworkByTeacher(req, res);
+    authenticateToken(req, res, () => handleGetHomeworkByTeacher(req, res));
   } else if (req.method === "POST" && pathname === "/homeworks/student") {
-    handleGetHomeworkForStudent(req, res);
+    authenticateToken(req, res, () => handleGetHomeworkForStudent(req, res));
   } else if (req.method === "POST" && pathname === "/homework/add") {
-    handleAddHomework(req, res);
+    authenticateToken(req, res, () => handleAddHomework(req, res));
   } else if (req.method === "POST" && pathname === "/homework/addProblem") {
-    handleAddProblemToHomework(req, res);
+    authenticateToken(req, res, () => handleAddProblemToHomework(req, res));
   } else if (req.method === "POST" && pathname === "/solutions/add") {
-    handleAddSolution(req, res);
+    authenticateToken(req, res, () => handleAddSolution(req, res));
   } else if (req.method === "POST" && pathname === "/homeworks/checkProblem") {
-    handleCheckProblemInHomework(req, res);
+    authenticateToken(req, res, () => handleCheckProblemInHomework(req, res));
   } else if (req.method === "POST" && pathname === "/problems/approval") {
-    handleProblemApproval(req, res);
+    authenticateToken(req, res, () => handleProblemApproval(req, res));
   } else if (req.method === "POST" && pathname === "/grades/add") {
-    handleAddGrade(req, res);
+    authenticateToken(req, res, () => handleAddGrade(req, res));
   } else if (req.method === "POST" && pathname === "/grades/teacher") {
-    getGradesByTeacher(req, res);
+    authenticateToken(req, res, () => getGradesByTeacher(req, res));
   } else if (req.method === "POST" && pathname === "/grades/student") {
-    getGradesByStudent(req, res);
+    authenticateToken(req, res, () => getGradesByStudent(req, res));
   } else if (req.method === "POST" && pathname === "/reports/user") {
-    getUserReports(req, res);
+    authenticateToken(req, res, () => getUserReports(req, res));
   } else if (req.method === "POST" && pathname === "/reports/problem") {
-    getProblemReports(req, res);
+    authenticateToken(req, res, () => getProblemReports(req, res));
   } else if (req.method === "POST" && pathname.startsWith("/problems/")) {
     const problemId = pathname.split("/")[2];
-    getProblemById(res, problemId);
+    authenticateToken(req, res, () => getProblemById(res, problemId));
   } else if (req.method === "POST" && pathname.startsWith("/Teacher/")) {
     const teacherId = pathname.split("/")[2];
-    getTeacherById(res, teacherId);
+    authenticateToken(req, res, () => getTeacherById(res, teacherId));
   } else {
     res.writeHead(404, { "Content-Type": "application/json" });
     res.end(JSON.stringify({ success: false, message: "Not Found" }));
