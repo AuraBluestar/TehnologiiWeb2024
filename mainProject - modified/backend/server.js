@@ -603,20 +603,32 @@ const handleAddHomework = (req, res) => {
 
   req.on("end", () => {
     try {
-      const { ClasaID, ProfesorID } = JSON.parse(body);
+      const { Grupa, Materie, ProfesorID } = JSON.parse(body);
 
-      const query = "INSERT INTO teme (ClasaID, ProfesorID) VALUES (?, ?)";
-      pool.query(query, [ClasaID, ProfesorID], (error, results) => {
-        if (error) {
-          console.error("Error inserting data:", error);
+      const findClassQuery = "SELECT ID FROM clase WHERE Grupa = ? AND Materie = ?";
+      pool.query(findClassQuery, [Grupa, Materie], (findError, findResults) => {
+        if (findError) {
+          console.error("Error finding class:", findError);
           res.writeHead(500, { "Content-Type": "application/json" });
-          res.end(
-            JSON.stringify({ success: false, message: "Database error" })
-          );
+          res.end(JSON.stringify({ success: false, message: "Database error" }));
+        } else if (findResults.length === 0) {
+          res.writeHead(404, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ success: false, message: "Class not found" }));
         } else {
-          const homeworkId = results.insertId;
-          res.writeHead(200, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ success: true, id: homeworkId }));
+          const ClasaID = findResults[0].ID;
+
+          const insertQuery = "INSERT INTO teme (ClasaID, ProfesorID) VALUES (?, ?)";
+          pool.query(insertQuery, [ClasaID, ProfesorID], (insertError, insertResults) => {
+            if (insertError) {
+              console.error("Error inserting data:", insertError);
+              res.writeHead(500, { "Content-Type": "application/json" });
+              res.end(JSON.stringify({ success: false, message: "Database error" }));
+            } else {
+              const homeworkId = insertResults.insertId;
+              res.writeHead(200, { "Content-Type": "application/json" });
+              res.end(JSON.stringify({ success: true, id: homeworkId }));
+            }
+          });
         }
       });
     } catch (err) {
@@ -626,6 +638,7 @@ const handleAddHomework = (req, res) => {
     }
   });
 };
+
 
 // Functie pentru a manevra cererile de adăugare problemă la temă
 const handleAddProblemToHomework = (req, res) => {
@@ -1285,6 +1298,39 @@ const handleProblemApproval = (req, res) => {
   });
 };
 
+// Funcție pentru obținerea materiilor pentru o anumită grupă
+const getSubjectsByGroup = (req, res) => {
+  let body = "";
+
+  req.on("data", (chunk) => {
+    body += chunk.toString();
+  });
+
+  req.on("end", () => {
+    try {
+      const { Grupa, ProfesorID } = JSON.parse(body);
+
+      const query = "SELECT Materie FROM clase WHERE Grupa = ? And ProfesorID=? ";
+      pool.query(query, [Grupa], [ProfesorID], (error, results) => {
+        if (error) {
+          console.error("Error fetching subjects:", error);
+          res.writeHead(500, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ success: false, message: "Database error" }));
+          return;
+        }
+        
+        const subjects = results.map(row => row.Materie);
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ success: true, subjects }));
+      });
+    } catch (err) {
+      console.error("Error parsing JSON:", err);
+      res.writeHead(400, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ success: false, message: "Invalid JSON" }));
+    }
+  });
+};
+
 const server = http.createServer((req, res) => {
   const baseDir = path.join(__dirname, "..", "frontend");
   const parsedUrl = url.parse(req.url, true);
@@ -1385,6 +1431,8 @@ const server = http.createServer((req, res) => {
     getUserReports(req, res);
   } else if (req.method === "POST" && pathname === "/reports/problem") {
     getProblemReports(req, res);
+  } else if (req.method === "POST" && pathname === "/subjects") {
+    getSubjectsByGroup(req, res);
   } else if (req.method === "POST" && pathname.startsWith("/problems/")) {
     const problemId = pathname.split("/")[2];
     getProblemById(res, problemId);
