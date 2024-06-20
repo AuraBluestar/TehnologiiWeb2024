@@ -105,12 +105,13 @@
     <script src="../scripts/script.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", () => {
+        const profesorId = localStorage.getItem('id');
         fetch("http://localhost:3000/homeworks/teacher", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify({ profesorID: 2 })
+          body: JSON.stringify({ profesorID: parseInt(profesorId) })
         })
         .then(response => response.json())
         .then(data => {
