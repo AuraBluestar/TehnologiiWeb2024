@@ -18,15 +18,21 @@ Echipa:
 - creare tema(doar pe frontend)
 - pagina problemei pt guest si pt studenti(lipseste formularul pt rezolvare) si pt profesori(doar front)
 - exportarea problemei
+- user page(prof(partial)+elev )
+- CreateProblemPage
 
 # Ce mai e de facut:
 - filtrare grupe(facut la studenti dar nu merge)
 - filtrare teme
 - populare cu teme create de profesor
 - populare cu teme asignate unui elev
-- user page(prof + elev + admin)
-- creare problema(+ cu import json)
-- landing page + pagina problema pt admin
+- Probleme Propuse pt profesor
+- IMPORTJson la creare problema
+- landing page&pagina problemapt admin
+- Miscellaneous pentru responsivness
+- Grupa&Tema unica
+- Rezolvat filter probleme(la dificultate e cu una inainte - easy nu selecteaza nimic, medium = easy si hard = medium)
+
 
 # Important de facut: 
 - modificarea link-uirii dintre pagini astfel incat sa fie dupa structura din server.js
