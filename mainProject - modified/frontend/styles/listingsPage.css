@@ -13,6 +13,37 @@
   min-height: 300px;
 }
 
+/*Pagina submission*/
+
+.submission,
+.submission-info,
+.grading-section{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.submission-info{
+  margin-bottom: 20px;
+}
+
+.grading-section input{
+  width: 28px;
+  max-height: 20px;
+  font-size: 20px;
+}
+
+.grading-section input[type=number]::-webkit-outer-spin-button,
+        .grading-section input[type=number]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        /* Hide the spinner for Firefox */
+        .grading-section input[type=number] {
+            -moz-appearance: textfield;
+        }
+
 /*Pagina createProblem*/
 
 .CreateProblemPage{
@@ -139,7 +170,8 @@
   width: calc(100% - 20px);
 }
 
-.profileButtons{
+.profileButtons
+{
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -187,6 +219,13 @@
   width:32%;
   margin-left: 5px;
   margin-right: 5px;
+}
+
+.groupHwDelete{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 20px;
 }
 
 
@@ -337,9 +376,10 @@
   margin-top: 20px;
 }
 
-.solution-box {
+.solution-box,
+.submission-code {
   width: 100%;
-  height: 200px;
+  height: 400px;
   padding: 10px;
   margin-bottom: 10px;
   border-radius: 14px;
