@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../styles/nav-bar.css">
-  <link rel="stylesheet" href="../styles/side-bar.css">
-  <link rel="stylesheet" href="../styles/main-content.css">
-  <link rel="stylesheet" href="../styles/searchmenu.css">
-  <link rel="stylesheet" href="../styles/listingsPage.css">
-  <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-  <title>Problem</title>
-  <style>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/nav-bar.css">
+    <link rel="stylesheet" href="../styles/side-bar.css">
+    <link rel="stylesheet" href="../styles/main-content.css">
+    <link rel="stylesheet" href="../styles/searchmenu.css">
+    <link rel="stylesheet" href="../styles/listingsPage.css">
+    <link rel='stylesheet'
+      href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <title>Problem</title>
+    <style>
     * {
       margin: 0;
       padding: 0;
@@ -23,101 +24,126 @@
       font-family: Lato, normal;
     }
   </style>
-</head>
-<body>
-  <!-- This is the NavBar -->
-  <nav class="navbar">
-    <div class="navleft">
-      <div class="logo"><a href="/loggedStudent">In&lt;form&gt;atiX</a></div>
-    </div>
-    <div class="navright">
+  </head>
+  <body>
+    <!-- This is the NavBar -->
+    <nav class="navbar">
+      <div class="navleft">
+        <div class="logo"><a href="/loggedStudent">In&lt;form&gt;atiX</a></div>
+      </div>
+      <div class="navright">
+        <ul>
+          <li><a href="/loggedStudent">Home</a></li>
+          <li><a href="/">LogOut</a></li>
+          <li><a href="mailto:assistance@informatix.com"> Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+    <!-- This is the SideBar -->
+    <nav class="sidebar">
+      <div class="top">
+        <div class="menu">
+          <i class='bx bx-code'></i>
+          <span>Menu</span>
+        </div>
+        <i class='bx bx-menu' id="btn"></i>
+      </div>
       <ul>
-        <li><a href="/loggedStudent">Home</a></li>
-        <li><a href="/">LogOut</a></li>
-        <li><a href="mailto:assistance@informatix.com"> Contact</a></li>
+        <li><a href="/loggedStudent"><i class='bx bxs-home'></i><span
+              class="navitem">Home</span></a></li>
+        <li><a href="/ProfilStudent"><i class='bx bxs-user-circle'></i><span
+              class="navitem">Profile</span></a></li>
+        <li><a href="/VisGroupsStudent"><i class='bx bxs-group'></i><span
+              class="navitem">Groups</span></a></li>
+        <li><a href="/VisHWStudent"><i class='bx bxs-book-alt'></i><span
+              class="navitem">Homeworks</span></a></li>
+        <li><a href="mailto:assistance@informatix.com"><i
+              class='bx bxs-contact'></i><span
+              class="navitem">Contact</span></a></li>
+        <li><a href="/"><i class='bx bx-log-out'></i><span
+              class="navitem">LogOut</span></a></li>
       </ul>
-    </div>
-  </nav>
-  <!-- This is the SideBar -->
-  <nav class="sidebar">
-    <div class="top">
-      <div class="menu">
-        <i class='bx bx-code'></i>
-        <span>Menu</span>
-      </div>
-      <i class='bx bx-menu' id="btn"></i>
-    </div>
-    <ul>
-      <li><a href="/loggedStudent"><i class='bx bxs-home'></i><span class="navitem">Home</span></a></li>
-      <li><a href="/ProfilStudent"><i class='bx bxs-user-circle'></i><span class="navitem">Profile</span></a></li>
-      <li><a href="/VisGroupsStudent"><i class='bx bxs-group'></i><span class="navitem">Groups</span></a></li>
-      <li><a href="/VisHWStudent"><i class='bx bxs-book-alt'></i><span class="navitem">Homeworks</span></a></li>
-      <li><a href="mailto:assistance@informatix.com"><i class='bx bxs-contact'></i><span class="navitem">Contact</span></a></li>
-      <li><a href="/"><i class='bx bx-log-out'></i><span class="navitem">LogOut</span></a></li>
-    </ul>
-  </nav>
-  
-  <div class="maincontent" style="margin-top:10px;">
-    <div class="ProblemPage" style="font-size:20px;">
-      <div class="problem-container" style="cursor:default;">
-        <!-- Left Section -->
-        <div class="up-section">
-          <div class="left-section">
-            <!-- Details section -->
-            <div class="details" style="margin-left:0px;">
-              <!-- ID and Name -->
-              <div class="id-name">
-                <p class="problem-id">#ID</p>
-                <p class="problem-name">titlu</p>
-              </div>
-              <!-- Category and Difficulty -->
-              <div class="category-diff">
-                <p class="problem-category">Cateogrie</p>
-                <p class="problem-diff">Dificultate</p>
-              </div>
-            </div>
+    </nav>
 
-            <div class="grading-section">
-              <div class="star-rating">
-                <span class="star" data-value="1">&#9733;</span>
-                <span class="star" data-value="2">&#9733;</span>
-                <span class="star" data-value="3">&#9733;</span>
-                <span class="star" data-value="4">&#9733;</span>
-                <span class="star" data-value="5">&#9733;</span>
+    <div class="maincontent" style="margin-top:10px;">
+      <div class="ProblemPage" style="font-size:20px;">
+        <div class="problem-container" style="cursor:default;">
+          <!-- Left Section -->
+          <div class="up-section">
+            <div class="left-section">
+              <!-- Details section -->
+              <div class="details" style="margin-left:0px;">
+                <!-- ID and Name -->
+                <div class="id-name">
+                  <p class="problem-id">#ID</p>
+                  <p class="problem-name">titlu</p>
+                </div>
+                <!-- Category and Difficulty -->
+                <div class="category-diff">
+                  <p class="problem-category">Cateogrie</p>
+                  <p class="problem-diff">Dificultate</p>
+                </div>
+              </div>
+
+              <div class="grading-section">
+                <div class="star-rating">
+                  <span class="star" data-value="1">&#9733;</span>
+                  <span class="star" data-value="2">&#9733;</span>
+                  <span class="star" data-value="3">&#9733;</span>
+                  <span class="star" data-value="4">&#9733;</span>
+                  <span class="star" data-value="5">&#9733;</span>
+                </div>
+              </div>
+            </div>
+            <div class="right-section">
+              <div class="author">
+                <p>Author: <span id="author-name">Author Name</span></p>
               </div>
             </div>
           </div>
-          <div class="right-section">
-            <div class="author">
-              <p>Author: <span id="author-name">Author Name</span></p>
+          <div class="description-section">
+            <h3 style="font-weight: bolder;">Description</h3>
+            <div class="description">
+              <p class="problem-description">Write functions to perform various
+                string manipulation tasks such as reversal, concatenation, and
+                substring extraction.</p>
             </div>
           </div>
         </div>
-        <div class="description-section">
-          <h3 style="font-weight: bolder;">Description</h3>
-          <div class="description">
-            <p class="problem-description">Write functions to perform various string manipulation tasks such as reversal, concatenation, and substring extraction.</p>
+        <div class="submissions-section">
+          <h3 style="font-weight: bolder;">Submissions</h3>
+
+          <div class="submissions">
+            <div class="submission-box">
+              <p class="submitter-name">Patricia Onisor</p>
+              <p class="class-subject">A1 - Web Technologies</p>
+            </div>
+            <div class="submission-box">
+              <p class="submitter-name">John Doe</p>
+              <p class="class-subject">B2 - Database Systems</p>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="export-button">
-        <button class="json-export">Export to JSON</button>
-      </div>
-      <div class="submit-section" style="display: none;">
-        <textarea class="solution-box" placeholder="Enter your solution here..."></textarea>
-        <button class="submit-button">Submit</button>
+        <div class="export-button">
+          <button class="json-export">Export to JSON</button>
+        </div>
+        <div class="submit-section" style="display: none;">
+          <textarea class="solution-box"
+            placeholder="Enter your solution here..."></textarea>
+          <button class="submit-button">Submit</button>
+        </div>
       </div>
     </div>
-  </div>
-  <script src="../scripts/script.js"></script>
-  <script>
+    <script src="../scripts/script.js"></script>
+    <script>
     document.addEventListener('DOMContentLoaded', function () {
       const params = new URLSearchParams(window.location.search);
-      const problemId = parseInt(params.get('problemId'), 10);
-      const studentId = parseInt(params.get('studentId'), 10); // Assuming studentId is passed in the URL
+      const problemId = params.get('problemId');
+      const elevID = localStorage.getItem('id');
+      console.log(`Problem ID: ${problemId}, Elev ID: ${elevID}`);
 
-      if (problemId && studentId) {
-        fetchProblemDetails(problemId, studentId);
+      if (problemId && elevID) {
+        fetchProblemDetails(problemId, elevID);
       }
     });
 
@@ -129,15 +155,51 @@
         }
     });
 
-    function fetchProblemDetails(problemId, studentId) {
-      fetch(`http://localhost:3000/problems/${problemId}`, {
+    document.querySelector('.submit-button').addEventListener('click', function () {
+        const solutionText = document.querySelector('.solution-box').value;
+        const params = new URLSearchParams(window.location.search);
+        const problemId = params.get('problemId');
+        const profesorId = params.get('profesorId');
+        const elevID = localStorage.getItem('id');
+        console.log(`Problem ID: ${problemId}, Elev ID: ${elevID}, Profesor ID: ${profesorId}`);
+        if (solutionText && problemId && elevID) {
+            submitSolution(elevID, problemId, profesorId, solutionText);
+        } else {
+            alert('Please enter a solution before submitting.');
+        }
+    });
+
+    let problemData;
+
+    function fetchProblemDetails(problemId, elevID) {
+      fetch('http://localhost:3000/problems/student', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ elevID: elevID })
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Data received:', data);
+        if (data.success) {
+          const problemExists = data.data.some(problem => problem.problemaid == problemId);
+          console.log(`Problem exists: ${problemExists}`);
+          if (problemExists) {
+            document.querySelector('.submit-section').style.display = 'block';
+          }
         }
+
+        return fetch(`http://localhost:3000/problems/${problemId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
       })
       .then(response => response.json())
       .then(problem => {
+        console.log('Problem details:', problem);
         problemData = problem;
         document.querySelector('.problem-id').textContent = `#${problem.ID}`;
         document.querySelector('.problem-name').textContent = problem.Titlu;
@@ -154,24 +216,8 @@
       })
       .then(response => response.json())
       .then(teacher => {
+        console.log('Teacher details:', teacher);
         document.getElementById('author-name').textContent = teacher.nume;
-
-        // Check if the problem is part of the student's homework
-        return fetch(`http://localhost:3000/homeworks/checkProblem`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ elevID: studentId, problemaID: problemData.ID })
-        });
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success && data.isAssigned) {
-          document.querySelector('.submit-section').style.display = 'block';
-        } else {
-          document.querySelector('.submit-section').style.display = 'none';
-        }
       })
       .catch(error => {
         console.error('Error:', error);
@@ -191,15 +237,43 @@
       }
     }
 
+    function submitSolution(elevID, problemId, profesorId, solutionText) {
+        fetch('http://localhost:3000/solutions/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                ElevID: elevID,
+                ProblemaID: problemId,
+                ProfesorID: profesorId,
+                Rezolvare: solutionText
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Solution submitted:', data);
+            if (data.success) {
+                alert('Solution submitted successfully!');
+            } else {
+                alert('Failed to submit solution.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while submitting the solution.');
+        });
+    }
+
     function exportToJsonFile(jsonData) {
-      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(jsonData));
-      const downloadAnchorNode = document.createElement('a');
-      downloadAnchorNode.setAttribute("href", dataStr);
-      downloadAnchorNode.setAttribute("download", `problem_${jsonData.ID}.json`);
-      document.body.appendChild(downloadAnchorNode); // Required for Firefox
-      downloadAnchorNode.click();
-      downloadAnchorNode.remove();
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(jsonData));
+        const downloadAnchorNode = document.createElement('a');
+        downloadAnchorNode.setAttribute("href", dataStr);
+        downloadAnchorNode.setAttribute("download", `problem_${jsonData.ID}.json`);
+        document.body.appendChild(downloadAnchorNode); // Required for Firefox
+        downloadAnchorNode.click();
+        downloadAnchorNode.remove();
     }
   </script>
-</body>
+  </body>
 </html>

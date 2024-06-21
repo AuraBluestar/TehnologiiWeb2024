@@ -1114,6 +1114,50 @@ const handleGetHomeworkForStudent = (req, res) => {
   });
 };
 
+const handleGetProblemForStudent = (req, res) => {
+  let body = "";
+
+  req.on("data", (chunk) => {
+    body += chunk.toString();
+  });
+
+  req.on("end", () => {
+    try {
+      const { elevID } = JSON.parse(body);
+
+      if (!elevID) {
+        res.writeHead(400, { "Content-Type": "application/json" });
+        res.end(
+          JSON.stringify({ success: false, message: "elevID is required" })
+        );
+        return;
+      }
+
+      const query = `select distinct problemaid, profesorid from problemeteme pt 
+      join teme t on pt.temaid = t.id join claseelevi ce on 
+      ce.clasaid = t.clasaid where elevid=?`;
+
+      pool.query(query, [elevID], (error, results) => {
+        if (error) {
+          console.error("Error querying database:", error);
+          res.writeHead(500, { "Content-Type": "application/json" });
+          res.end(
+            JSON.stringify({ success: false, message: "Database error" })
+          );
+          return;
+        }
+
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ success: true, data: results }));
+      });
+    } catch (err) {
+      console.error("Error parsing JSON:", err);
+      res.writeHead(400, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ success: false, message: "Invalid JSON" }));
+    }
+  });
+};
+
 //functie pt adaugare rezolvare  la o problema
 const handleAddSolution = (req, res) => {
   let body = "";
@@ -1124,10 +1168,10 @@ const handleAddSolution = (req, res) => {
 
   req.on("end", () => {
     try {
-      const { ProblemaID, ElevID, Rezolvare } = JSON.parse(body);
+      const { ProblemaID, ElevID, ProfesorID, Rezolvare } = JSON.parse(body);
 
       // Verificarea validității datelor
-      if (!ProblemaID || !ElevID || !Rezolvare) {
+      if (!ProblemaID || !ElevID || !ProfesorID|| !Rezolvare) {
         res.writeHead(400, { "Content-Type": "application/json" });
         res.end(
           JSON.stringify({ success: false, message: "Missing required fields" })
@@ -1136,8 +1180,8 @@ const handleAddSolution = (req, res) => {
       }
 
       const query =
-        "INSERT INTO rezolvari (ProblemaID, ElevID, Rezolvare) VALUES (?, ?, ?)";
-      pool.query(query, [ProblemaID, ElevID, Rezolvare], (error, results) => {
+        "INSERT INTO rezolvari (ProblemaID, ElevID, ProfesorID, Rezolvare) VALUES (?, ?, ?, ?)";
+      pool.query(query, [ProblemaID, ElevID, ProfesorID, Rezolvare], (error, results) => {
         if (error) {
           console.error("Error inserting data:", error.sqlMessage);
           res.writeHead(500, { "Content-Type": "application/json" });
@@ -1369,6 +1413,18 @@ const server = http.createServer((req, res) => {
       filePath = path.join(baseDir, "pages", "VisProblemGuest.html");
     } else if (req.url === "/ProfilStudent") {
       filePath = path.join(baseDir, "pages", "ProfilStudent.html");
+    } else if (req.url === "/uniqueGroupProfesor") {
+      filePath = path.join(baseDir, "pages", "uniqueGroupProfesor.html");
+    } else if (req.url === "/uniqueGroupStudent") {
+      filePath = path.join(baseDir, "pages", "uniqueGroupStudent.html");
+    } else if (req.url === "/uniqueHWProfesor") {
+      filePath = path.join(baseDir, "pages", "uniqueHWProfesor.html");
+    } else if (req.url === "/uniqueHWStudent") {
+      filePath = path.join(baseDir, "pages", "uniqueHWStudent.html");
+    } else if (req.url === "/solutionSubmittedProfesor") {
+      filePath = path.join(baseDir, "pages", "solutionSubmittedProfesor.html");
+    } else if (req.url === "/solutionSubmittedStudent") {
+      filePath = path.join(baseDir, "pages", "solutionSubmittedStudent.html");
     } else if (req.url.startsWith("/VisProblemStudent")) {
       filePath = path.join(baseDir, "pages", "VisProblemStudent.html");
     } else if (req.url.startsWith("/VisProblemTeacher")) {
@@ -1416,6 +1472,8 @@ const server = http.createServer((req, res) => {
     handleGetHomeworkByTeacher(req, res);
   } else if (req.method === "POST" && pathname === "/homeworks/student") {
     handleGetHomeworkForStudent(req, res);
+  } else if (req.method === "POST" && pathname === "/problems/student") {
+    handleGetProblemForStudent(req, res);
   } else if (req.method === "POST" && pathname === "/homework/add") {
     handleAddHomework(req, res);
   } else if (req.method === "POST" && pathname === "/homework/addProblem") {
