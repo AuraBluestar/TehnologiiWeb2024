@@ -24,7 +24,6 @@
       position: relative;
       height: 100%;
       font-family: Lato, normal;
-
     }
   </style>
 </head>
@@ -57,22 +56,13 @@
     </div>
     <ul>
       <li><a href="/loggedTeacher"><i class='bx bxs-home'></i><span class="navitem">Home</span></a></li>
-      <li><a href="/ProfilProfesor"><i
-            class='bx bxs-user-circle'></i><span
-            class="navitem">Profile</span></a></li>
-      <li><a href="/VisGroupsTeacher"><i class='bx bxs-group'></i><span
-            class="navitem">Groups</span></a></li>
-      <li><a href="/VisHWTeacher"><i class='bx bxs-book-alt'></i><span
-            class="navitem">Homeworks</span></a></li>
-      <li><a href="../../to be modified/ProblemePropuse.html"><i
-            class='bx bxs-book-content'></i><span class="navitem">Proposed
-            Problems</span></a></li>
-      <li><a href="/createProblem"><i class='bx bxs-edit'></i><span
-            class="navitem">New Problem</span></a></li>
-      <li><a href="mailto:assistance@informatix.com"><i class='bx bxs-contact'></i><span
-            class="navitem">Contact</span></a></li>
-      <li><a href="/"><i class='bx bx-log-out'></i><span
-            class="navitem">LogOut</span></a></li>
+      <li><a href="/ProfilProfesor"><i class='bx bxs-user-circle'></i><span class="navitem">Profile</span></a></li>
+      <li><a href="/VisGroupsTeacher"><i class='bx bxs-group'></i><span class="navitem">Groups</span></a></li>
+      <li><a href="/VisHWTeacher"><i class='bx bxs-book-alt'></i><span class="navitem">Homeworks</span></a></li>
+      <li><a href="../../to be modified/ProblemePropuse.html"><i class='bx bxs-book-content'></i><span class="navitem">Proposed Problems</span></a></li>
+      <li><a href="/createProblem"><i class='bx bxs-edit'></i><span class="navitem">New Problem</span></a></li>
+      <li><a href="mailto:assistance@informatix.com"><i class='bx bxs-contact'></i><span class="navitem">Contact</span></a></li>
+      <li><a href="/"><i class='bx bx-log-out'></i><span class="navitem">LogOut</span></a></li>
     </ul>
   </nav>
 
@@ -125,19 +115,8 @@
 
         <div class="submissions-section">
           <h3 style="font-weight: bolder;">Submissions</h3>
-
-          <div class="submissions">
-          <div class="submission-box">
-              <p class="submitter-name">Patricia Onisor</p>
-              <p class="class-subject">A1 - Web Technologies</p>
-          </div>
-          <div class="submission-box">
-              <p class="submitter-name">John Doe</p>
-              <p class="class-subject">B2 - Database Systems</p>
-          </div>
-         </div>
-         
-      </div>
+          <div class="submissions" id="submissionsList"></div>
+        </div>
 
     </div>
   </div>
@@ -149,6 +128,7 @@
 
       if (problemId) {
         fetchProblemDetails(problemId);
+        fetchProblemSubmissions(problemId);
       }
     });
 
@@ -159,6 +139,8 @@
             alert('Problem data is not available to export.');
         }
     });
+
+    let problemData = null;
 
     function fetchProblemDetails(problemId) {
       fetch(`http://localhost:3000/problems/${problemId}`, {
@@ -192,6 +174,90 @@
       });
     }
 
+    function fetchProblemSubmissions(problemId) {
+      const profesorId = localStorage.getItem('id');
+
+      fetch(`http://localhost:3000/solutions/teacher`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ profesorID: profesorId, problemaID: problemId })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          const submissionsList = document.getElementById('submissionsList');
+          submissionsList.innerHTML = ""; // Clear any existing content
+
+          data.data.forEach(submission => {
+            const submissionBox = document.createElement('div');
+            submissionBox.classList.add('submission-box');
+
+            fetchClassAndStudentNames(submission.ClasaID, submission.ElevID)
+              .then(names => {
+                const submitterName = document.createElement('p');
+                submitterName.classList.add('submitter-name');
+                submitterName.textContent = names.studentName;
+
+                const classSubject = document.createElement('p');
+                classSubject.classList.add('class-subject');
+                classSubject.textContent = names.className;
+
+                submissionBox.appendChild(submitterName);
+                submissionBox.appendChild(classSubject);
+
+                submissionBox.addEventListener('click', () => {
+                  localStorage.setItem('submissionDetails', JSON.stringify({
+                    problemId,
+                    title: problemData.Titlu,
+                    description: problemData.Descriere,
+                    solution: submission.Rezolvare,
+                    elevId: submission.ElevID
+                  }));
+                  window.location.href = 'http://localhost:3000/solutionSubmittedProfesor';
+                });
+
+                submissionsList.appendChild(submissionBox);
+              })
+              .catch(error => {
+                console.error('Error fetching class and student names:', error);
+              });
+          });
+        } else {
+          console.error("Failed to fetch submissions data");
+        }
+      })
+      .catch(error => {
+        console.error("Error:", error);
+      });
+    }
+
+    function fetchClassAndStudentNames(classId, studentId) {
+      const classNamePromise = fetch(`http://localhost:3000/group/${classId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then(response => response.json())
+        .then(classData => classData['Grupa-Materie']);
+
+      const studentNamePromise = fetch(`http://localhost:3000/student/${studentId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then(response => response.json())
+        .then(studentData => studentData.nume);
+
+      return Promise.all([classNamePromise, studentNamePromise])
+        .then(values => {
+          return {
+            className: values[0],
+            studentName: values[1]
+          };
+        });
+    }
     function getDifficultyText(difficulty) {
       switch (difficulty) {
         case 1:
@@ -204,6 +270,7 @@
           return 'Unknown';
       }
     }
+
     function exportToJsonFile(jsonData) {
         const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(jsonData));
         const downloadAnchorNode = document.createElement('a');
