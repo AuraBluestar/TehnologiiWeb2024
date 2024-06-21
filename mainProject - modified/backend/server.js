@@ -320,11 +320,11 @@ const handleAddGrade = (req, res) => {
 
   req.on("end", () => {
     try {
-      const { TemaID, ElevID, ProfesorID, Valoare } = JSON.parse(body);
+      const { ProblemaID, ElevID, ProfesorID, Valoare } = JSON.parse(body);
 
       // Verificarea validității datelor
       if (
-        !TemaID ||
+        !ProblemaID ||
         !ElevID ||
         !ProfesorID ||
         !Valoare ||
@@ -342,10 +342,10 @@ const handleAddGrade = (req, res) => {
       }
 
       const query =
-        "INSERT INTO note (TemaID, ElevID, ProfesorID, Valoare) VALUES (?, ?, ?, ?)";
+        "INSERT INTO note (ProblemaID, ElevID, ProfesorID, Valoare) VALUES (?, ?, ?, ?)";
       pool.query(
         query,
-        [TemaID, ElevID, ProfesorID, Valoare],
+        [ProblemaID, ElevID, ProfesorID, Valoare],
         (error, results) => {
           if (error) {
             console.error("Error inserting data:", error.sqlMessage);

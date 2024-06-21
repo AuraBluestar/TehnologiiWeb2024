@@ -127,7 +127,6 @@
       </div>
     </div>
     <script src="../scripts/script.js"></script>
-    <script src="../scripts/script.js"></script>
     <script>
   let problemData;
   let studentProblems = []; // Array to hold the student's problems
@@ -259,10 +258,25 @@
               const submissionBox = document.createElement('div');
               submissionBox.classList.add('submission-box');
               submissionBox.innerHTML = `
-                <p class="submitter-name">${teacher.nume}</p>
-                <p class="class-subject">${group['Grupa-Materie']}</p>
+                <a href="/solutionSubmittedStudent" class="submission-link" data-problem-id="${problemId}" data-titlu="${problemData.Titlu}" data-descriere="${problemData.Descriere}" data-rezolvare="${submission.Rezolvare}" data-profesor-id="${submission.ProfesorID}">
+                  <p class="submitter-name">${teacher.nume}</p>
+                  <p class="class-subject">${group['Grupa-Materie']}</p>
+                </a>
               `;
               submissionsContainer.appendChild(submissionBox);
+
+              // Add event listener for click to store data in local storage
+              submissionBox.querySelector('.submission-link').addEventListener('click', function(event) {
+                event.preventDefault();
+                const problemId = this.dataset.problemId;
+                const titlu = this.dataset.titlu;
+                const descriere = this.dataset.descriere;
+                const rezolvare = this.dataset.rezolvare;
+                const profesorId = this.dataset.profesorId;
+
+                localStorage.setItem('solutionData', JSON.stringify({ problemId, titlu, descriere, rezolvare, profesorId }));
+                window.location.href = this.href;
+              });
             })
             .catch(error => {
               console.error('Error fetching group:', error);
@@ -330,5 +344,6 @@
       downloadAnchorNode.remove();
   }
 </script>
+
   </body>
 </html>
