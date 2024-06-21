@@ -3,6 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const mysql = require("mysql");
 const url = require("url");
+const bcrypt = require("bcrypt");
 
 // Configurarea conexiunii la baza de date
 const dbConfig = {
@@ -75,19 +76,26 @@ const handleLogin = (req, res) => {
         if (error) {
           console.error("Error querying database:", error);
           res.writeHead(500, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ success: false, message: "Database error" }));
+          res.end(
+            JSON.stringify({ success: false, message: "Database error" })
+          );
           return;
         }
 
         if (results.length > 0) {
-          const validPassword = await bcrypt.compare(password, results[0].parola);
+          const validPassword = await bcrypt.compare(
+            password,
+            results[0].parola
+          );
           if (validPassword) {
             res.writeHead(200, { "Content-Type": "application/json" });
-            res.end(JSON.stringify({
-              success: true,
-              userType: "elev",
-              id: results[0].id,
-            }));
+            res.end(
+              JSON.stringify({
+                success: true,
+                userType: "elev",
+                id: results[0].id,
+              })
+            );
             return;
           }
         }
@@ -97,19 +105,26 @@ const handleLogin = (req, res) => {
           if (error) {
             console.error("Error querying database:", error);
             res.writeHead(500, { "Content-Type": "application/json" });
-            res.end(JSON.stringify({ success: false, message: "Database error" }));
+            res.end(
+              JSON.stringify({ success: false, message: "Database error" })
+            );
             return;
           }
 
           if (results.length > 0) {
-            const validPassword = await bcrypt.compare(password, results[0].parola);
+            const validPassword = await bcrypt.compare(
+              password,
+              results[0].parola
+            );
             if (validPassword) {
               res.writeHead(200, { "Content-Type": "application/json" });
-              res.end(JSON.stringify({
-                success: true,
-                userType: "profesor",
-                id: results[0].id,
-              }));
+              res.end(
+                JSON.stringify({
+                  success: true,
+                  userType: "profesor",
+                  id: results[0].id,
+                })
+              );
               return;
             }
           }
@@ -119,7 +134,9 @@ const handleLogin = (req, res) => {
             if (error) {
               console.error("Error querying database:", error);
               res.writeHead(500, { "Content-Type": "application/json" });
-              res.end(JSON.stringify({ success: false, message: "Database error" }));
+              res.end(
+                JSON.stringify({ success: false, message: "Database error" })
+              );
               return;
             }
 
@@ -127,20 +144,24 @@ const handleLogin = (req, res) => {
               const validPassword = password === results[0].parola;
               if (validPassword) {
                 res.writeHead(200, { "Content-Type": "application/json" });
-                res.end(JSON.stringify({
-                  success: true,
-                  userType: "admin",
-                  id: results[0].id,
-                }));
+                res.end(
+                  JSON.stringify({
+                    success: true,
+                    userType: "admin",
+                    id: results[0].id,
+                  })
+                );
                 return;
               }
             }
 
             res.writeHead(401, { "Content-Type": "application/json" });
-            res.end(JSON.stringify({
-              success: false,
-              message: "Invalid username or password",
-            }));
+            res.end(
+              JSON.stringify({
+                success: false,
+                message: "Invalid username or password",
+              })
+            );
           });
         });
       });
@@ -156,9 +177,6 @@ function sendErrorResponse(res, statusCode, message) {
   res.writeHead(statusCode, { "Content-Type": "application/json" });
   res.end(JSON.stringify({ success: false, message }));
 }
-
-// Functie pentru a manevra cererile de adăugare student
-const bcrypt = require('bcrypt');
 
 // Functie pentru a manevra cererile de adăugare student
 const handleAddStudent = (req, res) => {
@@ -604,30 +622,42 @@ const handleAddHomework = (req, res) => {
     try {
       const { Grupa, Materie, ProfesorID } = JSON.parse(body);
 
-      const findClassQuery = "SELECT ID FROM clase WHERE Grupa = ? AND Materie = ?";
+      const findClassQuery =
+        "SELECT ID FROM clase WHERE Grupa = ? AND Materie = ?";
       pool.query(findClassQuery, [Grupa, Materie], (findError, findResults) => {
         if (findError) {
           console.error("Error finding class:", findError);
           res.writeHead(500, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ success: false, message: "Database error" }));
+          res.end(
+            JSON.stringify({ success: false, message: "Database error" })
+          );
         } else if (findResults.length === 0) {
           res.writeHead(404, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ success: false, message: "Class not found" }));
+          res.end(
+            JSON.stringify({ success: false, message: "Class not found" })
+          );
         } else {
           const ClasaID = findResults[0].ID;
 
-          const insertQuery = "INSERT INTO teme (ClasaID, ProfesorID) VALUES (?, ?)";
-          pool.query(insertQuery, [ClasaID, ProfesorID], (insertError, insertResults) => {
-            if (insertError) {
-              console.error("Error inserting data:", insertError);
-              res.writeHead(500, { "Content-Type": "application/json" });
-              res.end(JSON.stringify({ success: false, message: "Database error" }));
-            } else {
-              const homeworkId = insertResults.insertId;
-              res.writeHead(200, { "Content-Type": "application/json" });
-              res.end(JSON.stringify({ success: true, id: homeworkId }));
+          const insertQuery =
+            "INSERT INTO teme (ClasaID, ProfesorID) VALUES (?, ?)";
+          pool.query(
+            insertQuery,
+            [ClasaID, ProfesorID],
+            (insertError, insertResults) => {
+              if (insertError) {
+                console.error("Error inserting data:", insertError);
+                res.writeHead(500, { "Content-Type": "application/json" });
+                res.end(
+                  JSON.stringify({ success: false, message: "Database error" })
+                );
+              } else {
+                const homeworkId = insertResults.insertId;
+                res.writeHead(200, { "Content-Type": "application/json" });
+                res.end(JSON.stringify({ success: true, id: homeworkId }));
+              }
             }
-          });
+          );
         }
       });
     } catch (err) {
@@ -637,7 +667,6 @@ const handleAddHomework = (req, res) => {
     }
   });
 };
-
 
 // Functie pentru a manevra cererile de adăugare problemă la temă
 const handleAddProblemToHomework = (req, res) => {
@@ -693,6 +722,44 @@ function getTeacherById(res, id) {
       res.end(JSON.stringify(results[0]));
     }
   );
+}
+
+// Funcție pentru obținerea usernameului unui elev după ID
+function getStudentById(res, id) {
+  pool.query("SELECT nume FROM elevi WHERE ID = ?", [id], (error, results) => {
+    if (error) {
+      res.statusCode = 500;
+      res.end(JSON.stringify({ error: error.message }));
+      return;
+    }
+    if (results.length === 0) {
+      res.statusCode = 404;
+      res.end(JSON.stringify({ error: "Student not found" }));
+      return;
+    }
+    res.statusCode = 200;
+    res.end(JSON.stringify(results[0]));
+  });
+}
+
+// Funcție pentru obținerea unei clase după ID
+function getGroupById(res, id) {
+  const query =
+    "SELECT CONCAT(Grupa, '-', Materie) AS 'Grupa-Materie' FROM clase WHERE ID = ?";
+  pool.query(query, [id], (error, results) => {
+    if (error) {
+      res.statusCode = 500;
+      res.end(JSON.stringify({ error: error.message }));
+      return;
+    }
+    if (results.length === 0) {
+      res.statusCode = 404;
+      res.end(JSON.stringify({ error: "Group not found" }));
+      return;
+    }
+    res.statusCode = 200;
+    res.end(JSON.stringify(results[0]));
+  });
 }
 
 // Controller function for searching problems
@@ -1171,7 +1238,7 @@ const handleAddSolution = (req, res) => {
       const { ProblemaID, ElevID, ProfesorID, Rezolvare } = JSON.parse(body);
 
       // Verificarea validității datelor
-      if (!ProblemaID || !ElevID || !ProfesorID|| !Rezolvare) {
+      if (!ProblemaID || !ElevID || !ProfesorID || !Rezolvare) {
         res.writeHead(400, { "Content-Type": "application/json" });
         res.end(
           JSON.stringify({ success: false, message: "Missing required fields" })
@@ -1181,23 +1248,27 @@ const handleAddSolution = (req, res) => {
 
       const query =
         "INSERT INTO rezolvari (ProblemaID, ElevID, ProfesorID, Rezolvare) VALUES (?, ?, ?, ?)";
-      pool.query(query, [ProblemaID, ElevID, ProfesorID, Rezolvare], (error, results) => {
-        if (error) {
-          console.error("Error inserting data:", error.sqlMessage);
-          res.writeHead(500, { "Content-Type": "application/json" });
-          res.end(
-            JSON.stringify({
-              success: false,
-              message: "Database error",
-              error: error.sqlMessage,
-            })
-          );
-        } else {
-          const solutionId = results.insertId;
-          res.writeHead(200, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ success: true, id: solutionId }));
+      pool.query(
+        query,
+        [ProblemaID, ElevID, ProfesorID, Rezolvare],
+        (error, results) => {
+          if (error) {
+            console.error("Error inserting data:", error.sqlMessage);
+            res.writeHead(500, { "Content-Type": "application/json" });
+            res.end(
+              JSON.stringify({
+                success: false,
+                message: "Database error",
+                error: error.sqlMessage,
+              })
+            );
+          } else {
+            const solutionId = results.insertId;
+            res.writeHead(200, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ success: true, id: solutionId }));
+          }
         }
-      });
+      );
     } catch (err) {
       console.error("Error parsing JSON:", err);
       res.writeHead(400, { "Content-Type": "application/json" });
@@ -1353,18 +1424,125 @@ const getSubjectsByGroup = (req, res) => {
     try {
       const { Grupa, ProfesorID } = JSON.parse(body);
 
-      const query = "SELECT Materie FROM clase WHERE Grupa = ? And ProfesorID=? ";
+      const query =
+        "SELECT Materie FROM clase WHERE Grupa = ? And ProfesorID=? ";
       pool.query(query, [Grupa], [ProfesorID], (error, results) => {
         if (error) {
           console.error("Error fetching subjects:", error);
           res.writeHead(500, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ success: false, message: "Database error" }));
+          res.end(
+            JSON.stringify({ success: false, message: "Database error" })
+          );
           return;
         }
-        
-        const subjects = results.map(row => row.Materie);
+
+        const subjects = results.map((row) => row.Materie);
         res.writeHead(200, { "Content-Type": "application/json" });
         res.end(JSON.stringify({ success: true, subjects }));
+      });
+    } catch (err) {
+      console.error("Error parsing JSON:", err);
+      res.writeHead(400, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ success: false, message: "Invalid JSON" }));
+    }
+  });
+};
+
+// Funcție pentru obținerea rezolvarilor după elevID
+const getSolutionsByStudent = (req, res) => {
+  let body = "";
+
+  req.on("data", (chunk) => {
+    body += chunk.toString();
+  });
+
+  req.on("end", () => {
+    try {
+      const { elevID, problemaID } = JSON.parse(body);
+
+      if (!elevID || !problemaID) {
+        res.writeHead(400, { "Content-Type": "application/json" });
+        res.end(
+          JSON.stringify({
+            success: false,
+            message: "elevID and problemaID are required",
+          })
+        );
+        return;
+      }
+
+      const query = `
+        SELECT t.ProfesorID, ce.ClasaID, r.Rezolvare
+        FROM claseelevi ce
+        JOIN teme t ON ce.ClasaID = t.ClasaID
+        JOIN problemeteme pt ON t.ID = pt.TemaID
+        JOIN rezolvari r ON pt.ProblemaID = r.ProblemaID AND ce.ElevID = r.ElevID
+        WHERE ce.ElevID = ? AND pt.ProblemaID = ?;`;
+
+      pool.query(query, [elevID, problemaID], (error, results) => {
+        if (error) {
+          console.error("Error querying database:", error);
+          res.writeHead(500, { "Content-Type": "application/json" });
+          res.end(
+            JSON.stringify({ success: false, message: "Database error" })
+          );
+          return;
+        }
+
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ success: true, data: results }));
+      });
+    } catch (err) {
+      console.error("Error parsing JSON:", err);
+      res.writeHead(400, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ success: false, message: "Invalid JSON" }));
+    }
+  });
+};
+
+// Funcție pentru obținerea rezolvarilor după profesorID
+const getSolutionsByTeacher = (req, res) => {
+  let body = "";
+
+  req.on("data", (chunk) => {
+    body += chunk.toString();
+  });
+
+  req.on("end", () => {
+    try {
+      const { profesorID, problemaID } = JSON.parse(body);
+
+      if (!profesorID || !problemaID) {
+        res.writeHead(400, { "Content-Type": "application/json" });
+        res.end(
+          JSON.stringify({
+            success: false,
+            message: "profesorID and problemaID are required",
+          })
+        );
+        return;
+      }
+
+      const query = `
+        SELECT claseelevi.ClasaID, claseelevi.ElevID, rezolvari.Rezolvare
+        FROM claseelevi
+        JOIN teme ON claseelevi.ClasaID = teme.ClasaID
+        JOIN problemeteme ON teme.ID = problemeteme.TemaID
+        JOIN rezolvari ON problemeteme.ProblemaID = rezolvari.ProblemaID AND claseelevi.ElevID = rezolvari.ElevID
+        WHERE problemeteme.ProblemaID = ? AND teme.ProfesorID = ?;`;
+
+      pool.query(query, [problemaID, profesorID], (error, results) => {
+        if (error) {
+          console.error("Error querying database:", error);
+          res.writeHead(500, { "Content-Type": "application/json" });
+          res.end(
+            JSON.stringify({ success: false, message: "Database error" })
+          );
+          return;
+        }
+
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ success: true, data: results }));
       });
     } catch (err) {
       console.error("Error parsing JSON:", err);
@@ -1480,6 +1658,10 @@ const server = http.createServer((req, res) => {
     handleAddProblemToHomework(req, res);
   } else if (req.method === "POST" && pathname === "/solutions/add") {
     handleAddSolution(req, res);
+  } else if (req.method === "POST" && pathname === "/solutions/student") {
+    getSolutionsByStudent(req, res);
+  } else if (req.method === "POST" && pathname === "/solutions/teacher") {
+    getSolutionsByTeacher(req, res);
   } else if (req.method === "POST" && pathname === "/homeworks/checkProblem") {
     handleCheckProblemInHomework(req, res);
   } else if (req.method === "POST" && pathname === "/problems/approval") {
@@ -1502,6 +1684,12 @@ const server = http.createServer((req, res) => {
   } else if (req.method === "POST" && pathname.startsWith("/Teacher/")) {
     const teacherId = pathname.split("/")[2];
     getTeacherById(res, teacherId);
+  } else if (req.method === "POST" && pathname.startsWith("/student/")) {
+    const studentId = pathname.split("/")[2];
+    getStudentById(res, studentId);
+  } else if (req.method === "POST" && pathname.startsWith("/group/")) {
+    const groupId = pathname.split("/")[2];
+    getGroupById(res, groupId);
   } else {
     res.writeHead(404, { "Content-Type": "application/json" });
     res.end(JSON.stringify({ success: false, message: "Not Found" }));

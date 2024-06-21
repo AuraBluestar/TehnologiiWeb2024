@@ -112,16 +112,8 @@
         </div>
         <div class="submissions-section">
           <h3 style="font-weight: bolder;">Submissions</h3>
-
           <div class="submissions">
-            <div class="submission-box">
-              <p class="submitter-name">Patricia Onisor</p>
-              <p class="class-subject">A1 - Web Technologies</p>
-            </div>
-            <div class="submission-box">
-              <p class="submitter-name">John Doe</p>
-              <p class="class-subject">B2 - Database Systems</p>
-            </div>
+            <!-- Submissions will be appended here by JavaScript -->
           </div>
         </div>
         <div class="export-button">
@@ -135,145 +127,208 @@
       </div>
     </div>
     <script src="../scripts/script.js"></script>
+    <script src="../scripts/script.js"></script>
     <script>
-    document.addEventListener('DOMContentLoaded', function () {
+  let problemData;
+  let studentProblems = []; // Array to hold the student's problems
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const params = new URLSearchParams(window.location.search);
+    const problemId = params.get('problemId');
+    const elevID = localStorage.getItem('id');
+    console.log(`Problem ID: ${problemId}, Elev ID: ${elevID}`);
+
+    if (problemId && elevID) {
+      fetchProblemDetails(problemId, elevID);
+    } else {
+      console.error('Missing required IDs');
+    }
+  });
+
+  document.querySelector('.json-export').addEventListener('click', function () {
+      if (problemData) {
+          exportToJsonFile(problemData);
+      } else {
+          alert('Problem data is not available to export.');
+      }
+  });
+
+  document.querySelector('.submit-button').addEventListener('click', function () {
+      const solutionText = document.querySelector('.solution-box').value;
       const params = new URLSearchParams(window.location.search);
       const problemId = params.get('problemId');
       const elevID = localStorage.getItem('id');
-      console.log(`Problem ID: ${problemId}, Elev ID: ${elevID}`);
+      const profesorId = studentProblems.find(problem => problem.problemaid == problemId)?.profesorid;
 
-      if (problemId && elevID) {
-        fetchProblemDetails(problemId, elevID);
+      if (solutionText && problemId && elevID && profesorId) {
+          submitSolution(elevID, problemId, profesorId, solutionText);
+      } else {
+          alert('Please enter a solution before submitting.');
       }
-    });
+  });
 
-    document.querySelector('.json-export').addEventListener('click', function () {
-        if (problemData) {
-            exportToJsonFile(problemData);
-        } else {
-            alert('Problem data is not available to export.');
+  function fetchProblemDetails(problemId, elevID) {
+    fetch('http://localhost:3000/problems/student', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ elevID: elevID })
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Data received:', data);
+      if (data.success) {
+        studentProblems = data.data; // Save the student's problems
+        const problemExists = studentProblems.some(problem => problem.problemaid == problemId);
+        console.log(`Problem exists: ${problemExists}`);
+        if (problemExists) {
+          document.querySelector('.submit-section').style.display = 'block';
         }
-    });
+      }
 
-    document.querySelector('.submit-button').addEventListener('click', function () {
-        const solutionText = document.querySelector('.solution-box').value;
-        const params = new URLSearchParams(window.location.search);
-        const problemId = params.get('problemId');
-        const profesorId = params.get('profesorId');
-        const elevID = localStorage.getItem('id');
-        console.log(`Problem ID: ${problemId}, Elev ID: ${elevID}, Profesor ID: ${profesorId}`);
-        if (solutionText && problemId && elevID) {
-            submitSolution(elevID, problemId, profesorId, solutionText);
-        } else {
-            alert('Please enter a solution before submitting.');
-        }
-    });
-
-    let problemData;
-
-    function fetchProblemDetails(problemId, elevID) {
-      fetch('http://localhost:3000/problems/student', {
+      return fetch(`http://localhost:3000/problems/${problemId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ elevID: elevID })
+        }
+      });
+    })
+    .then(response => response.json())
+    .then(problem => {
+      console.log('Problem details:', problem);
+      problemData = problem;
+      document.querySelector('.problem-id').textContent = `#${problem.ID}`;
+      document.querySelector('.problem-name').textContent = problem.Titlu;
+      document.querySelector('.problem-category').textContent = problem.Capitol;
+      document.querySelector('.problem-diff').textContent = getDifficultyText(problem.Dificultate);
+      document.querySelector('.problem-description').textContent = problem.Descriere;
+
+      return fetch(`http://localhost:3000/Teacher/${problem.ProfesorID}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+    })
+    .then(response => response.json())
+    .then(teacher => {
+      console.log('Teacher details:', teacher);
+      document.getElementById('author-name').textContent = teacher.nume;
+
+      // Fetch and populate submissions
+      fetchSubmissions(problemId, elevID);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+  }
+
+  function fetchSubmissions(problemId, elevID) {
+    fetch('http://localhost:3000/solutions/student', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ elevID: elevID, problemaID: problemId })
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Submissions data received:', data);
+      if (data.success) {
+        const submissions = data.data;
+        const submissionsContainer = document.querySelector('.submissions');
+        submissionsContainer.innerHTML = ''; // Clear any existing submissions
+        submissions.forEach(submission => {
+          fetch(`http://localhost:3000/Teacher/${submission.ProfesorID}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          })
+          .then(response => response.json())
+          .then(teacher => {
+            fetch(`http://localhost:3000/group/${submission.ClasaID}`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            })
+            .then(response => response.json())
+            .then(group => {
+              const submissionBox = document.createElement('div');
+              submissionBox.classList.add('submission-box');
+              submissionBox.innerHTML = `
+                <p class="submitter-name">${teacher.nume}</p>
+                <p class="class-subject">${group['Grupa-Materie']}</p>
+              `;
+              submissionsContainer.appendChild(submissionBox);
+            })
+            .catch(error => {
+              console.error('Error fetching group:', error);
+            });
+          })
+          .catch(error => {
+            console.error('Error fetching teacher:', error);
+          });
+        });
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching submissions:', error);
+    });
+  }
+
+  function getDifficultyText(difficulty) {
+    switch (difficulty) {
+      case 1:
+        return 'Easy';
+      case 2:
+        return 'Medium';
+      case 3:
+        return 'Hard';
+      default:
+        return 'Unknown';
+    }
+  }
+
+  function submitSolution(elevID, problemId, profesorId, solutionText) {
+      fetch('http://localhost:3000/solutions/add', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+              ElevID: elevID,
+              ProblemaID: problemId,
+              ProfesorID: profesorId,
+              Rezolvare: solutionText
+          })
       })
       .then(response => response.json())
       .then(data => {
-        console.log('Data received:', data);
-        if (data.success) {
-          const problemExists = data.data.some(problem => problem.problemaid == problemId);
-          console.log(`Problem exists: ${problemExists}`);
-          if (problemExists) {
-            document.querySelector('.submit-section').style.display = 'block';
+          console.log('Solution submitted:', data);
+          if (data.success) {
+              alert('Solution submitted successfully!');
+          } else {
+              alert('Failed to submit solution.');
           }
-        }
-
-        return fetch(`http://localhost:3000/problems/${problemId}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-      })
-      .then(response => response.json())
-      .then(problem => {
-        console.log('Problem details:', problem);
-        problemData = problem;
-        document.querySelector('.problem-id').textContent = `#${problem.ID}`;
-        document.querySelector('.problem-name').textContent = problem.Titlu;
-        document.querySelector('.problem-category').textContent = problem.Capitol;
-        document.querySelector('.problem-diff').textContent = getDifficultyText(problem.Dificultate);
-        document.querySelector('.problem-description').textContent = problem.Descriere;
-
-        return fetch(`http://localhost:3000/Teacher/${problem.ProfesorID}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-      })
-      .then(response => response.json())
-      .then(teacher => {
-        console.log('Teacher details:', teacher);
-        document.getElementById('author-name').textContent = teacher.nume;
       })
       .catch(error => {
-        console.error('Error:', error);
+          console.error('Error:', error);
+          alert('An error occurred while submitting the solution.');
       });
-    }
+  }
 
-    function getDifficultyText(difficulty) {
-      switch (difficulty) {
-        case 1:
-          return 'Easy';
-        case 2:
-          return 'Medium';
-        case 3:
-          return 'Hard';
-        default:
-          return 'Unknown';
-      }
-    }
-
-    function submitSolution(elevID, problemId, profesorId, solutionText) {
-        fetch('http://localhost:3000/solutions/add', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                ElevID: elevID,
-                ProblemaID: problemId,
-                ProfesorID: profesorId,
-                Rezolvare: solutionText
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Solution submitted:', data);
-            if (data.success) {
-                alert('Solution submitted successfully!');
-            } else {
-                alert('Failed to submit solution.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('An error occurred while submitting the solution.');
-        });
-    }
-
-    function exportToJsonFile(jsonData) {
-        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(jsonData));
-        const downloadAnchorNode = document.createElement('a');
-        downloadAnchorNode.setAttribute("href", dataStr);
-        downloadAnchorNode.setAttribute("download", `problem_${jsonData.ID}.json`);
-        document.body.appendChild(downloadAnchorNode); // Required for Firefox
-        downloadAnchorNode.click();
-        downloadAnchorNode.remove();
-    }
-  </script>
+  function exportToJsonFile(jsonData) {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(jsonData));
+      const downloadAnchorNode = document.createElement('a');
+      downloadAnchorNode.setAttribute("href", dataStr);
+      downloadAnchorNode.setAttribute("download", `problem_${jsonData.ID}.json`);
+      document.body.appendChild(downloadAnchorNode); // Required for Firefox
+      downloadAnchorNode.click();
+      downloadAnchorNode.remove();
+  }
+</script>
   </body>
 </html>
