@@ -11,29 +11,28 @@ Echipa:
 - server
 - login
 - signup
-- landingPage pt user neloggat, profesor si elev
+- landingPage pt user neloggat, profesor si elev si admin
 - filtrarea postarilor
 - creare grupe + adaugare elevi
 - popularea cu grupe la profesori si la studenti
-- creare tema(doar pe frontend)
-- pagina problemei pt guest si pt studenti(lipseste formularul pt rezolvare) si pt profesori(doar front)
+- creare tema
+- pagina problemei pt guest si pt studenti si pt profesori si pt admin
 - exportarea problemei
 - user page(prof(partial)+elev )
 - CreateProblemPage
 - landing page&pagina problemapt admin
+- populare cu teme create de profesor
+- IMPORT Json la creare problema
+- grupa unica + tema unica pt elevi
+- pagina cu teme pt elev
 
 # Ce mai e de facut:
 - filtrare grupe(facut la studenti dar nu merge)
 - filtrare teme
-- populare cu teme create de profesor
-- populare cu teme asignate unui elev
-- Probleme Propuse pt profesor
-- IMPORTJson la creare problema
 - la createHW acum nu mai merge dropdown-ul pt grupe + de facut pt materii
-- la pagina problemei pt student desi e parte dintr-o tema nu se afiseaza zona de rezolvare
 - partea de acordare stele la probleme 
 - Miscellaneous pentru responsivness
-- Grupa&Tema unica
+- Grupa&Tema unica pt profesor
 - Rezolvat filter probleme(la dificultate e cu una inainte - easy nu selecteaza nimic, medium = easy si hard = medium)
 
 
