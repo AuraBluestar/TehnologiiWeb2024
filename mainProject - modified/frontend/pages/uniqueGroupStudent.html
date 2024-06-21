@@ -68,9 +68,8 @@
 
     <div class="search">
       <div class="createForm">
-        <h2>A1 - Web Technolgies </h2>
-        <h3>Profesor: Cosmin Varlan</h3>
-        
+        <h2 id="groupTitle">Group Title</h2>
+        <h3 id="professorName">Professor: </h3>
       </div>
     </div>
 
@@ -89,99 +88,67 @@
 
   <script src="../scripts/script.js"></script>
   <script>
-    document.getElementById('createGroupForm').addEventListener('submit', function (event) {
-      event.preventDefault();
-
-      const grupa = document.getElementById('classInput').value;
-      const materie = document.getElementById('subjectInput').value;
-      const profesorID = localStorage.getItem('id'); // Assuming the ID is stored in localStorage
-
-      const requestBody = JSON.stringify({
-        grupa: grupa,
-        profesorID: parseInt(profesorID),
-        materie: materie
-      });
-
-      fetch('http://localhost:3000/classes/add', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: requestBody
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          alert('Group created successfully!');
-          localStorage.setItem('classId', data.id);
-          // Optionally, redirect to another page or reset the form
-          document.getElementById('createGroupForm').reset();
-        } else {
-          alert('Failed to create group');
-        }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        alert('Error creating group');
-      });
-    });
-
-    document.getElementById('addStudentBtn').addEventListener('click', function () {
-      const studentName = document.getElementById('studentNameInput').value;
-      if (studentName.trim() === '') {
-        alert('Please enter a student name.');
-        return;
-      }
-
-      fetch('http://localhost:3000/student/id', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ nume: studentName })
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          const studentId = data.id;
-          const classId = localStorage.getItem('classId');
-          if (!classId) {
-            alert('No class created yet. Please create a class first.');
-            return;
+    document.addEventListener('DOMContentLoaded', function () {
+      const groupId = localStorage.getItem('groupId');
+      if (groupId) {
+        // Fetch group details
+        fetch(`http://localhost:3000/group/${groupId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
           }
+        })
+        .then(response => response.json())
+        .then(groupData => {
+          console.log('Group Data:', groupData);
+          document.getElementById('groupTitle').textContent = groupData['Grupa-Materie'];
 
-          fetch('http://localhost:3000/classes/addStudent', {
+          // Fetch professor details
+          fetch(`http://localhost:3000/Teacher/${groupData.ProfesorID}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          })
+          .then(response => response.json())
+          .then(professorData => {
+            console.log('Professor Data:', professorData);
+            document.getElementById('professorName').textContent = `Professor: ${professorData.nume}`;
+          })
+          .catch(error => {
+            console.error('Error fetching professor data:', error);
+          });
+
+          // Fetch student details
+          fetch(`http://localhost:3000/classes/students`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ classId: parseInt(classId), studentId: parseInt(studentId) })
+            body: JSON.stringify({ GroupID: groupId })
           })
           .then(response => response.json())
-          .then(data => {
-            if (data.success) {
-              const addedStudentsList = document.getElementById('addedStudentsList');
-              const listItem = document.createElement('li');
-              listItem.textContent = studentName;
-              addedStudentsList.appendChild(listItem);
-              document.getElementById('studentNameInput').value = '';
-              alert('Student added to class successfully!');
-            } else {
-              alert('Failed to add student to class');
-            }
+          .then(studentData => {
+            console.log('Student Data:', studentData);
+            const studentList = document.getElementById('addedStudentsList');
+            studentList.innerHTML = ''; // Clear existing content
+            studentData.data.forEach(student => {
+              const li = document.createElement('li');
+              li.textContent = student.nume;
+              studentList.appendChild(li);
+            });
           })
           .catch(error => {
-            console.error('Error:', error);
-            alert('Error adding student to class');
+            console.error('Error fetching student data:', error);
           });
-        } else {
-          alert('Student not found');
-        }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        alert('Error fetching student ID');
-      });
+
+        })
+        .catch(error => {
+          console.error('Error fetching group data:', error);
+        });
+      } else {
+        console.error('groupId is not available in local storage');
+      }
     });
   </script>
 </body>

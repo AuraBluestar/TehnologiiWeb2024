@@ -745,7 +745,7 @@ function getStudentById(res, id) {
 // Funcție pentru obținerea unei clase după ID
 function getGroupById(res, id) {
   const query =
-    "SELECT CONCAT(Grupa, '-', Materie) AS 'Grupa-Materie' FROM clase WHERE ID = ?";
+    "SELECT CONCAT(Grupa, '-', Materie) AS 'Grupa-Materie', ProfesorID FROM clase WHERE ID = ?";
   pool.query(query, [id], (error, results) => {
     if (error) {
       res.statusCode = 500;
@@ -1551,6 +1551,80 @@ const getSolutionsByTeacher = (req, res) => {
     }
   });
 };
+//functie pt a obtine toti studentii dintr-o tabela
+const getStudents = (req, res) => {
+  let body = "";
+
+  req.on("data", (chunk) => {
+    body += chunk.toString();
+  });
+
+  req.on("end", () => {
+    try {
+      const { GroupID } = JSON.parse(body);
+
+      if (!GroupID) {
+        res.writeHead(400, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ success: false, message: "GroupID is required" }));
+        return;
+      }
+
+      const query = "SELECT DISTINCT e.nume FROM claseelevi ce join elevi e on e.id=ce.elevid WHERE clasaid = ?";
+      pool.query(query, [GroupID], (error, results) => {
+        if (error) {
+          console.error("Error querying database:", error);
+          res.writeHead(500, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ success: false, message: "Database error" }));
+          return;
+        }
+
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ success: true, data: results }));
+      });
+    } catch (err) {
+      console.error("Error parsing JSON:", err);
+      res.writeHead(400, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ success: false, message: "Invalid JSON" }));
+    }
+  });
+};
+
+const getProblemsByHomework = (req, res) => {
+  let body = "";
+
+  req.on("data", (chunk) => {
+    body += chunk.toString();
+  });
+
+  req.on("end", () => {
+    try {
+      const { temaID } = JSON.parse(body);
+
+      if (!temaID) {
+        res.writeHead(400, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ success: false, message: "temaID is required" }));
+        return;
+      }
+
+      const query = "SELECT ProblemaID FROM problemeteme WHERE temaID = ?";
+      pool.query(query, [temaID], (error, results) => {
+        if (error) {
+          console.error("Error querying database:", error);
+          res.writeHead(500, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ success: false, message: "Database error" }));
+          return;
+        }
+
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ success: true, data: results }));
+      });
+    } catch (err) {
+      console.error("Error parsing JSON:", err);
+      res.writeHead(400, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ success: false, message: "Invalid JSON" }));
+    }
+  });
+};
 
 const server = http.createServer((req, res) => {
   const baseDir = path.join(__dirname, "..", "frontend");
@@ -1664,6 +1738,8 @@ const server = http.createServer((req, res) => {
     getSolutionsByTeacher(req, res);
   } else if (req.method === "POST" && pathname === "/homeworks/checkProblem") {
     handleCheckProblemInHomework(req, res);
+  } else if (req.method === "POST" && pathname === "/homeworks/problems") {
+    getProblemsByHomework(req, res);
   } else if (req.method === "POST" && pathname === "/problems/approval") {
     handleProblemApproval(req, res);
   } else if (req.method === "POST" && pathname === "/grades/add") {
@@ -1678,6 +1754,8 @@ const server = http.createServer((req, res) => {
     getProblemReports(req, res);
   } else if (req.method === "POST" && pathname === "/subjects") {
     getSubjectsByGroup(req, res);
+  } else if (req.method === "POST" && pathname === "/classes/students") {
+    getStudents(req, res);
   } else if (req.method === "POST" && pathname.startsWith("/problems/")) {
     const problemId = pathname.split("/")[2];
     getProblemById(res, problemId);

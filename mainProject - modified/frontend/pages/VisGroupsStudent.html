@@ -100,13 +100,23 @@
       const groupsContainer = document.querySelector('.GroupsPage');
       groupsContainer.innerHTML = '';
       groups.forEach(group => {
-        const problemElement = `
-          <div class="group">
+        const groupElement = `
+          <a class="group" href="http://localhost:3000/uniqueGroupStudent" data-group-id="${group.ID}">
             <h2 class="group-title">${group.Grupa}</h2>
             <p class="group-label">${group.Materie}</p>
-          </div>
+          </a>
         `;
-        groupsContainer.insertAdjacentHTML('beforeend', problemElement);
+        groupsContainer.insertAdjacentHTML('beforeend', groupElement);
+      });
+
+      // Add click event listeners to group links to store group ID in local storage
+      document.querySelectorAll('.group').forEach(link => {
+        link.addEventListener('click', function(event) {
+          event.preventDefault();
+          const groupId = this.dataset.groupId;
+          localStorage.setItem('groupId', groupId);
+          window.location.href = this.href;
+        });
       });
     }
 

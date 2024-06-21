@@ -65,8 +65,8 @@
   <div class="maincontent">
     <div class="search">
       <div class="createForm">
-        <h1>Homework #ID</h1>
-        <h2>A1 - Web Technologies</h2>
+        <h1 id="homeworkId">Homework #ID</h1>
+        <h2 id="className">Class Name</h2>
       </div>
     </div>
     <div class="add">
@@ -79,7 +79,45 @@
     </div>
   </div>
   <script src="../scripts/script.js"></script>
-  <script src="../scripts/createHW.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const homeworkId = localStorage.getItem('homeworkId');
+      const className = localStorage.getItem('className');
+
+      if (homeworkId && className) {
+        document.getElementById('homeworkId').textContent = `Homework #${homeworkId}`;
+        document.getElementById('className').textContent = className;
+
+        fetch("http://localhost:3000/homeworks/problems", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ temaID: homeworkId })
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            const problemsList = document.getElementById('addedProblemsList');
+            problemsList.innerHTML = ""; // Clear any existing content
+
+            data.data.forEach(problem => {
+              const li = document.createElement('li');
+              li.textContent = `Problem ID: ${problem.ProblemaID}`;
+              problemsList.appendChild(li);
+            });
+          } else {
+            console.error("Failed to fetch problems data");
+          }
+        })
+        .catch(error => {
+          console.error("Error:", error);
+        });
+      } else {
+        console.error("Homework ID or Class Name is not available in local storage");
+      }
+    });
+  </script>
 </body>
 
 </html>

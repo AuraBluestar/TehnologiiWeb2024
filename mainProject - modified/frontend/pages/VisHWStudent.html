@@ -50,17 +50,11 @@
       </div>
       <ul>
         <li><a href="/loggedStudent"><i class='bx bxs-home'></i><span class="navitem">Home</span></a></li>
-        <li><a href="/ProfilStudent"><i
-              class='bx bxs-user-circle'></i><span
-              class="navitem">Profile</span></a></li>
-        <li><a href="/VisGroupsStudent"><i class='bx bxs-group'></i><span
-              class="navitem">Groups</span></a></li>
-        <li><a href="/VisHWStudent"><i class='bx bxs-book-alt'></i><span
-              class="navitem">Homeworks</span></a></li>
-        <li><a href="mailto:assistance@informatix.com"><i class='bx bxs-contact'></i><span
-              class="navitem">Contact</span></a></li>
-        <li><a href="/"><i class='bx bx-log-out'></i><span
-              class="navitem">LogOut</span></a></li>
+        <li><a href="/ProfilStudent"><i class='bx bxs-user-circle'></i><span class="navitem">Profile</span></a></li>
+        <li><a href="/VisGroupsStudent"><i class='bx bxs-group'></i><span class="navitem">Groups</span></a></li>
+        <li><a href="/VisHWStudent"><i class='bx bxs-book-alt'></i><span class="navitem">Homeworks</span></a></li>
+        <li><a href="mailto:assistance@informatix.com"><i class='bx bxs-contact'></i><span class="navitem">Contact</span></a></li>
+        <li><a href="/"><i class='bx bx-log-out'></i><span class="navitem">LogOut</span></a></li>
       </ul>
     </nav>
 
@@ -107,7 +101,7 @@
           headers: {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify({ elevID: 9 })
+          body: JSON.stringify({ elevID: localStorage.getItem('id') })
         })
         .then(response => response.json())
         .then(data => {
@@ -125,11 +119,11 @@
               
               const homeworkId = document.createElement('p');
               homeworkId.classList.add('homework-id');
-              homeworkId.innerHTML = `<strong>ID:</strong> ${homework.temaID}`;
+              homeworkId.innerHTML = `<strong>Profesor:</strong> Loading...`;
               
               const group = document.createElement('p');
               group.classList.add('homework-group');
-              group.innerHTML = `<strong>Class ID:</strong> ${homework.clasaID}`;
+              group.innerHTML = `<strong>Class:</strong> Loading...`;
               
               const problemCount = document.createElement('p');
               problemCount.classList.add('homework-problem-count');
@@ -141,6 +135,42 @@
               homeworkDiv.appendChild(problemCount);
               
               homeworksContainer.appendChild(homeworkDiv);
+
+              // Fetch class details
+              fetch(`http://localhost:3000/group/${homework.clasaID}`, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                }
+              })
+              .then(response => response.json())
+              .then(classData => {
+                const className = classData['Grupa-Materie'];
+                group.innerHTML = `<strong>Class:</strong> ${className}`;
+                
+                // Fetch professor details
+                return fetch(`http://localhost:3000/Teacher/${classData.ProfesorID}`, {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  }
+                })
+                .then(response => response.json())
+                .then(professorData => {
+                  const professorName = professorData.nume;
+                  homeworkId.innerHTML = `<strong>Professor:</strong> ${professorName}`;
+
+                  // Add click event to the homeworkDiv
+                  homeworkDiv.addEventListener('click', () => {
+                    localStorage.setItem('homeworkId', homework.temaID);
+                    localStorage.setItem('className', className);
+                    window.location.href = '/uniqueHWStudent';
+                  });
+                });
+              })
+              .catch(error => {
+                console.error('Error fetching details:', error);
+              });
             });
           } else {
             console.error("Failed to fetch homeworks data");
