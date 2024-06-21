@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../styles/nav-bar.css">
+  <link rel="stylesheet" href="../styles/side-bar.css">
+  <link rel="stylesheet" href="../styles/main-content.css">
+  <link rel="stylesheet" href="../styles/searchmenu.css">
+  <link rel="stylesheet" href="../styles/listingsPage.css">
+  <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+  <title>Problem</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body,
+    html {
+      position: relative;
+      height: 100%;
+      font-family: Lato, normal;
+
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- This is the NavBar -->
+  <nav class="navbar">
+    <div class="navleft">
+      <div class="logo"><a href="/loggedStudent">In&lt;form&gt;atiX</a></div>
+    </div>
+    <div class="navright">
+      <ul>
+        <li><a href="/loggedStudent">Home</a></li>
+        <li><a href="/">LogOut</a></li>
+        <li><a href="mailto:assistance@informatix.com"> Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+  <!-- This is the SideBar -->
+  <nav class="sidebar">
+    <div class="top">
+      <div class="menu">
+        <i class='bx bx-code'></i>
+        <span>Menu</span>
+      </div>
+      <i class='bx bx-menu' id="btn"></i>
+    </div>
+    <ul>
+      <li><a href="/loggedStudent"><i class='bx bxs-home'></i><span class="navitem">Home</span></a></li>
+      <li><a href="/ProfilStudent"><i class='bx bxs-user-circle'></i><span class="navitem">Profile</span></a></li>
+      <li><a href="/VisGroupsStudent"><i class='bx bxs-group'></i><span class="navitem">Groups</span></a></li>
+      <li><a href="/VisHWStudent"><i class='bx bxs-book-alt'></i><span class="navitem">Homeworks</span></a></li>
+      <li><a href="mailto:assistance@informatix.com"><i class='bx bxs-contact'></i><span class="navitem">Contact</span></a></li>
+      <li><a href="/"><i class='bx bx-log-out'></i><span class="navitem">LogOut</span></a></li>
+    </ul>
+  </nav>
+
+  <div class="maincontent" style="margin-top:10px;">
+
+    <div class="ProblemPage" style="font-size:20px;">
+       
+        <div class="problem-container" style="cursor:default;">
+            <!-- Left Section -->
+            <div class="up-section">
+            <div class="left-section">
+                <!-- Details section -->
+                <div class="details" style="margin-left:0px;">
+                    <!-- ID and Name -->
+                    <div class="id-name">
+                        <p class="problem-id">#ID</p>
+                        <p class="problem-name">titlu</p>
+                    </div>
+                    
+                </div>
+            </div>
+
+        </div>
+        
+            <!-- Description section -->
+            <div class="description-section">
+                <h3 style="font-weight: bolder;">Description</h3>
+                <div class="description">
+                    <p class="problem-description">Write functions to perform various string manipulation tasks such as reversal, concatenation, and substring extraction.</p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="submission">
+          <h3 style="font-weight: bolder;">Submission</h3>
+
+            <div class="submission-info">
+                <p class="submission-student">Vatamaniuc Eusebiu</p>
+                <p class="submission-group">Group: A1 - Web Technologies</p>
+            </div>
+
+            <textarea class="submission-code" readonly>#include <iostream>
+using namespace std;
+
+int n, m;
+
+return 0;
+            </textarea>
+
+            <div class="grading-section">
+                <p>Grade:notGraded(0/10)</p>
+            </div>
+         
+        </div>
+
+    </div>
+  </div>
+  <script src="../scripts/script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const params = new URLSearchParams(window.location.search);
+      const problemId = params.get('problemId');
+
+      if (problemId) {
+        fetchProblemDetails(problemId);
+      }
+    });
+
+    document.querySelector('.json-export').addEventListener('click', function () {
+        if (problemData) {
+            exportToJsonFile(problemData);
+        } else {
+            alert('Problem data is not available to export.');
+        }
+    });
+
+    function fetchProblemDetails(problemId) {
+      fetch(`http://localhost:3000/problems/${problemId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => response.json())
+      .then(problem => {
+        problemData = problem;
+        document.querySelector('.problem-id').textContent = `#${problem.ID}`;
+        document.querySelector('.problem-name').textContent = problem.Titlu;
+        document.querySelector('.problem-category').textContent = problem.Capitol;
+        document.querySelector('.problem-diff').textContent = getDifficultyText(problem.Dificultate);
+        document.querySelector('.problem-description').textContent = problem.Descriere;
+
+        return fetch(`http://localhost:3000/Teacher/${problem.ProfesorID}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+      })
+      .then(response => response.json())
+      .then(teacher => {
+        document.getElementById('author-name').textContent = teacher.nume;
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    }
+
+    function getDifficultyText(difficulty) {
+      switch (difficulty) {
+        case 1:
+          return 'Easy';
+        case 2:
+          return 'Medium';
+        case 3:
+          return 'Hard';
+        default:
+          return 'Unknown';
+      }
+    }
+    function exportToJsonFile(jsonData) {
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(jsonData));
+        const downloadAnchorNode = document.createElement('a');
+        downloadAnchorNode.setAttribute("href", dataStr);
+        downloadAnchorNode.setAttribute("download", `problem_${jsonData.ID}.json`);
+        document.body.appendChild(downloadAnchorNode); // Required for Firefox
+        downloadAnchorNode.click();
+        downloadAnchorNode.remove();
+    }
+  </script>
+</body>
+</html>
