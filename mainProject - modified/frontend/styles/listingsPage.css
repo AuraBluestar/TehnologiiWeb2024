@@ -501,6 +501,11 @@
   border-bottom: 1px solid black;
 }
 
+.createForm h2,h3 {
+  text-align: center;
+  padding: 20px 0;
+}
+
 .createForm form {
   padding: 0 40px;
   box-sizing: border-box;
