@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../styles/nav-bar.css">
-  <link rel="stylesheet" href="../styles/side-bar.css">
-  <link rel="stylesheet" href="../styles/main-content.css">
-  <link rel="stylesheet" href="../styles/searchmenu.css">
-  <link rel="stylesheet" href="../styles/listingsPage.css">
-  <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-  <title>createProblem</title>
-  <style>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../styles/nav-bar.css">
+        <link rel="stylesheet" href="../styles/side-bar.css">
+        <link rel="stylesheet" href="../styles/main-content.css">
+        <link rel="stylesheet" href="../styles/searchmenu.css">
+        <link rel="stylesheet" href="../styles/listingsPage.css">
+        <link rel='stylesheet'
+            href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Lato">
+        <title>createProblem</title>
+        <style>
     * {
       margin: 0;
       padding: 0;
@@ -23,86 +25,105 @@
       font-family: Lato, normal;
     }
   </style>
-</head>
-<body>
- <!-- This is the NavBar -->
- <nav class="navbar">
-    <div class="navleft">
-      <div class="logo"><a href="/loggedTeacher">In&lt;form&gt;atiX</a> </div>
-    </div>
-    <div class="navright">
-      <ul>
-        <li><a href="/loggedTeacher">Home</a></li>
-        <li><a href="/">LogOut</a></li>
-        <li><a href="mailto:assistance@informatix.com">Contact</a></li>
-      </ul>
-    </div>
-  </nav>
+    </head>
+    <body>
+        <!-- This is the NavBar -->
+        <nav class="navbar">
+            <div class="navleft">
+                <div class="logo"><a
+                        href="/loggedTeacher">In&lt;form&gt;atiX</a> </div>
+            </div>
+            <div class="navright">
+                <ul>
+                    <li><a href="/loggedTeacher">Home</a></li>
+                    <li><a href="/">LogOut</a></li>
+                    <li><a
+                            href="mailto:assistance@informatix.com">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
 
-  <!-- This is the SideBar -->
-  <nav class="sidebar">
-    <div class="top">
-      <div class="menu">
-        <i class='bx bx-code'></i>
-        <span>Menu</span>
-      </div>
-      <i class='bx bx-menu' id="btn"></i>
-    </div>
-    <ul>
-      <li><a href="/loggedTeacher"><i class='bx bxs-home'></i><span class="navitem">Home</span></a></li>
-      <li><a href="/ProfilProfesor"><i class='bx bxs-user-circle'></i><span class="navitem">Profile</span></a></li>
-      <li><a href="/VisGroupsTeacher"><i class='bx bxs-group'></i><span class="navitem">Groups</span></a></li>
-      <li><a href="/VisHWTeacher"><i class='bx bxs-book-alt'></i><span class="navitem">Homeworks</span></a></li>
-      <li><a href="../../to be modified/ProblemePropuse.html"><i class='bx bxs-book-content'></i><span class="navitem">Proposed Problems</span></a></li>
-      <li><a href="createProblem"><i class='bx bxs-edit'></i><span class="navitem">New Problem</span></a></li>
-      <li><a href="mailto:assistance@informatix.com"><i class='bx bxs-contact'></i><span class="navitem">Contact</span></a></li>
-      <li><a href="/"><i class='bx bx-log-out'></i><span class="navitem">LogOut</span></a></li>
-    </ul>
-  </nav>
-  
-  <div class="maincontent" style="justify-content: center;">
-    <div class="CreateProblemPage">
-        <h1>New Problem</h1>
+        <!-- This is the SideBar -->
+        <nav class="sidebar">
+            <div class="top">
+                <div class="menu">
+                    <i class='bx bx-code'></i>
+                    <span>Menu</span>
+                </div>
+                <i class='bx bx-menu' id="btn"></i>
+            </div>
+            <ul>
+                <li><a href="/loggedTeacher"><i class='bx bxs-home'></i><span
+                            class="navitem">Home</span></a></li>
+                <li><a href="/ProfilProfesor"><i
+                            class='bx bxs-user-circle'></i><span
+                            class="navitem">Profile</span></a></li>
+                <li><a href="/VisGroupsTeacher"><i
+                            class='bx bxs-group'></i><span
+                            class="navitem">Groups</span></a></li>
+                <li><a href="/VisHWTeacher"><i class='bx bxs-book-alt'></i><span
+                            class="navitem">Homeworks</span></a></li>
+                <li><a href="/submitedProblems"><i
+                            class='bx bxs-book-content'></i><span
+                            class="navitem">Proposed Problems</span></a></li>
+                <li><a href="createProblem"><i class='bx bxs-edit'></i><span
+                            class="navitem">New Problem</span></a></li>
+                <li><a href="mailto:assistance@informatix.com"><i
+                            class='bx bxs-contact'></i><span
+                            class="navitem">Contact</span></a></li>
+                <li><a href="/"><i class='bx bx-log-out'></i><span
+                            class="navitem">LogOut</span></a></li>
+            </ul>
+        </nav>
 
-        <div class="problemNameSection">
-            <label for="problemName">Problem Name:</label>
-            <input type="text" id="problemName" />
-        </div>
+        <div class="maincontent" style="justify-content: center;">
+            <div class="CreateProblemPage">
+                <h1>New Problem</h1>
 
-        <div class="problemDescriptionSection">
-            <label for="problemDescription">Problem Description:</label>
-            <textarea id="problemDescription"></textarea>
-        </div>
+                <div class="problemNameSection">
+                    <label for="problemName">Problem Name:</label>
+                    <input type="text" id="problemName" />
+                </div>
 
-        <div class="problemCategorySection">
-            <label for="problemCategory">Problem Category:</label>
-            <input type="text" id="problemCategory" />
-        </div>
+                <div class="problemDescriptionSection">
+                    <label for="problemDescription">Problem Description:</label>
+                    <textarea id="problemDescription"></textarea>
+                </div>
 
-        <div class="problemDifficultySection">
-            <header>Difficulty:</header>
-            <div class="diffButtons">
-                <input type="radio" id="radio-easy" name="diffButtons" value="1">
-                <label class="diff" for="radio-easy">Easy</label>
-    
-                <input type="radio" id="radio-medium" name="diffButtons" value="2">
-                <label class="diff" for="radio-medium">Medium</label>
-    
-                <input type="radio" id="radio-hard" name="diffButtons" value="3">
-                <label class="diff" for="radio-hard">Hard</label>
+                <div class="problemCategorySection">
+                    <label for="problemCategory">Problem Category:</label>
+                    <input type="text" id="problemCategory" />
+                </div>
+
+                <div class="problemDifficultySection">
+                    <header>Difficulty:</header>
+                    <div class="diffButtons">
+                        <input type="radio" id="radio-easy" name="diffButtons"
+                            value="1">
+                        <label class="diff" for="radio-easy">Easy</label>
+
+                        <input type="radio" id="radio-medium" name="diffButtons"
+                            value="2">
+                        <label class="diff" for="radio-medium">Medium</label>
+
+                        <input type="radio" id="radio-hard" name="diffButtons"
+                            value="3">
+                        <label class="diff" for="radio-hard">Hard</label>
+                    </div>
+                </div>
+
+                <div class="createProblemButtons">
+                    <button id="submitButton" type="button">Submit</button>
+                    <button id="jsonImportButton" type="button">Import
+                        JSON</button>
+                    <input type="file" id="jsonFileInput" style="display:none"
+                        accept=".json" />
+                </div>
             </div>
         </div>
 
-        <div class="createProblemButtons">
-            <button id="submitButton" type="button">Submit</button>
-            <button id="jsonImportButton" type="button">Import JSON</button>
-            <input type="file" id="jsonFileInput" style="display:none" accept=".json"/>
-          </div>
-    </div>
-  </div>
-
-  <script src="../scripts/script.js"></script>
-  <script>
+        <script src="../scripts/script.js"></script>
+        <script>
     document.addEventListener('DOMContentLoaded', function () {
         const submitButton = document.getElementById('submitButton');
         const jsonImportButton = document.getElementById('jsonImportButton');
@@ -204,5 +225,5 @@
             }
         });
   </script>
-</body>
+    </body>
 </html>

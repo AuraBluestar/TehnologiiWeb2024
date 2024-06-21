@@ -24,7 +24,6 @@
       position: relative;
       height: 100%;
       font-family: Lato, normal;
-
     }
   </style>
 </head>
@@ -36,7 +35,6 @@
       <div class="logo"><a href="/loggedTeacher">In&lt;form&gt;atiX</a> </div>
     </div>
     <div class="navright">
-
       <ul>
         <li><a href="/loggedTeacher">Home</a></li>
         <li><a href="/">LogOut</a></li>
@@ -56,120 +54,107 @@
     </div>
     <ul>
       <li><a href="/loggedTeacher"><i class='bx bxs-home'></i><span class="navitem">Home</span></a></li>
-      <li><a href="/ProfilProfesor"><i
-            class='bx bxs-user-circle'></i><span
-            class="navitem">Profile</span></a></li>
-      <li><a href="/VisGroupsTeacher"><i class='bx bxs-group'></i><span
-            class="navitem">Groups</span></a></li>
-      <li><a href="/VisHWTeacher"><i class='bx bxs-book-alt'></i><span
-            class="navitem">Homeworks</span></a></li>
-      <li><a href="../../to be modified/ProblemePropuse.html"><i
-            class='bx bxs-book-content'></i><span class="navitem">Proposed
-            Problems</span></a></li>
-      <li><a href="/createProblem"><i class='bx bxs-edit'></i><span
-            class="navitem">New Problem</span></a></li>
-      <li><a href="mailto:assistance@informatix.com"><i class='bx bxs-contact'></i><span
-            class="navitem">Contact</span></a></li>
-      <li><a href="/"><i class='bx bx-log-out'></i><span
-            class="navitem">LogOut</span></a></li>
+      <li><a href="/ProfilProfesor"><i class='bx bxs-user-circle'></i><span class="navitem">Profile</span></a></li>
+      <li><a href="/VisGroupsTeacher"><i class='bx bxs-group'></i><span class="navitem">Groups</span></a></li>
+      <li><a href="/VisHWTeacher"><i class='bx bxs-book-alt'></i><span class="navitem">Homeworks</span></a></li>
+      <li><a href="../../to be modified/ProblemePropuse.html"><i class='bx bxs-book-content'></i><span class="navitem">Proposed Problems</span></a></li>
+      <li><a href="/createProblem"><i class='bx bxs-edit'></i><span class="navitem">New Problem</span></a></li>
+      <li><a href="mailto:assistance@informatix.com"><i class='bx bxs-contact'></i><span class="navitem">Contact</span></a></li>
+      <li><a href="/"><i class='bx bx-log-out'></i><span class="navitem">LogOut</span></a></li>
     </ul>
   </nav>
 
   <div class="maincontent">
-
-
     <div class="ProblemsPage">
-<!-- Problem list will be dynamically inserted here -->
-      
+      <!-- Problem list will be dynamically inserted here -->
     </div>
   </div>
 
   <script src="../scripts/script.js"></script>
 
   <script>
-// Funcție pentru a încărca și afișa lista de probleme din fișierul JSON
-function loadProblems(problems) {
-  const problemsContainer = document.querySelector('.ProblemsPage');
-  problemsContainer.innerHTML = ''; // Clear the container before inserting new elements
-  problems.forEach(problem => {
-    const problemElement = `
-      <div class="problem" data-id="${problem.ID}" style="cursor: pointer;">
-        <!-- Details section -->
-        <div class="details">
-            <!-- ID and Name -->
-            <div class="id-name">
-                <p class="problem-id"><strong>#</strong>${problem.ID}</p>
-                <p class="problem-name">${problem.Titlu}</h2>
+    // Funcție pentru a converti valoarea dificultății în cuvinte corespunzătoare
+    function getDifficultyText(difficulty) {
+      switch (difficulty) {
+        case 1:
+          return "Easy";
+        case 2:
+          return "Medium";
+        case 3:
+          return "Hard";
+        default:
+          return "Unknown";
+      }
+    }
+
+    function getDifficultyColor(difficulty) {
+      switch (difficulty) {
+        case 1:
+          return 'green';
+        case 2:
+          return 'orange';
+        case 3:
+          return 'red';
+        default:
+          return 'black';
+      }
+    }
+
+    // Funcție pentru a încărca și afișa lista de probleme din fișierul JSON
+    function loadProblems(problems) {
+      const problemsContainer = document.querySelector('.ProblemsPage');
+      problemsContainer.innerHTML = ''; // Clear the container before inserting new elements
+      const profesorID = localStorage.getItem('id'); // Recuperați ProfesorID din localStorage
+
+      problems.forEach(problem => {
+        if (problem.ProfesorID == profesorID) {
+          const problemElement = `
+            <div class="problem" data-id="${problem.ID}" style="cursor: pointer;">
+              <!-- Details section -->
+              <div class="details">
+                  <!-- ID and Name -->
+                  <div class="id-name">
+                      <p class="problem-id"><strong>#</strong>${problem.ID}</p>
+                      <p class="problem-name">${problem.Titlu}</h2>
+                  </div>
+                  <!-- Category and Difficulty -->
+                  <div class="category-diff">
+                      <p class="problem-category">${problem.Capitol}</p>
+                      <p class="problem-diff" style="color: ${getDifficultyColor(problem.Dificultate)} ;">${getDifficultyText(problem.Dificultate)}</p>
+                  </div>
+              </div>
+              <!-- Description section -->
+              <div class="description">
+                  <p class="problem-description">${problem.Descriere}</p>
+              </div>
             </div>
-            <!-- Category and Difficulty -->
-            <div class="category-diff">
-                <p class="problem-category">${problem.Capitol}</p>
-                <p class="problem-diff" style="color: ${getDifficultyColor(problem.Dificultate)} ;">${getDifficultyText(problem.Dificultate)}</p>
-            </div>
-        </div>
-        <!-- Description section -->
-        <div class="description">
-            <p class="problem-description">${problem.Descriere}</p>
-        </div>
-      </div>
-    `;
-    problemsContainer.insertAdjacentHTML('beforeend', problemElement);
-  });
+          `;
+          problemsContainer.insertAdjacentHTML('beforeend', problemElement);
+        }
+      });
 
-  // Add click event listener to each problem element
-  document.querySelectorAll('.problem').forEach(problemElement => {
-    problemElement.addEventListener('click', () => {
-      const problemId = problemElement.dataset.id;
-      window.location.href = `VisProblemTeacher?problemId=${problemId}`;
-    });
-  });
-}
+      // Add click event listener to each problem element
+      document.querySelectorAll('.problem').forEach(problemElement => {
+        problemElement.addEventListener('click', () => {
+          const problemId = problemElement.dataset.id;
+          window.location.href = `VisProblemTeacher?problemId=${problemId}`;
+        });
+      });
+    }
 
-// Funcție pentru a trimite cererea POST la server și a încărca problemele filtrate
-function searchProblems(event) {
-  event.preventDefault();
-
-  const text = document.querySelector('.search-input').value;
-  const difficulty = document.querySelector('input[name="diffButtons"]:checked').value;
-  const category = selectBtn.dataset.value || 'all';
-
-  const searchParams = {
-    text: text,
-    difficulty: difficulty,
-    category: category
-  };
-
-  fetch('http://localhost:3000/problems/search', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(searchParams)
-  })
-    .then(response => response.json())
-    .then(data => {
-      loadProblems(data);
-    })
-    .catch(error => console.error('Error loading problems:', error));
-}
-
-// Adăugăm event listener la formularul de filtrare
-document.getElementById('filtermenu').addEventListener('submit', searchProblems);
-
-// Apelăm funcția pentru a încărca și afișa lista de probleme la încărcarea paginii
-window.onload = function() {
-  // Încarcăm problemele inițiale (toate problemele)
-  fetch('http://localhost:3000/problems/all', {
-    method: 'POST',
-  })
-  .then(response => response.json())
-  .then(data => {
-    loadProblems(data);
-  })
-  .catch(error => console.error('Error loading problems:', error));
-};
+    // Apelăm funcția pentru a încărca și afișa lista de probleme la încărcarea paginii
+    window.onload = function() {
+      // Încarcăm problemele inițiale (toate problemele)
+      fetch('http://localhost:3000/problems/all', {
+        method: 'POST',
+      })
+      .then(response => response.json())
+      .then(data => {
+        loadProblems(data);
+      })
+      .catch(error => console.error('Error loading problems:', error));
+    };
   </script>
 </body>
-
 
 </html>

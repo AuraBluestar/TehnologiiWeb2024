@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../styles/nav-bar.css">
-  <link rel="stylesheet" href="../styles/side-bar.css">
-  <link rel="stylesheet" href="../styles/main-content.css">
-  <link rel="stylesheet" href="../styles/searchmenu.css">
-  <link rel="stylesheet" href="../styles/listingsPage.css">
-  <link rel="stylesheet" href="../styles/add.css">
-  <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-  <title>createGroup</title>
-  <style>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/nav-bar.css">
+    <link rel="stylesheet" href="../styles/side-bar.css">
+    <link rel="stylesheet" href="../styles/main-content.css">
+    <link rel="stylesheet" href="../styles/searchmenu.css">
+    <link rel="stylesheet" href="../styles/listingsPage.css">
+    <link rel="stylesheet" href="../styles/add.css">
+    <link rel='stylesheet'
+      href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <title>createGroup</title>
+    <style>
     * {
       margin: 0;
       padding: 0;
@@ -28,87 +29,99 @@
     }
   </style>
 
-</head>
+  </head>
 
-<body>
+  <body>
 
-  <!-- This is the NavBar -->
-  <nav class="navbar">
-    <div class="navleft">
-      <div class="logo"><a href="/loggedTeacher">In&lt;form&gt;atiX</a> </div>
-    </div>
-    <div class="navright">
-      <ul>
-        <li><a href="/loggedTeacher">Home</a></li>
-        <li><a href="/">LogOut</a></li>
-        <li><a href="mailto:assistance@informatix.com">Contact</a></li>
-      </ul>
-    </div>
-  </nav>
-
-  <!-- This is the SideBar -->
-  <nav class="sidebar">
-    <div class="top">
-      <div class="menu">
-        <i class='bx bx-code'></i>
-        <span>Menu</span>
+    <!-- This is the NavBar -->
+    <nav class="navbar">
+      <div class="navleft">
+        <div class="logo"><a href="/loggedTeacher">In&lt;form&gt;atiX</a> </div>
       </div>
-      <i class='bx bx-menu' id="btn"></i>
-    </div>
-    <ul>
-      <li><a href="/loggedTeacher"><i class='bx bxs-home'></i><span class="navitem">Home</span></a></li>
-      <li><a href="/ProfilProfesor"><i class='bx bxs-user-circle'></i><span class="navitem">Profile</span></a></li>
-      <li><a href="/VisGroupsTeacher"><i class='bx bxs-group'></i><span class="navitem">Groups</span></a></li>
-      <li><a href="/VisHWTeacher"><i class='bx bxs-book-alt'></i><span class="navitem">Homeworks</span></a></li>
-      <li><a href="../../to be modified/ProblemePropuse.html"><i class='bx bxs-book-content'></i><span class="navitem">Proposed Problems</span></a></li>
-      <li><a href="/createProblem"><i class='bx bxs-edit'></i><span class="navitem">New Problem</span></a></li>
-      <li><a href="mailto:assistance@informatix.com"><i class='bx bxs-contact'></i><span class="navitem">Contact</span></a></li>
-      <li><a href="/"><i class='bx bx-log-out'></i><span class="navitem">LogOut</span></a></li>
-    </ul>
-  </nav>
-
-  <div class="maincontent">
-
-    <div class="search">
-      <div class="createForm">
-        <h1>New Group</h1>
-        <form id="createGroupForm">
-          <div class="text-field">
-            <input type="text" id="classInput" required><span></span><label>Class</label>
-          </div>
-          <div class="text-field">
-            <input type="text" id="subjectInput" required><span></span><label>Subject</label>
-          </div>
-          <input type="submit" value="Create">
-        </form>
-      </div>
-    </div>
-
-    <div class="add">
-      <form class="addForm" id="addStudentForm">
-        <h1>Add Student</h1>
-
-        <div class="searchbox">
-          <header id="add-header">Student Name</header>
-          <div class="searchfield">
-            <div class="searchBar">
-              <input class="search-input" type="search" placeholder="Type Student Name..." id="studentNameInput">
-              <i class='bx bx-plus' id="addStudentBtn"></i>
-            </div>
-          </div>
-        </div>
-      </form>
-
-      <div class="added">
-        <ul class="added-flex" id="addedStudentsList">
-          <!-- Dynamic student list will be appended here -->
+      <div class="navright">
+        <ul>
+          <li><a href="/loggedTeacher">Home</a></li>
+          <li><a href="/">LogOut</a></li>
+          <li><a href="mailto:assistance@informatix.com">Contact</a></li>
         </ul>
       </div>
-    </div>
-  </div>
+    </nav>
 
-  <script src="../scripts/script.js"></script>
-  <script>
+    <!-- This is the SideBar -->
+    <nav class="sidebar">
+      <div class="top">
+        <div class="menu">
+          <i class='bx bx-code'></i>
+          <span>Menu</span>
+        </div>
+        <i class='bx bx-menu' id="btn"></i>
+      </div>
+      <ul>
+        <li><a href="/loggedTeacher"><i class='bx bxs-home'></i><span
+              class="navitem">Home</span></a></li>
+        <li><a href="/ProfilProfesor"><i class='bx bxs-user-circle'></i><span
+              class="navitem">Profile</span></a></li>
+        <li><a href="/VisGroupsTeacher"><i class='bx bxs-group'></i><span
+              class="navitem">Groups</span></a></li>
+        <li><a href="/VisHWTeacher"><i class='bx bxs-book-alt'></i><span
+              class="navitem">Homeworks</span></a></li>
+        <li><a href="/submitedProblems"><i class='bx bxs-book-content'></i><span
+              class="navitem">Proposed Problems</span></a></li>
+        <li><a href="/createProblem"><i class='bx bxs-edit'></i><span
+              class="navitem">New Problem</span></a></li>
+        <li><a href="mailto:assistance@informatix.com"><i
+              class='bx bxs-contact'></i><span
+              class="navitem">Contact</span></a></li>
+        <li><a href="/"><i class='bx bx-log-out'></i><span
+              class="navitem">LogOut</span></a></li>
+      </ul>
+    </nav>
+
+    <div class="maincontent">
+
+      <div class="search">
+        <div class="createForm">
+          <h1>New Group</h1>
+          <form id="createGroupForm">
+            <div class="text-field">
+              <input type="text" id="classInput"
+                required><span></span><label>Class</label>
+            </div>
+            <div class="text-field">
+              <input type="text" id="subjectInput"
+                required><span></span><label>Subject</label>
+            </div>
+            <input type="submit" value="Create">
+          </form>
+        </div>
+      </div>
+
+      <div class="add">
+        <form class="addForm" id="addStudentForm">
+          <h1>Add Student</h1>
+
+          <div class="searchbox">
+            <header id="add-header">Student Name</header>
+            <div class="searchfield">
+              <div class="searchBar">
+                <input class="search-input" type="search"
+                  placeholder="Type Student Name..." id="studentNameInput">
+                <i class='bx bx-plus' id="addStudentBtn"></i>
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <div class="added">
+          <ul class="added-flex" id="addedStudentsList">
+            <!-- Dynamic student list will be appended here -->
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <script src="../scripts/script.js"></script>
+    <script>
     document.getElementById('createGroupForm').addEventListener('submit', function (event) {
       event.preventDefault();
 
@@ -204,6 +217,6 @@
       });
     });
   </script>
-</body>
+  </body>
 
 </html>

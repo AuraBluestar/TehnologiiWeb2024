@@ -1677,6 +1677,8 @@ const server = http.createServer((req, res) => {
       filePath = path.join(baseDir, "pages", "solutionSubmittedProfesor.html");
     } else if (req.url === "/solutionSubmittedStudent") {
       filePath = path.join(baseDir, "pages", "solutionSubmittedStudent.html");
+    } else if (req.url === "/submitedProblems") {
+      filePath = path.join(baseDir, "pages", "submitedProblems.html");
     } else if (req.url.startsWith("/VisProblemStudent")) {
       filePath = path.join(baseDir, "pages", "VisProblemStudent.html");
     } else if (req.url.startsWith("/VisProblemTeacher")) {

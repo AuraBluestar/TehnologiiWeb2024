@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../styles/nav-bar.css">
-  <link rel="stylesheet" href="../styles/side-bar.css">
-  <link rel="stylesheet" href="../styles/main-content.css">
-  <link rel="stylesheet" href="../styles/searchmenu.css">
-  <link rel="stylesheet" href="../styles/listingsPage.css">
-  <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-  <title>LoggedTeacher</title>
-  <style>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/nav-bar.css">
+    <link rel="stylesheet" href="../styles/side-bar.css">
+    <link rel="stylesheet" href="../styles/main-content.css">
+    <link rel="stylesheet" href="../styles/searchmenu.css">
+    <link rel="stylesheet" href="../styles/listingsPage.css">
+    <link rel='stylesheet'
+      href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <title>LoggedTeacher</title>
+    <style>
     * {
       margin: 0;
       padding: 0;
@@ -27,118 +28,134 @@
 
     }
   </style>
-</head>
-<body>
+  </head>
+  <body>
 
+    <!-- This is the NavBar -->
+    <nav class="navbar">
+      <div class="navleft">
+        <div class="logo"><a href="/loggedTeacher">In&lt;form&gt;atiX</a> </div>
+      </div>
+      <div class="navright">
 
-  <!-- This is the NavBar -->
-  <nav class="navbar">
-    <div class="navleft">
-      <div class="logo"><a href="/loggedTeacher">In&lt;form&gt;atiX</a> </div>
-    </div>
-    <div class="navright">
-
-      <ul>
-        <li><a href="/ProfilProfesor">Profile</a></li>
+        <ul>
+          <li><a href="/ProfilProfesor">Profile</a></li>
           <li><a href="/">LogOut</a></li>
           <li><a href="mailto:assistance@informatix.com">Contact</a></li>
-      </ul>
-    </div>
-  </nav>
-
-  <!-- This is the SideBar -->
-  <nav class="sidebar">
-    <div class="top">
-      <div class="menu">
-        <i class='bx bx-code'></i>
-        <span>Menu</span>
+        </ul>
       </div>
-      <i class='bx bx-menu' id="btn"></i>
-    </div>
-    <ul>
-      <li><a href="/ProfilProfesor"><i class='bx bxs-user-circle'></i><span class="navitem">Profile</span></a></li>
-      <li><a href="/VisGroupsTeacher"><i class='bx bxs-group'></i><span class="navitem">Groups</span></a></li>
-      <li><a href="/VisHWTeacher"><i class='bx bxs-book-alt'></i><span class="navitem">Homeworks</span></a></li>
-      <li><a href="../../to be modified/ProblemePropuse.html"><i class='bx bxs-book-content'></i><span class="navitem">Proposed Problems</span></a></li>
-      <li><a href="/createProblem"><i class='bx bxs-edit'></i><span class="navitem">New Problem</span></a></li>
-      <li><a href="mailto:assistance@informatix.com"><i class='bx bxs-contact'></i><span class="navitem">Contact</span></a></li>
-      <li><a href="/"><i class='bx bx-log-out'></i><span class="navitem">LogOut</span></a></li>
-    </ul>
-  </nav> 
+    </nav>
 
-  <div class="maincontent">
+    <!-- This is the SideBar -->
+    <nav class="sidebar">
+      <div class="top">
+        <div class="menu">
+          <i class='bx bx-code'></i>
+          <span>Menu</span>
+        </div>
+        <i class='bx bx-menu' id="btn"></i>
+      </div>
+      <ul>
+        <li><a href="/ProfilProfesor"><i class='bx bxs-user-circle'></i><span
+              class="navitem">Profile</span></a></li>
+        <li><a href="/VisGroupsTeacher"><i class='bx bxs-group'></i><span
+              class="navitem">Groups</span></a></li>
+        <li><a href="/VisHWTeacher"><i class='bx bxs-book-alt'></i><span
+              class="navitem">Homeworks</span></a></li>
+        <li><a href="/submitedProblems"><i class='bx bxs-book-content'></i><span
+              class="navitem">Proposed Problems</span></a></li>
+        <li><a href="/createProblem"><i class='bx bxs-edit'></i><span
+              class="navitem">New Problem</span></a></li>
+        <li><a href="mailto:assistance@informatix.com"><i
+              class='bx bxs-contact'></i><span
+              class="navitem">Contact</span></a></li>
+        <li><a href="/"><i class='bx bx-log-out'></i><span
+              class="navitem">LogOut</span></a></li>
+      </ul>
+    </nav>
 
+    <div class="maincontent">
 
-    <div class="searchmenu">
-      <div class="searchbox">
-        <header>Problem Number</header>
-        <div class="searchfield">
-          <form id="search">
-  
-            <div class="seachBar">
-              <input class="search-input" type="search" placeholder="Search">
-              <i class='bx bx-search-alt-2'></i>
+      <div class="searchmenu">
+        <div class="searchbox">
+          <header>Problem Number</header>
+          <div class="searchfield">
+            <form id="search">
+
+              <div class="seachBar">
+                <input class="search-input" type="search" placeholder="Search">
+                <i class='bx bx-search-alt-2'></i>
+              </div>
+
+            </form>
+          </div>
+        </div>
+
+        <div class="filterbox">
+
+          <form id="filtermenu">
+
+            <header>Difficulty</header>
+            <div class="diffButtons">
+
+              <input type="radio" id="radio-all" name="diffButtons" value="all"
+                checked>
+              <label class="diff" for="radio-all">All</label>
+
+              <input type="radio" id="radio-easy" name="diffButtons"
+                value="easy">
+              <label class="diff" for="radio-easy">Easy</label>
+
+              <input type="radio" id="radio-medium" name="diffButtons"
+                value="medium">
+              <label class="diff" for="radio-medium">Medium</label>
+
+              <input type="radio" id="radio-hard" name="diffButtons"
+                value="hard">
+              <label class="diff" for="radio-hard">Hard</label>
+
             </div>
-  
+
+            <header>Category</header>
+            <div class="dropdown">
+              <div class="selectbtn">
+                <span class="sBtn-text">Select your option</span>
+                <i class="bx bx-chevron-down"></i>
+              </div>
+
+              <ul class="dmenu">
+                <li class="option" data-value="all"><span
+                    class="option-text">None</span></li>
+                <li class="option"
+                  data-value="Basic Principles Of The Language"><span
+                    class="option-text">Basic Principles Of The
+                    Language</span></li>
+                <li class="option" data-value="algoritmi"><span
+                    class="option-text">Basic Algorithms</span></li>
+                <li class="option" data-value="Vectors"><span
+                    class="option-text">Vectors</span></li>
+                <li class="option" data-value="Matrix"><span
+                    class="option-text">Matrix</span></li>
+              </ul>
+
+            </div>
+
+            <button type="submit" class="filter">Filter</button>
+
           </form>
+
         </div>
       </div>
 
-      <div class="filterbox">
-
-        <form id="filtermenu">
-
-
-          <header>Difficulty</header>
-          <div class="diffButtons">
-
-            <input type="radio" id="radio-all" name="diffButtons" value="all" checked>
-              <label class="diff" for="radio-all">All</label>
-  
-              <input type="radio" id="radio-easy" name="diffButtons" value="easy">
-              <label class="diff" for="radio-easy">Easy</label>
-  
-              <input type="radio" id="radio-medium" name="diffButtons" value="medium">
-              <label class="diff" for="radio-medium">Medium</label>
-  
-              <input type="radio" id="radio-hard" name="diffButtons" value="hard">
-              <label class="diff" for="radio-hard">Hard</label>
-
-          </div>
-
-          <header>Category</header>
-          <div class="dropdown">
-            <div class="selectbtn">
-              <span class="sBtn-text">Select your option</span>
-              <i class="bx bx-chevron-down"></i>
-            </div>
-
-            <ul class="dmenu">
-              <li class="option" data-value="all"><span class="option-text">None</span></li>
-              <li class="option" data-value="Basic Principles Of The Language"><span class="option-text">Basic Principles Of The Language</span></li>
-              <li class="option" data-value="algoritmi"><span class="option-text">Basic Algorithms</span></li>
-              <li class="option" data-value="Vectors"><span class="option-text">Vectors</span></li>
-              <li class="option" data-value="Matrix"><span class="option-text">Matrix</span></li>
-            </ul>
-
-          </div>
-
-          <button type="submit" class="filter">Filter</button>
-
-        </form>
+      <div class="ProblemsPage">
+        <!-- Problem list will be dynamically inserted here -->
 
       </div>
     </div>
 
-    <div class="ProblemsPage">
-<!-- Problem list will be dynamically inserted here -->
-      
-    </div>
-  </div>
+    <script src="../scripts/script.js"></script>
 
-  <script src="../scripts/script.js"></script>
-
-  <script>
+    <script>
      // Funcție pentru a converti valoarea dificultății în cuvinte corespunzătoare
 function getDifficultyText(difficulty) {
   switch (difficulty) {
@@ -248,7 +265,6 @@ window.onload = function() {
   .catch(error => console.error('Error loading problems:', error));
 };
   </script>
-</body>
-
+  </body>
 
 </html>

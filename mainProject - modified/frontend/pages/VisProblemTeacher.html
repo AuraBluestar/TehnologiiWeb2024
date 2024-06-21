@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../styles/nav-bar.css">
-  <link rel="stylesheet" href="../styles/side-bar.css">
-  <link rel="stylesheet" href="../styles/main-content.css">
-  <link rel="stylesheet" href="../styles/searchmenu.css">
-  <link rel="stylesheet" href="../styles/listingsPage.css">
-  <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-  <title>Problem</title>
-  <style>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/nav-bar.css">
+    <link rel="stylesheet" href="../styles/side-bar.css">
+    <link rel="stylesheet" href="../styles/main-content.css">
+    <link rel="stylesheet" href="../styles/searchmenu.css">
+    <link rel="stylesheet" href="../styles/listingsPage.css">
+    <link rel='stylesheet'
+      href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <title>Problem</title>
+    <style>
     * {
       margin: 0;
       padding: 0;
@@ -26,91 +27,102 @@
       font-family: Lato, normal;
     }
   </style>
-</head>
+  </head>
 
-<body>
+  <body>
 
-  <!-- This is the NavBar -->
-  <nav class="navbar">
-    <div class="navleft">
-      <div class="logo"><a href="/loggedTeacher">In&lt;form&gt;atiX</a> </div>
-    </div>
-    <div class="navright">
-
-      <ul>
-        <li><a href="/loggedTeacher">Home</a></li>
-        <li><a href="/">LogOut</a></li>
-        <li><a href="mailto:assistance@informatix.com">Contact</a></li>
-      </ul>
-    </div>
-  </nav>
-
-  <!-- This is the SideBar -->
-  <nav class="sidebar">
-    <div class="top">
-      <div class="menu">
-        <i class='bx bx-code'></i>
-        <span>Menu</span>
+    <!-- This is the NavBar -->
+    <nav class="navbar">
+      <div class="navleft">
+        <div class="logo"><a href="/loggedTeacher">In&lt;form&gt;atiX</a> </div>
       </div>
-      <i class='bx bx-menu' id="btn"></i>
-    </div>
-    <ul>
-      <li><a href="/loggedTeacher"><i class='bx bxs-home'></i><span class="navitem">Home</span></a></li>
-      <li><a href="/ProfilProfesor"><i class='bx bxs-user-circle'></i><span class="navitem">Profile</span></a></li>
-      <li><a href="/VisGroupsTeacher"><i class='bx bxs-group'></i><span class="navitem">Groups</span></a></li>
-      <li><a href="/VisHWTeacher"><i class='bx bxs-book-alt'></i><span class="navitem">Homeworks</span></a></li>
-      <li><a href="../../to be modified/ProblemePropuse.html"><i class='bx bxs-book-content'></i><span class="navitem">Proposed Problems</span></a></li>
-      <li><a href="/createProblem"><i class='bx bxs-edit'></i><span class="navitem">New Problem</span></a></li>
-      <li><a href="mailto:assistance@informatix.com"><i class='bx bxs-contact'></i><span class="navitem">Contact</span></a></li>
-      <li><a href="/"><i class='bx bx-log-out'></i><span class="navitem">LogOut</span></a></li>
-    </ul>
-  </nav>
+      <div class="navright">
 
-  <div class="maincontent" style="margin-top:10px;">
+        <ul>
+          <li><a href="/loggedTeacher">Home</a></li>
+          <li><a href="/">LogOut</a></li>
+          <li><a href="mailto:assistance@informatix.com">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
 
-    <div class="ProblemPage" style="font-size:20px;">
-       
+    <!-- This is the SideBar -->
+    <nav class="sidebar">
+      <div class="top">
+        <div class="menu">
+          <i class='bx bx-code'></i>
+          <span>Menu</span>
+        </div>
+        <i class='bx bx-menu' id="btn"></i>
+      </div>
+      <ul>
+        <li><a href="/loggedTeacher"><i class='bx bxs-home'></i><span
+              class="navitem">Home</span></a></li>
+        <li><a href="/ProfilProfesor"><i class='bx bxs-user-circle'></i><span
+              class="navitem">Profile</span></a></li>
+        <li><a href="/VisGroupsTeacher"><i class='bx bxs-group'></i><span
+              class="navitem">Groups</span></a></li>
+        <li><a href="/VisHWTeacher"><i class='bx bxs-book-alt'></i><span
+              class="navitem">Homeworks</span></a></li>
+        <li><a href="/submitedProblems"><i class='bx bxs-book-content'></i><span
+              class="navitem">Proposed Problems</span></a></li>
+        <li><a href="/createProblem"><i class='bx bxs-edit'></i><span
+              class="navitem">New Problem</span></a></li>
+        <li><a href="mailto:assistance@informatix.com"><i
+              class='bx bxs-contact'></i><span
+              class="navitem">Contact</span></a></li>
+        <li><a href="/"><i class='bx bx-log-out'></i><span
+              class="navitem">LogOut</span></a></li>
+      </ul>
+    </nav>
+
+    <div class="maincontent" style="margin-top:10px;">
+
+      <div class="ProblemPage" style="font-size:20px;">
+
         <div class="problem-container" style="cursor:default;">
-            <!-- Left Section -->
-            <div class="up-section">
+          <!-- Left Section -->
+          <div class="up-section">
             <div class="left-section">
-                <!-- Details section -->
-                <div class="details" style="margin-left:0px;">
-                    <!-- ID and Name -->
-                    <div class="id-name">
-                        <p class="problem-id">#ID</p>
-                        <p class="problem-name">titlu</p>
-                    </div>
-                    <!-- Category and Difficulty -->
-                    <div class="category-diff">
-                        <p class="problem-category">Cateogrie</p>
-                        <p class="problem-diff">Dificultate</p>
-                    </div>
-                    
+              <!-- Details section -->
+              <div class="details" style="margin-left:0px;">
+                <!-- ID and Name -->
+                <div class="id-name">
+                  <p class="problem-id">#ID</p>
+                  <p class="problem-name">titlu</p>
                 </div>
+                <!-- Category and Difficulty -->
+                <div class="category-diff">
+                  <p class="problem-category">Cateogrie</p>
+                  <p class="problem-diff">Dificultate</p>
+                </div>
+
+              </div>
             </div>
-        
+
             <!-- Right Section -->
             <div class="right-section">
-                <div class="author">
-                  <p>Author: <span id="author-name">Author Name</span></p>
-                </div>
+              <div class="author">
+                <p>Author: <span id="author-name">Author Name</span></p>
+              </div>
             </div>
 
-        </div>
-        
-            <!-- Description section -->
-            <div class="description-section">
-                <h3 style="font-weight: bolder;">Description</h3>
-                <div class="description">
-                    <p class="problem-description">Write functions to perform various string manipulation tasks such as reversal, concatenation, and substring extraction.</p>
-                </div>
+          </div>
+
+          <!-- Description section -->
+          <div class="description-section">
+            <h3 style="font-weight: bolder;">Description</h3>
+            <div class="description">
+              <p class="problem-description">Write functions to perform various
+                string manipulation tasks such as reversal, concatenation, and
+                substring extraction.</p>
             </div>
+          </div>
         </div>
 
         <!-- Export to JSON button -->
         <div class="export-button">
-            <button class="json-export">Export to JSON</button>
+          <button class="json-export">Export to JSON</button>
         </div>
 
         <div class="submissions-section">
@@ -118,10 +130,10 @@
           <div class="submissions" id="submissionsList"></div>
         </div>
 
+      </div>
     </div>
-  </div>
-  <script src="../scripts/script.js"></script>
-  <script>
+    <script src="../scripts/script.js"></script>
+    <script>
     document.addEventListener('DOMContentLoaded', function () {
       const params = new URLSearchParams(window.location.search);
       const problemId = params.get('problemId');
@@ -281,5 +293,5 @@
         downloadAnchorNode.remove();
     }
   </script>
-</body>
+  </body>
 </html>
