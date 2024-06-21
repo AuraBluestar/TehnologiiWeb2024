@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../styles/nav-bar.css">
+  <link rel="stylesheet" href="../styles/side-bar.css">
+  <link rel="stylesheet" href="../styles/main-content.css">
+  <link rel="stylesheet" href="../styles/searchmenu.css">
+  <link rel="stylesheet" href="../styles/listingsPage.css">
+  <link rel="stylesheet" href="../styles/add.css">
+  <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+  <title>seeGroup</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body,
+    html {
+      position: relative;
+      height: 100%;
+      font-family: Lato, normal;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <!-- This is the NavBar -->
+  <nav class="navbar">
+    <div class="navleft">
+      <div class="logo"><a href="/loggedStudent">In&lt;form&gt;atiX</a></div>
+    </div>
+    <div class="navright">
+      <ul>
+        <li><a href="/loggedStudent">Home</a></li>
+        <li><a href="/">LogOut</a></li>
+        <li><a href="mailto:assistance@informatix.com"> Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+  <!-- This is the SideBar -->
+  <nav class="sidebar">
+    <div class="top">
+      <div class="menu">
+        <i class='bx bx-code'></i>
+        <span>Menu</span>
+      </div>
+      <i class='bx bx-menu' id="btn"></i>
+    </div>
+    <ul>
+      <li><a href="/loggedStudent"><i class='bx bxs-home'></i><span class="navitem">Home</span></a></li>
+      <li><a href="/ProfilStudent"><i class='bx bxs-user-circle'></i><span class="navitem">Profile</span></a></li>
+      <li><a href="/VisGroupsStudent"><i class='bx bxs-group'></i><span class="navitem">Groups</span></a></li>
+      <li><a href="/VisHWStudent"><i class='bx bxs-book-alt'></i><span class="navitem">Homeworks</span></a></li>
+      <li><a href="mailto:assistance@informatix.com"><i class='bx bxs-contact'></i><span class="navitem">Contact</span></a></li>
+      <li><a href="/"><i class='bx bx-log-out'></i><span class="navitem">LogOut</span></a></li>
+    </ul>
+  </nav>
+
+  <div class="maincontent">
+
+    <div class="search">
+      <div class="createForm">
+        <h2>A1 - Web Technolgies </h2>
+        <h3>Profesor: Cosmin Varlan</h3>
+        
+      </div>
+    </div>
+
+    <div class="add">
+      <form class="addForm" id="addStudentForm">
+        <h1>Group</h1>
+      </form>
+
+      <div class="added">
+        <ul class="added-flex" id="addedStudentsList">
+          <!-- Dynamic student list will be appended here -->
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script src="../scripts/script.js"></script>
+  <script>
+    document.getElementById('createGroupForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      const grupa = document.getElementById('classInput').value;
+      const materie = document.getElementById('subjectInput').value;
+      const profesorID = localStorage.getItem('id'); // Assuming the ID is stored in localStorage
+
+      const requestBody = JSON.stringify({
+        grupa: grupa,
+        profesorID: parseInt(profesorID),
+        materie: materie
+      });
+
+      fetch('http://localhost:3000/classes/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: requestBody
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          alert('Group created successfully!');
+          localStorage.setItem('classId', data.id);
+          // Optionally, redirect to another page or reset the form
+          document.getElementById('createGroupForm').reset();
+        } else {
+          alert('Failed to create group');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Error creating group');
+      });
+    });
+
+    document.getElementById('addStudentBtn').addEventListener('click', function () {
+      const studentName = document.getElementById('studentNameInput').value;
+      if (studentName.trim() === '') {
+        alert('Please enter a student name.');
+        return;
+      }
+
+      fetch('http://localhost:3000/student/id', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ nume: studentName })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          const studentId = data.id;
+          const classId = localStorage.getItem('classId');
+          if (!classId) {
+            alert('No class created yet. Please create a class first.');
+            return;
+          }
+
+          fetch('http://localhost:3000/classes/addStudent', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ classId: parseInt(classId), studentId: parseInt(studentId) })
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              const addedStudentsList = document.getElementById('addedStudentsList');
+              const listItem = document.createElement('li');
+              listItem.textContent = studentName;
+              addedStudentsList.appendChild(listItem);
+              document.getElementById('studentNameInput').value = '';
+              alert('Student added to class successfully!');
+            } else {
+              alert('Failed to add student to class');
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert('Error adding student to class');
+          });
+        } else {
+          alert('Student not found');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Error fetching student ID');
+      });
+    });
+  </script>
+</body>
+
+</html>
