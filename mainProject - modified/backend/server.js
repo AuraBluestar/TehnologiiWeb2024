@@ -610,7 +610,7 @@ function getProblemById(res, id) {
   });
 }
 
-// Functie pentru a manevra cererile de adăugare temă
+// Function to handle adding homework
 const handleAddHomework = (req, res) => {
   let body = "";
 
@@ -620,44 +620,19 @@ const handleAddHomework = (req, res) => {
 
   req.on("end", () => {
     try {
-      const { Grupa, Materie, ProfesorID } = JSON.parse(body);
+      const { ClasaID, ProfesorID } = JSON.parse(body);
 
-      const findClassQuery =
-        "SELECT ID FROM clase WHERE Grupa = ? AND Materie = ?";
-      pool.query(findClassQuery, [Grupa, Materie], (findError, findResults) => {
-        if (findError) {
-          console.error("Error finding class:", findError);
+      const insertQuery =
+        "INSERT INTO teme (ClasaID, ProfesorID) VALUES (?, ?)";
+      pool.query(insertQuery, [ClasaID, ProfesorID], (insertError, insertResults) => {
+        if (insertError) {
+          console.error("Error inserting data:", insertError);
           res.writeHead(500, { "Content-Type": "application/json" });
-          res.end(
-            JSON.stringify({ success: false, message: "Database error" })
-          );
-        } else if (findResults.length === 0) {
-          res.writeHead(404, { "Content-Type": "application/json" });
-          res.end(
-            JSON.stringify({ success: false, message: "Class not found" })
-          );
+          res.end(JSON.stringify({ success: false, message: "Database error" }));
         } else {
-          const ClasaID = findResults[0].ID;
-
-          const insertQuery =
-            "INSERT INTO teme (ClasaID, ProfesorID) VALUES (?, ?)";
-          pool.query(
-            insertQuery,
-            [ClasaID, ProfesorID],
-            (insertError, insertResults) => {
-              if (insertError) {
-                console.error("Error inserting data:", insertError);
-                res.writeHead(500, { "Content-Type": "application/json" });
-                res.end(
-                  JSON.stringify({ success: false, message: "Database error" })
-                );
-              } else {
-                const homeworkId = insertResults.insertId;
-                res.writeHead(200, { "Content-Type": "application/json" });
-                res.end(JSON.stringify({ success: true, id: homeworkId }));
-              }
-            }
-          );
+          const homeworkId = insertResults.insertId;
+          res.writeHead(200, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ success: true, id: homeworkId }));
         }
       });
     } catch (err) {
@@ -905,7 +880,7 @@ function getAllGroupsForProfesor(req, res) {
 
       // Verificare dacă profesorID este furnizat
       if (!profesorID) {
-        return sendErrorResponse(res, 400, "ProfesorID is required");
+        return sendErrorResponse(res, 400, "profesorID is required");
       }
 
       // Interogare pentru a obține toate clasele pentru profesorul dat
