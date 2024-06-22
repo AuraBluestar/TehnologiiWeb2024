@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,9 +24,36 @@
       height: 100%;
       font-family: Lato, normal;
     }
+
+    .dropdown {
+      position: relative;
+    }
+
+    .dmenu {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+    }
+
+    .dmenu .option {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+
+    .dmenu .option:hover {
+      background-color: #f1f1f1;
+    }
+
+    .selectbtn {
+      cursor: pointer;
+    }
   </style>
 </head>
-
 <body>
 
   <!-- This is the NavBar -->
@@ -67,26 +93,23 @@
 
   <div class="maincontent">
     <div class="searchmenu">
-      <div class="searchbox">
-        <header>Subject</header>
-        <div class="searchfield">
-          <form id="search">
-            <div class="seachBar">
-              <input class="search-input" type="search" placeholder="Search">
-              <i class='bx bx-search-alt-2'></i>
-            </div>
-          </form>
-        </div>
-      </div>
       <div class="filterbox">
         <form id="filtermenu">
           <header>Class</header>
           <div class="dropdown">
-            <div class="selectbtn" id="selectBtn">
+            <div class="selectbtn" id="selectBtnGroup">
               <span class="sBtn-text">Select your option</span>
               <i class="bx bx-chevron-down"></i>
             </div>
             <ul class="dmenu" id="groupDropdown"></ul>
+          </div>
+          <header>Subject</header>
+          <div class="dropdown">
+            <div class="selectbtn" id="selectBtnSubject">
+              <span class="sBtn-text">Select your option</span>
+              <i class="bx bx-chevron-down"></i>
+            </div>
+            <ul class="dmenu" id="subjectDropdown"></ul>
           </div>
           <button type="submit" class="filter">Filter</button>
           <div class="createnew">
@@ -137,87 +160,128 @@
       });
     }
 
-    // Function to populate the dropdown menu with fetched groups (unique options only)
-    function populateDropdown(groups) {
+    // Function to populate the group dropdown
+    function populateGroupDropdown(groups) {
       const groupDropdown = document.getElementById('groupDropdown');
       groupDropdown.innerHTML = ''; // Clear existing options
 
-      // Create a Set to store unique group names
-      const uniqueGroups = new Set(groups.map(group => group.Grupa));
+      const allOption = document.createElement('li');
+      allOption.innerHTML = `<span class="option-text">All</span>`;
+      allOption.classList.add('option');
+      allOption.dataset.value = 'All';
+      groupDropdown.appendChild(allOption);
+      allOption.addEventListener('click', () => {
+        document.querySelector('#selectBtnGroup .sBtn-text').innerText = 'All';
+        document.getElementById('selectBtnGroup').dataset.value = 'All';
+      });
 
-      // Populate dropdown with unique group names
+      const uniqueGroups = new Set(groups.map(group => group.Grupa));
       uniqueGroups.forEach(groupName => {
         const option = document.createElement('li');
         option.innerHTML = `<span class="option-text">${groupName}</span>`;
         option.classList.add('option');
-        option.dataset.value = groupName; // Store group value in dataset
+        option.dataset.value = groupName;
         groupDropdown.appendChild(option);
-
-        // Add click event listener to each option
         option.addEventListener('click', () => {
-          document.querySelector('.sBtn-text').innerText = groupName;
-          document.getElementById('selectBtn').dataset.value = groupName;
+          document.querySelector('#selectBtnGroup .sBtn-text').innerText = groupName;
+          document.getElementById('selectBtnGroup').dataset.value = groupName;
         });
       });
+    }
+
+    // Function to populate the subject dropdown
+    function populateSubjectDropdown(groups) {
+      const subjectDropdown = document.getElementById('subjectDropdown');
+      subjectDropdown.innerHTML = ''; // Clear existing options
+
+      const allOption = document.createElement('li');
+      allOption.innerHTML = `<span class="option-text">All</span>`;
+      allOption.classList.add('option');
+      allOption.dataset.value = 'All';
+      subjectDropdown.appendChild(allOption);
+      allOption.addEventListener('click', () => {
+        document.querySelector('#selectBtnSubject .sBtn-text').innerText = 'All';
+        document.getElementById('selectBtnSubject').dataset.value = 'All';
+      });
+
+      const uniqueSubjects = new Set(groups.map(group => group.Materie));
+      uniqueSubjects.forEach(subjectName => {
+        const option = document.createElement('li');
+        option.innerHTML = `<span class="option-text">${subjectName}</span>`;
+        option.classList.add('option');
+        option.dataset.value = subjectName;
+        subjectDropdown.appendChild(option);
+        option.addEventListener('click', () => {
+          document.querySelector('#selectBtnSubject .sBtn-text').innerText = subjectName;
+          document.getElementById('selectBtnSubject').dataset.value = subjectName;
+        });
+      });
+    }
+
+    // Function to fetch data
+    function fetchData(profesorID) {
+      const requestBody = JSON.stringify({ "profesorID": parseInt(profesorID) });
+      return fetch('http://localhost:3000/classes/all/Teacher', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: requestBody
+      })
+      .then(response => response.json());
     }
 
     // Load groups and populate dropdown when the page loads
     window.onload = function () {
       const profesorID = localStorage.getItem('id');
-
+      console.log('Teacher ID:', profesorID);
       if (profesorID) {
-        const requestBody = JSON.stringify({ "profesorID": parseInt(profesorID) });
-
-        fetch('http://localhost:3000/classes/all/Teacher', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: requestBody
+        fetchData(profesorID)
+        .then(data => {
+          console.log('Fetched groups:', data); // Debug log
+          loadGroups(data); // Call the function to load groups
+          populateGroupDropdown(data); // Call the function to populate group dropdown
+          populateSubjectDropdown(data); // Call the function to populate subject dropdown
         })
-          .then(response => response.json())
-          .then(data => {
-            console.log('Fetched groups:', data); // Debug log
-            loadGroups(data); // Call the function to load groups
-            populateDropdown(data); // Call the function to populate dropdown
-          })
-          .catch(error => console.error('Error loading groups:', error));
+        .catch(error => console.error('Error loading groups:', error));
       } else {
         console.error('profesorID is not available in local storage');
       }
+
+      document.getElementById('selectBtnGroup').addEventListener('click', toggleDropdown);
+      document.getElementById('selectBtnSubject').addEventListener('click', toggleDropdown);
+
+      document.getElementById('filtermenu').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const selectedGroup = document.getElementById('selectBtnGroup').dataset.value || 'All';
+        const selectedSubject = document.getElementById('selectBtnSubject').dataset.value || 'All';
+
+        console.log('Selected Group:', selectedGroup);
+        console.log('Selected Subject:', selectedSubject);
+
+        if (profesorID) {
+          fetchData(profesorID)
+          .then(data => {
+            console.log('Data before filtering:', data);
+            const filteredGroups = data.filter(group => {
+              const groupMatch = selectedGroup === 'All' || group.Grupa === selectedGroup;
+              const subjectMatch = selectedSubject === 'All' || group.Materie === selectedSubject;
+              return groupMatch && subjectMatch;
+            });
+
+            console.log('Filtered Groups:', filteredGroups);
+            loadGroups(filteredGroups);
+          })
+          .catch(error => console.error('Error filtering groups:', error));
+        }
+      });
     };
 
-    document.getElementById('filtermenu').addEventListener('submit', function(event) {
-      event.preventDefault();
-      const text = document.getElementById('subjectInput').value;
-      const selectBtn = document.getElementById('selectBtn');
-      const group = selectBtn.getAttribute('data-value');
-      const profesorID = localStorage.getItem('id');
-
-      if (profesorID) {
-        const requestBody = JSON.stringify({
-          "profesorID": parseInt(profesorID),
-          "text": text,
-          "subject": group
-        });
-
-        fetch('http://localhost:3000/classes/search/Teacher', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: requestBody
-        })
-          .then(response => response.json())
-          .then(data => {
-            console.log('Filtered groups:', data); // Debug log
-            loadGroups(data);
-          })
-          .catch(error => console.error('Error loading groups:', error));
-      } else {
-        console.error('profesorID is not available in local storage');
-      }
-    });
+    function toggleDropdown(event) {
+      const dropdown = event.currentTarget.nextElementSibling;
+      dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    }
   </script>
 </body>
 </html>
