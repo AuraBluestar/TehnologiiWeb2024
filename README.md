@@ -18,24 +18,23 @@ Echipa:
 - creare tema
 - pagina problemei pt guest si pt studenti si pt profesori si pt admin
 - exportarea problemei
-- user page(prof(partial)+elev )
+- user page(prof + elev ) + grafuri cu statistica
 - CreateProblemPage
 - landing page&pagina problemapt admin
 - populare cu teme create de profesor
 - IMPORT Json la creare problema
 - grupa unica + tema unica pt elevi
 - pagina cu teme pt elev
-- - Grupa&Tema unica pt profesor
+- Grupa&Tema unica pt profesor
+- acordarea de stele la o problema
+- pagina cu probleme propuse
+- NU MAI STIU. PREA MULTE AU FOST FACUTE.
 
 # Ce mai e de facut:
 - filtrare grupe(facut la studenti dar nu merge)
-- filtrare teme
-- la createHW acum nu mai merge dropdown-ul pt grupe + de facut pt materii
-- partea de acordare stele la probleme 
+- filtrare teme 
 - Miscellaneous pentru responsivness
 - Rezolvat filter probleme(la dificultate e cu una inainte - easy nu selecteaza nimic, medium = easy si hard = medium)
 
-
 # Important de facut: 
-- modificarea link-uirii dintre pagini astfel incat sa fie dupa structura din server.js
 - La final testarea tuturor paginilor
