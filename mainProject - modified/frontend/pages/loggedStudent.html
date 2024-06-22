@@ -94,17 +94,11 @@
           </div>
           <header>Category</header>
           <div class="dropdown">
-            <div class="selectbtn">
+            <div class="selectbtn" id="selectBtnCategory">
               <span class="sBtn-text">Select your option</span>
               <i class="bx bx-chevron-down"></i>
             </div>
-            <ul class="dmenu">
-              <li class="option" data-value="all"><span class="option-text">None</span></li>
-              <li class="option" data-value="Basic Principles Of The Language"><span class="option-text">Basic Principles Of The Language</span></li>
-              <li class="option" data-value="algoritmi"><span class="option-text">Basic Algorithms</span></li>
-              <li class="option" data-value="Vectors"><span class="option-text">Vectors</span></li>
-              <li class="option" data-value="Matrix"><span class="option-text">Matrix</span></li>
-            </ul>
+            <ul class="dmenu" id="categoryDropdown"></ul>
           </div>
           <button type="submit" class="filter">Filter</button>
         </form>
@@ -121,7 +115,8 @@
     <script src="../scripts/checkStudent.js"></script>
     
     <script>
-   // Funcție pentru a converti valoarea dificultății în cuvinte corespunzătoare
+  let allCategories = [];
+
   function getDifficultyText(difficulty) {
     switch (difficulty) {
       case 1:
@@ -135,125 +130,143 @@
     }
   }
 
-    // Function to get color based on difficulty
-    function getDifficultyColor(difficulty) {
-      switch (difficulty) {
-        case 1:
-          return 'green';
-        case 2:
-          return 'orange';
-        case 3:
-          return 'red';
-        default:
-          return 'black';
-      }
+  function getDifficultyColor(difficulty) {
+    switch (difficulty) {
+      case 1:
+        return 'green';
+      case 2:
+        return 'orange';
+      case 3:
+        return 'red';
+      default:
+        return 'black';
     }
+  }
 
-    // Function to load and display the list of problems from the JSON file
-    async function loadProblems(problems) {
-      const problemsContainer = document.querySelector('.ProblemsPage');
-      problemsContainer.innerHTML = ''; // Clear the container before inserting new elements
+  async function loadProblems(problems) {
+    const problemsContainer = document.querySelector('.ProblemsPage');
+    problemsContainer.innerHTML = '';
 
-      // Fetch statistics for all problems
-      const problemPromises = problems.map(problem => {
-        return fetch(`http://localhost:3000/reports/problem`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ ProblemID: problem.ID })
-        })
-          .then(response => response.json())
-          .then(statistics => {
-            return {
-              ...problem,
-              statistics: statistics
-            };
-          });
-      });
-
-      // Wait for all promises to complete
-      const problemsWithStatistics = await Promise.all(problemPromises);
-
-      // Render the problems in the correct order
-      problemsWithStatistics.forEach(problem => {
-        const problemElement = `
-          <div class="problem" data-id="${problem.ID}" style="cursor: pointer;">
-            <!-- Details section -->
-            <div class="details">
-              <!-- ID and Name -->
-              <div class="id-name">
-                <p class="problem-id"><strong>#</strong>${problem.ID}</p>
-                <p class="problem-name">${problem.Titlu}</p>
-              </div>
-              <!-- Category and Difficulty -->
-              <div class="category-diff">
-                <p class="problem-category">${problem.Capitol}</p>
-                <p class="problem-diff" style="color: ${getDifficultyColor(problem.Dificultate)} ;">${getDifficultyText(problem.Dificultate)}</p>
-                <p class="problem-statistic">${problem.statistics.users_succeeded}/${problem.statistics.users_tried}</p>
-              </div>
-            </div>
-            <!-- Description section -->
-            <div class="description">
-              <p class="problem-description">${problem.Descriere}</p>
-            </div>
-          </div>
-        `;
-        problemsContainer.insertAdjacentHTML('beforeend', problemElement);
-      });
-
-      // Add click event listener to each problem element
-      document.querySelectorAll('.problem').forEach(problemElement => {
-        problemElement.addEventListener('click', () => {
-          const problemId = problemElement.dataset.id;
-          window.location.href = `VisProblemStudent?problemId=${problemId}`;
-        });
-      });
-    }
-
-    // Function to send the POST request to the server and load filtered problems
-    function searchProblems(event) {
-      event.preventDefault();
-
-      const text = document.querySelector('.search-input').value;
-      const difficulty = document.querySelector('input[name="diffButtons"]:checked').value;
-      const category = selectBtn.dataset.value || 'all';
-
-      const searchParams = {
-        text: text,
-        difficulty: difficulty,
-        category: category
-      };
-
-      fetch('http://localhost:3000/problems/search', {
+    const problemPromises = problems.map(problem => {
+      return fetch(`http://localhost:3000/reports/problem`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(searchParams)
+        body: JSON.stringify({ ProblemID: problem.ID })
       })
         .then(response => response.json())
-        .then(data => {
-          loadProblems(data);
-        })
-        .catch(error => console.error('Error loading problems:', error));
+        .then(statistics => {
+          return {
+            ...problem,
+            statistics: statistics
+          };
+        });
+    });
+
+    const problemsWithStatistics = await Promise.all(problemPromises);
+
+    problemsWithStatistics.forEach(problem => {
+      const problemElement = `
+        <div class="problem" data-id="${problem.ID}" style="cursor: pointer;">
+          <div class="details">
+            <div class="id-name">
+              <p class="problem-id"><strong>#</strong>${problem.ID}</p>
+              <p class="problem-name">${problem.Titlu}</p>
+            </div>
+            <div class="category-diff">
+              <p class="problem-category">${problem.Capitol}</p>
+              <p class="problem-diff" style="color: ${getDifficultyColor(problem.Dificultate)} ;">${getDifficultyText(problem.Dificultate)}</p>
+              <p class="problem-statistic">${problem.statistics.users_succeeded}/${problem.statistics.users_tried}</p>
+            </div>
+          </div>
+          <div class="description">
+            <p class="problem-description">${problem.Descriere}</p>
+          </div>
+        </div>
+      `;
+      problemsContainer.insertAdjacentHTML('beforeend', problemElement);
+    });
+
+    document.querySelectorAll('.problem').forEach(problemElement => {
+      problemElement.addEventListener('click', () => {
+        const problemId = problemElement.dataset.id;
+        window.location.href = `VisProblemStudent?problemId=${problemId}`;
+      });
+    });
+
+    // Populate the category dropdown if not already populated
+    if (allCategories.length === 0) {
+      populateCategoryDropdown(problems);
     }
+  }
 
-    // Add event listener to the filter form
-    document.getElementById('filtermenu').addEventListener('submit', searchProblems);
+  function populateCategoryDropdown(problems) {
+    const categoryDropdown = document.querySelector('#categoryDropdown');
+    categoryDropdown.innerHTML = '<li class="option" data-value="all"><span class="option-text">All</span></li>';
 
-    // Call the function to load and display the list of problems when the page loads
-    window.onload = function() {
-      // Load initial problems (all problems)
-      fetch('http://localhost:3000/problems/all', {
-        method: 'POST',
-      })
-        .then(response => response.json())
-        .then(data => {
-          loadProblems(data);
-        })
-        .catch(error => console.error('Error loading problems:', error));
+    const categories = [...new Set(problems.map(problem => problem.Capitol))];
+    allCategories = categories;
+
+    categories.forEach(category => {
+      const categoryOption = document.createElement('li');
+      categoryOption.classList.add('option');
+      categoryOption.dataset.value = category;
+      categoryOption.innerHTML = `<span class="option-text">${category}</span>`;
+      categoryDropdown.appendChild(categoryOption);
+    });
+
+    const selectBtn = document.querySelector('#selectBtnCategory');
+    const sBtnText = document.querySelector('.sBtn-text');
+    categoryDropdown.addEventListener('click', (e) => {
+      const option = e.target.closest('.option');
+      if (option) {
+        sBtnText.textContent = option.textContent;
+        selectBtn.dataset.value = option.dataset.value;
+      }
+    });
+  }
+
+  function searchProblems(event) {
+    event.preventDefault();
+
+    const text = document.querySelector('.search-input').value;
+    const difficulty = document.querySelector('input[name="diffButtons"]:checked').value;
+    const category = document.querySelector('#selectBtnCategory').dataset.value || 'all';
+
+    const searchParams = {
+      text: text,
+      difficulty: difficulty,
+      category: category
     };
+
+    fetch('http://localhost:3000/problems/search', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(searchParams)
+    })
+      .then(response => response.json())
+      .then(data => {
+        loadProblems(data);
+      })
+      .catch(error => console.error('Error loading problems:', error));
+  }
+
+  document.getElementById('filtermenu').addEventListener('submit', searchProblems);
+
+  window.onload = function() {
+    fetch('http://localhost:3000/problems/all', {
+      method: 'POST',
+    })
+      .then(response => response.json())
+      .then(data => {
+        loadProblems(data);
+        populateCategoryDropdown(data); // Ensure dropdown is populated on initial load
+      })
+      .catch(error => console.error('Error loading problems:', error));
+  };
   </script>
 
 </body>
