@@ -1,158 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../styles/nav-bar.css">
-    <link rel="stylesheet" href="../styles/side-bar.css">
-    <link rel="stylesheet" href="../styles/main-content.css">
-    <link rel="stylesheet" href="../styles/searchmenu.css">
-    <link rel="stylesheet" href="../styles/listingsPage.css">
-    <link rel='stylesheet'
-      href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-    <title>Problem</title>
-    <style>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../styles/nav-bar.css">
+  <link rel="stylesheet" href="../styles/side-bar.css">
+  <link rel="stylesheet" href="../styles/main-content.css">
+  <link rel="stylesheet" href="../styles/searchmenu.css">
+  <link rel="stylesheet" href="../styles/listingsPage.css">
+  <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+  <title>Problem</title>
+  <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-    body, html {
+
+    body,
+    html {
       position: relative;
       height: 100%;
       font-family: Lato, normal;
     }
   </style>
-  </head>
-  <body>
-    <!-- This is the NavBar -->
-    <nav class="navbar">
-      <div class="navleft">
-        <div class="logo"><a href="/loggedStudent">In&lt;form&gt;atiX</a></div>
-      </div>
-      <div class="navright">
-        <ul>
-          <li><a href="/loggedStudent">Home</a></li>
-          <li><a href="/">LogOut</a></li>
-          <li><a href="mailto:assistance@informatix.com"> Contact</a></li>
-        </ul>
-      </div>
-    </nav>
-    <!-- This is the SideBar -->
-    <nav class="sidebar">
-      <div class="top">
-        <div class="menu">
-          <i class='bx bx-code'></i>
-          <span>Menu</span>
-        </div>
-        <i class='bx bx-menu' id="btn"></i>
-      </div>
+</head>
+
+<body>
+  <nav class="navbar">
+    <div class="navleft">
+      <div class="logo"><a href="/loggedStudent">In&lt;form&gt;atiX</a></div>
+    </div>
+    <div class="navright">
       <ul>
-        <li><a href="/loggedStudent"><i class='bx bxs-home'></i><span
-              class="navitem">Home</span></a></li>
-        <li><a href="/ProfilStudent"><i class='bx bxs-user-circle'></i><span
-              class="navitem">Profile</span></a></li>
-        <li><a href="/VisGroupsStudent"><i class='bx bxs-group'></i><span
-              class="navitem">Groups</span></a></li>
-        <li><a href="/VisHWStudent"><i class='bx bxs-book-alt'></i><span
-              class="navitem">Homeworks</span></a></li>
-        <li><a href="mailto:assistance@informatix.com"><i
-              class='bx bxs-contact'></i><span
-              class="navitem">Contact</span></a></li>
-        <li><a href="/"><i class='bx bx-log-out'></i><span
-              class="navitem">LogOut</span></a></li>
+        <li><a href="/loggedStudent">Home</a></li>
+        <li><a href="/">LogOut</a></li>
+        <li><a href="mailto:assistance@informatix.com"> Contact</a></li>
       </ul>
-    </nav>
+    </div>
+  </nav>
+  <nav class="sidebar">
+    <div class="top">
+      <div class="menu">
+        <i class='bx bx-code'></i>
+        <span>Menu</span>
+      </div>
+      <i class='bx bx-menu' id="btn"></i>
+    </div>
+    <ul>
+      <li><a href="/loggedStudent"><i class='bx bxs-home'></i><span class="navitem">Home</span></a></li>
+      <li><a href="/ProfilStudent"><i class='bx bxs-user-circle'></i><span class="navitem">Profile</span></a></li>
+      <li><a href="/VisGroupsStudent"><i class='bx bxs-group'></i><span class="navitem">Groups</span></a></li>
+      <li><a href="/VisHWStudent"><i class='bx bxs-book-alt'></i><span class="navitem">Homeworks</span></a></li>
+      <li><a href="mailto:assistance@informatix.com"><i class='bx bxs-contact'></i><span class="navitem">Contact</span></a></li>
+      <li><a href="/"><i class='bx bx-log-out'></i><span class="navitem">LogOut</span></a></li>
+    </ul>
+  </nav>
 
-    <div class="maincontent" style="margin-top:10px;">
-      <div class="ProblemPage" style="font-size:20px;">
-        <div class="problem-container" style="cursor:default;">
-          <!-- Left Section -->
-          <div class="up-section">
-            <div class="left-section">
-              <!-- Details section -->
-              <div class="details" style="margin-left:0px;">
-                <!-- ID and Name -->
-                <div class="id-name">
-                  <p class="problem-id">#ID</p>
-                  <p class="problem-name">titlu</p>
-                </div>
-                <!-- Category and Difficulty -->
-                <div class="category-diff">
-                  <p class="problem-category">Cateogrie</p>
-                  <p class="problem-diff">Dificultate</p>
-                </div>
+  <div class="maincontent" style="margin-top:10px;">
+    <div class="ProblemPage" style="font-size:20px;">
+      <div class="problem-container" style="cursor:default;">
+        <div class="up-section">
+          <div class="left-section">
+            <div class="details" style="margin-left:0px;">
+              <div class="id-name">
+                <p class="problem-id">#ID</p>
+                <p class="problem-name">titlu</p>
               </div>
+              <div class="category-diff">
+                <p class="problem-category">Cateogrie</p>
+                <p class="problem-diff">Dificultate</p>
+              </div>
+            </div>
 
-              <div class="grading-section">
-                <div class="star-rating">
-                  <span class="star" data-value="1">&#9733;</span>
-                  <span class="star" data-value="2">&#9733;</span>
-                  <span class="star" data-value="3">&#9733;</span>
-                  <span class="star" data-value="4">&#9733;</span>
-                  <span class="star" data-value="5">&#9733;</span>
-                </div>
+            <div class="grading-section">
+              <div class="star-rating">
+                <span class="star" data-value="1">&#9733;</span>
+                <span class="star" data-value="2">&#9733;</span>
+                <span class="star" data-value="3">&#9733;</span>
+                <span class="star" data-value="4">&#9733;</span>
+                <span class="star" data-value="5">&#9733;</span>
               </div>
-            </div>
-            <div class="right-section">
-              <div class="author">
-                <p>Author: <span id="author-name">Author Name</span></p>
+              <div class="average-rating">
+                <p>Average Rating: <span id="average-rating">0</span></p>
               </div>
             </div>
           </div>
-          <div class="description-section">
-            <h3 style="font-weight: bolder;">Description</h3>
-            <div class="description">
-              <p class="problem-description">Write functions to perform various
-                string manipulation tasks such as reversal, concatenation, and
-                substring extraction.</p>
+          <div class="right-section">
+            <div class="author">
+              <p>Author: <span id="author-name">Author Name</span></p>
             </div>
           </div>
         </div>
-        <div class="submissions-section">
-          <h3 style="font-weight: bolder;">Submissions</h3>
-          <div class="submissions">
-            <!-- Submissions will be appended here by JavaScript -->
+        <div class="description-section">
+          <h3 style="font-weight: bolder;">Description</h3>
+          <div class="description">
+            <p class="problem-description">Write functions to perform various string manipulation tasks such as reversal,
+              concatenation, and substring extraction.</p>
           </div>
         </div>
-        <div class="export-button">
-          <button class="json-export">Export to JSON</button>
-        </div>
-        <div class="submit-section" style="display: none;">
-          <textarea class="solution-box"
-            placeholder="Enter your solution here..."></textarea>
-          <button class="submit-button">Submit</button>
-        </div>
+      </div>
+      <div class="submissions-section">
+        <h3 style="font-weight: bolder;">Submissions</h3>
+        <div class="submissions"></div>
+      </div>
+      <div class="export-button">
+        <button class="json-export">Export to JSON</button>
+      </div>
+      <div class="submit-section" style="display: none;">
+        <textarea class="solution-box" placeholder="Enter your solution here..."></textarea>
+        <button class="submit-button">Submit</button>
+      </div>
+      <div class="submission-message" style="display: none;">
+        <p>You have already submitted a solution for this problem.</p>
       </div>
     </div>
-    <script src="../scripts/script.js"></script>
-    <script>
-  let problemData;
-  let studentProblems = []; // Array to hold the student's problems
+  </div>
+  <script src="../scripts/script.js"></script>
+  <script>
+    let problemData;
+    let studentProblems = [];
+    let submissions = [];
 
-  document.addEventListener('DOMContentLoaded', function () {
-    const params = new URLSearchParams(window.location.search);
-    const problemId = params.get('problemId');
-    const elevID = localStorage.getItem('id');
-    console.log(`Problem ID: ${problemId}, Elev ID: ${elevID}`);
+    document.addEventListener('DOMContentLoaded', function () {
+      const params = new URLSearchParams(window.location.search);
+      const problemId = params.get('problemId');
+      const elevID = localStorage.getItem('id');
+      console.log(`Problem ID: ${problemId}, Elev ID: ${elevID}`);
 
-    if (problemId && elevID) {
-      fetchProblemDetails(problemId, elevID);
-    } else {
-      console.error('Missing required IDs');
-    }
-  });
-
-  document.querySelector('.json-export').addEventListener('click', function () {
-      if (problemData) {
-          exportToJsonFile(problemData);
+      if (problemId && elevID) {
+        fetchProblemDetails(problemId, elevID);
       } else {
-          alert('Problem data is not available to export.');
+        console.error('Missing required IDs');
       }
-  });
+    });
 
-  document.querySelector('.submit-button').addEventListener('click', function () {
+    document.querySelector('.json-export').addEventListener('click', function () {
+      if (problemData) {
+        exportToJsonFile(problemData);
+      } else {
+        alert('Problem data is not available to export.');
+      }
+    });
+
+    document.querySelector('.submit-button').addEventListener('click', function () {
       const solutionText = document.querySelector('.solution-box').value;
       const params = new URLSearchParams(window.location.search);
       const problemId = params.get('problemId');
@@ -160,190 +153,288 @@
       const profesorId = studentProblems.find(problem => problem.problemaid == problemId)?.profesorid;
 
       if (solutionText && problemId && elevID && profesorId) {
-          submitSolution(elevID, problemId, profesorId, solutionText);
+        submitSolution(elevID, problemId, profesorId, solutionText);
       } else {
-          alert('Please enter a solution before submitting.');
+        alert('Please enter a solution before submitting.');
       }
-  });
-
-  function fetchProblemDetails(problemId, elevID) {
-    fetch('http://localhost:3000/problems/student', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ elevID: elevID })
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Data received:', data);
-      if (data.success) {
-        studentProblems = data.data; // Save the student's problems
-        const problemExists = studentProblems.some(problem => problem.problemaid == problemId);
-        console.log(`Problem exists: ${problemExists}`);
-        if (problemExists) {
-          document.querySelector('.submit-section').style.display = 'block';
-        }
-      }
-
-      return fetch(`http://localhost:3000/problems/${problemId}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-    })
-    .then(response => response.json())
-    .then(problem => {
-      console.log('Problem details:', problem);
-      problemData = problem;
-      document.querySelector('.problem-id').textContent = `#${problem.ID}`;
-      document.querySelector('.problem-name').textContent = problem.Titlu;
-      document.querySelector('.problem-category').textContent = problem.Capitol;
-      document.querySelector('.problem-diff').textContent = getDifficultyText(problem.Dificultate);
-      document.querySelector('.problem-description').textContent = problem.Descriere;
-
-      return fetch(`http://localhost:3000/Teacher/${problem.ProfesorID}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-    })
-    .then(response => response.json())
-    .then(teacher => {
-      console.log('Teacher details:', teacher);
-      document.getElementById('author-name').textContent = teacher.nume;
-
-      // Fetch and populate submissions
-      fetchSubmissions(problemId, elevID);
-    })
-    .catch(error => {
-      console.error('Error:', error);
     });
-  }
 
-  function fetchSubmissions(problemId, elevID) {
-    fetch('http://localhost:3000/solutions/student', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ elevID: elevID, problemaID: problemId })
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Submissions data received:', data);
-      if (data.success) {
-        const submissions = data.data;
-        const submissionsContainer = document.querySelector('.submissions');
-        submissionsContainer.innerHTML = ''; // Clear any existing submissions
-        submissions.forEach(submission => {
-          fetch(`http://localhost:3000/Teacher/${submission.ProfesorID}`, {
+    function fetchProblemDetails(problemId, elevID) {
+      fetch('http://localhost:3000/problems/student', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ elevID: elevID })
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Data received from problems/student:', data);
+          if (data.success) {
+            studentProblems = data.data;
+            const problemExists = studentProblems.some(problem => problem.problemaid == problemId);
+            console.log(`Problem exists: ${problemExists}`);
+            if (problemExists) {
+              return fetch('http://localhost:3000/solutions/student', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ elevID: elevID, problemaID: problemId })
+              });
+            }
+          }
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Data received from solutions/student:', data);
+          if (data.success) {
+            submissions = data.data;
+            const problemDetails = studentProblems.find(problem => problem.problemaid == problemId);
+            console.log('Problem details from studentProblems:', problemDetails);
+            console.log('Submissions:', submissions);
+            const alreadySubmitted = submissions.some(submission => {
+              console.log('Checking submission:', submission);
+              return submission.problemaID == problemId && submission.ProfesorID == problemDetails.profesorid;
+            });
+            console.log(`Already submitted: ${alreadySubmitted}`);
+            if (!alreadySubmitted) {
+              document.querySelector('.submit-section').style.display = 'block';
+            } else {
+              document.querySelector('.submission-message').style.display = 'block';
+            }
+          }
+          return fetch(`http://localhost:3000/problems/${problemId}`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
             }
+          });
+        })
+        .then(response => response.json())
+        .then(problem => {
+          console.log('Problem details:', problem);
+          problemData = problem;
+          document.querySelector('.problem-id').textContent = `#${problem.ID}`;
+          document.querySelector('.problem-name').textContent = problem.Titlu;
+          document.querySelector('.problem-category').textContent = problem.Capitol;
+          document.querySelector('.problem-diff').textContent = getDifficultyText(problem.Dificultate);
+          document.querySelector('.problem-description').textContent = problem.Descriere;
+
+          return fetch(`http://localhost:3000/Teacher/${problem.ProfesorID}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          });
+        })
+        .then(response => response.json())
+        .then(teacher => {
+          console.log('Teacher details:', teacher);
+          document.getElementById('author-name').textContent = teacher.nume;
+
+          fetchSubmissions(problemId, elevID);
+
+          fetch(`http://localhost:3000/votes/get`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ ProblemaID: problemId })
           })
-          .then(response => response.json())
-          .then(teacher => {
-            fetch(`http://localhost:3000/group/${submission.ClasaID}`, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
+            .then(response => response.json())
+            .then(ratingData => {
+              if (ratingData.success) {
+                const avgRating = ratingData.data.avg_stars;
+                document.getElementById('average-rating').textContent = avgRating;
+                highlightStars(avgRating);
               }
             })
-            .then(response => response.json())
-            .then(group => {
-              const submissionBox = document.createElement('div');
-              submissionBox.classList.add('submission-box');
-              submissionBox.innerHTML = `
-                <a href="/solutionSubmittedStudent" class="submission-link" data-problem-id="${problemId}" data-titlu="${problemData.Titlu}" data-descriere="${problemData.Descriere}" data-rezolvare="${submission.Rezolvare}" data-profesor-id="${submission.ProfesorID}">
-                  <p class="submitter-name">${teacher.nume}</p>
-                  <p class="class-subject">${group['Grupa-Materie']}</p>
-                </a>
-              `;
-              submissionsContainer.appendChild(submissionBox);
-
-              // Add event listener for click to store data in local storage
-              submissionBox.querySelector('.submission-link').addEventListener('click', function(event) {
-                event.preventDefault();
-                const problemId = this.dataset.problemId;
-                const titlu = this.dataset.titlu;
-                const descriere = this.dataset.descriere;
-                const rezolvare = this.dataset.rezolvare;
-                const profesorId = this.dataset.profesorId;
-
-                localStorage.setItem('solutionData', JSON.stringify({ problemId, titlu, descriere, rezolvare, profesorId }));
-                window.location.href = this.href;
-              });
-            })
-            .catch(error => {
-              console.error('Error fetching group:', error);
-            });
-          })
-          .catch(error => {
-            console.error('Error fetching teacher:', error);
-          });
+            .catch(error => console.error('Error fetching average rating:', error));
+        })
+        .catch(error => {
+          console.error('Error:', error);
         });
-      }
-    })
-    .catch(error => {
-      console.error('Error fetching submissions:', error);
-    });
-  }
-
-  function getDifficultyText(difficulty) {
-    switch (difficulty) {
-      case 1:
-        return 'Easy';
-      case 2:
-        return 'Medium';
-      case 3:
-        return 'Hard';
-      default:
-        return 'Unknown';
     }
-  }
 
-  function submitSolution(elevID, problemId, profesorId, solutionText) {
-      fetch('http://localhost:3000/solutions/add', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-              ElevID: elevID,
-              ProblemaID: problemId,
-              ProfesorID: profesorId,
-              Rezolvare: solutionText
-          })
+    function fetchSubmissions(problemId, elevID) {
+      fetch('http://localhost:3000/solutions/student', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ elevID: elevID, problemaID: problemId })
       })
-      .then(response => response.json())
-      .then(data => {
+        .then(response => response.json())
+        .then(data => {
+          console.log('Submissions data received:', data);
+          if (data.success) {
+            const submissions = data.data;
+            const submissionsContainer = document.querySelector('.submissions');
+            submissionsContainer.innerHTML = '';
+            submissions.forEach(submission => {
+              fetch(`http://localhost:3000/Teacher/${submission.ProfesorID}`, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                }
+              })
+                .then(response => response.json())
+                .then(teacher => {
+                  fetch(`http://localhost:3000/group/${submission.ClasaID}`, {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json'
+                    }
+                  })
+                    .then(response => response.json())
+                    .then(group => {
+                      const submissionBox = document.createElement('div');
+                      submissionBox.classList.add('submission-box');
+                      submissionBox.innerHTML = `
+                        <a href="/solutionSubmittedStudent" class="submission-link" data-problem-id="${problemId}" data-titlu="${problemData.Titlu}" data-descriere="${problemData.Descriere}" data-rezolvare="${submission.Rezolvare}" data-profesor-id="${submission.ProfesorID}">
+                          <p class="submitter-name">${teacher.nume}</p>
+                          <p class="class-subject">${group['Grupa-Materie']}</p>
+                        </a>
+                      `;
+                      submissionsContainer.appendChild(submissionBox);
+
+                      submissionBox.querySelector('.submission-link').addEventListener('click', function (event) {
+                        event.preventDefault();
+                        const problemId = this.dataset.problemId;
+                        const titlu = this.dataset.titlu;
+                        const descriere = this.dataset.descriere;
+                        const rezolvare = this.dataset.rezolvare;
+                        const profesorId = this.dataset.profesorId;
+
+                        localStorage.setItem('solutionData', JSON.stringify({ problemId, titlu, descriere, rezolvare, profesorId }));
+                        window.location.href = this.href;
+                      });
+                    })
+                    .catch(error => {
+                      console.error('Error fetching group:', error);
+                    });
+                })
+                .catch(error => {
+                  console.error('Error fetching teacher:', error);
+                });
+            });
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching submissions:', error);
+        });
+    }
+
+    function getDifficultyText(difficulty) {
+      switch (difficulty) {
+        case 1:
+          return 'Easy';
+        case 2:
+          return 'Medium';
+        case 3:
+          return 'Hard';
+        default:
+          return 'Unknown';
+      }
+    }
+
+    function submitSolution(elevID, problemId, profesorId, solutionText) {
+      fetch('http://localhost:3000/solutions/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          ElevID: elevID,
+          ProblemaID: problemId,
+          ProfesorID: profesorId,
+          Rezolvare: solutionText
+        })
+      })
+        .then(response => response.json())
+        .then(data => {
           console.log('Solution submitted:', data);
           if (data.success) {
-              alert('Solution submitted successfully!');
+            alert('Solution submitted successfully!');
+            document.querySelector('.submit-section').style.display = 'none';
+            document.querySelector('.submission-message').style.display = 'block';
+          } else if (data.error === "Duplicate entry '11-9-8' for key 'rezolvari.unique_problem_elev_prof'") {
+            alert('Already submitted a response.');
           } else {
-              alert('Failed to submit solution.');
+            alert('Failed to submit solution.');
           }
-      })
-      .catch(error => {
+        })
+        .catch(error => {
           console.error('Error:', error);
           alert('An error occurred while submitting the solution.');
-      });
-  }
+        });
+    }
 
-  function exportToJsonFile(jsonData) {
+    function exportToJsonFile(jsonData) {
       const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(jsonData));
       const downloadAnchorNode = document.createElement('a');
       downloadAnchorNode.setAttribute("href", dataStr);
       downloadAnchorNode.setAttribute("download", `problem_${jsonData.ID}.json`);
-      document.body.appendChild(downloadAnchorNode); // Required for Firefox
+      document.body.appendChild(downloadAnchorNode);
       downloadAnchorNode.click();
       downloadAnchorNode.remove();
-  }
-</script>
+    }
 
-  </body>
+    function highlightStars(rating) {
+      const stars = document.querySelectorAll('.star');
+      stars.forEach(star => {
+        star.style.color = star.dataset.value <= rating ? 'gold' : 'gray';
+      });
+    }
+
+    function handleStarHover() {
+      const stars = document.querySelectorAll('.star');
+      stars.forEach(star => {
+        star.addEventListener('mouseover', () => {
+          highlightStars(star.dataset.value);
+        });
+        star.addEventListener('mouseout', () => {
+          const currentRating = document.getElementById('average-rating').textContent;
+          highlightStars(currentRating);
+        });
+        star.addEventListener('click', () => {
+          const rating = star.dataset.value;
+          const problemId = new URLSearchParams(window.location.search).get('problemId');
+          const elevID = localStorage.getItem('id');
+          submitRating(problemId, elevID, rating);
+        });
+      });
+    }
+
+    function submitRating(problemId, elevID, rating) {
+      fetch('http://localhost:3000/votes/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          ProblemaID: problemId,
+          UtilizatorID: elevID,
+          Stele: rating
+        })
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            window.location.reload();
+          } else {
+            alert('Failed to submit rating.');
+          }
+        })
+        .catch(error => {
+          console.error('Error submitting rating:', error);
+        });
+    }
+
+    handleStarHover();
+  </script>
+
+</body>
+
 </html>

@@ -24,11 +24,8 @@
       position: relative;
       height: 100%;
       font-family: Lato, normal;
-
     }
   </style>
-
-
 </head>
 
 <body>
@@ -36,10 +33,9 @@
   <!-- This is the NavBar -->
   <nav class="navbar">
     <div class="navleft">
-      <div class="logo"><a href="/">In&lt;form&gt;atiX</a> </div>
+      <div class="logo"><a href="/">In&lt;form&gt;atiX</a></div>
     </div>
     <div class="navright">
-
       <ul>
         <li><a href="/login">Login</a></li>
         <li><a href="/signup">Sign Up</a></li>
@@ -65,52 +61,37 @@
   </nav>
 
   <div class="maincontent">
-
-
     <div class="searchmenu">
       <div class="searchbox">
-      <header>Problem Number</header>
-      <div class="searchfield">
-        <form id="search">
-
-          <div class="seachBar">
-            <input class="search-input" type="search" placeholder="Search">
-            <i class='bx bx-search-alt-2'></i>
-          </div>
-
-        </form>
+        <header>Problem Number</header>
+        <div class="searchfield">
+          <form id="search">
+            <div class="seachBar">
+              <input class="search-input" type="search" placeholder="Search">
+              <i class='bx bx-search-alt-2'></i>
+            </div>
+          </form>
+        </div>
       </div>
-      </div>
-
       <div class="filterbox">
-
         <form id="filtermenu">
-
-
           <header>Difficulty</header>
           <div class="diffButtons">
-
             <input type="radio" id="radio-all" name="diffButtons" value="all" checked>
             <label class="diff" for="radio-all">All</label>
-
             <input type="radio" id="radio-easy" name="diffButtons" value="easy">
             <label class="diff" for="radio-easy">Easy</label>
-
             <input type="radio" id="radio-medium" name="diffButtons" value="medium">
             <label class="diff" for="radio-medium">Medium</label>
-
             <input type="radio" id="radio-hard" name="diffButtons" value="hard">
             <label class="diff" for="radio-hard">Hard</label>
-
           </div>
-
           <header>Category</header>
           <div class="dropdown">
             <div class="selectbtn">
               <span class="sBtn-text">Select your option</span>
               <i class="bx bx-chevron-down"></i>
             </div>
-
             <ul class="dmenu">
               <li class="option" data-value="all"><span class="option-text">None</span></li>
               <li class="option" data-value="Basic Principles Of The Language"><span class="option-text">Basic Principles Of The Language</span></li>
@@ -118,23 +99,19 @@
               <li class="option" data-value="Vectors"><span class="option-text">Vectors</span></li>
               <li class="option" data-value="Matrix"><span class="option-text">Matrix</span></li>
             </ul>
-
           </div>
-
           <button type="submit" class="filter">Filter</button>
-
         </form>
-
       </div>
     </div>
-
     <div class="ProblemsPage">
-<!-- Problem list will be dynamically inserted here -->
+      <!-- Problem list will be dynamically inserted here -->
     </div>
   </div>
 
   <script src="../scripts/script.js"></script>
-  <script> // Funcție pentru a converti valoarea dificultății în cuvinte corespunzătoare
+  <script>
+    // Function to convert difficulty value to corresponding text
     function getDifficultyText(difficulty) {
       switch (difficulty) {
         case 1:
@@ -147,49 +124,74 @@
           return "Unknown";
       }
     }
-    
+
+    // Function to get color based on difficulty
     function getDifficultyColor(difficulty) {
       switch (difficulty) {
-          case 1:
-              return 'green';
-          case 2:
-              return 'orange';
-          case 3:
-              return 'red';
-          default:
-              return 'black';
+        case 1:
+          return 'green';
+        case 2:
+          return 'orange';
+        case 3:
+          return 'red';
+        default:
+          return 'black';
       }
     }
-    
-    // Funcție pentru a încărca și afișa lista de probleme din fișierul JSON
-    function loadProblems(problems) {
+
+    // Function to load and display the list of problems from the JSON file
+    async function loadProblems(problems) {
       const problemsContainer = document.querySelector('.ProblemsPage');
       problemsContainer.innerHTML = ''; // Clear the container before inserting new elements
-      problems.forEach(problem => {
+
+      // Fetch statistics for all problems
+      const problemPromises = problems.map(problem => {
+        return fetch(`http://localhost:3000/reports/problem`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ ProblemID: problem.ID })
+        })
+          .then(response => response.json())
+          .then(statistics => {
+            return {
+              ...problem,
+              statistics: statistics
+            };
+          });
+      });
+
+      // Wait for all promises to complete
+      const problemsWithStatistics = await Promise.all(problemPromises);
+
+      // Render the problems in the correct order
+      problemsWithStatistics.forEach(problem => {
         const problemElement = `
           <div class="problem" data-id="${problem.ID}" style="cursor: pointer;">
             <!-- Details section -->
             <div class="details">
-                <!-- ID and Name -->
-                <div class="id-name">
-                    <p class="problem-id"><strong>#</strong>${problem.ID}</p>
-                    <p class="problem-name">${problem.Titlu}</h2>
-                </div>
-                <!-- Category and Difficulty -->
-                <div class="category-diff">
-                    <p class="problem-category">${problem.Capitol}</p>
-                    <p class="problem-diff" style="color: ${getDifficultyColor(problem.Dificultate)} ;">${getDifficultyText(problem.Dificultate)}</p>
-                </div>
+              <!-- ID and Name -->
+              <div class="id-name">
+                <p class="problem-id"><strong>#</strong>${problem.ID}</p>
+                <p class="problem-name">${problem.Titlu}</p>
+              </div>
+              <!-- Category and Difficulty -->
+              <div class="category-diff">
+                <p class="problem-category">${problem.Capitol}</p>
+                <p class="problem-diff" style="color: ${getDifficultyColor(problem.Dificultate)} ;">${getDifficultyText(problem.Dificultate)}</p>
+                <p class="problem-statistic">${problem.statistics.users_succeeded}/${problem.statistics.users_tried}</p>
+              </div>
             </div>
             <!-- Description section -->
             <div class="description">
-                <p class="problem-description">${problem.Descriere}</p>
+              <p class="problem-description">${problem.Descriere}</p>
             </div>
           </div>
         `;
         problemsContainer.insertAdjacentHTML('beforeend', problemElement);
       });
-    
+
       // Add click event listener to each problem element
       document.querySelectorAll('.problem').forEach(problemElement => {
         problemElement.addEventListener('click', () => {
@@ -198,21 +200,21 @@
         });
       });
     }
-    
-    // Funcție pentru a trimite cererea POST la server și a încărca problemele filtrate
+
+    // Function to send the POST request to the server and load filtered problems
     function searchProblems(event) {
       event.preventDefault();
-    
+
       const text = document.querySelector('.search-input').value;
       const difficulty = document.querySelector('input[name="diffButtons"]:checked').value;
       const category = selectBtn.dataset.value || 'all';
-    
+
       const searchParams = {
         text: text,
         difficulty: difficulty,
         category: category
       };
-    
+
       fetch('http://localhost:3000/problems/search', {
         method: 'POST',
         headers: {
@@ -226,24 +228,24 @@
         })
         .catch(error => console.error('Error loading problems:', error));
     }
-    
-    // Adăugăm event listener la formularul de filtrare
+
+    // Add event listener to the filter form
     document.getElementById('filtermenu').addEventListener('submit', searchProblems);
-    
-    // Apelăm funcția pentru a încărca și afișa lista de probleme la încărcarea paginii
+
+    // Call the function to load and display the list of problems when the page loads
     window.onload = function() {
-      // Încarcăm problemele inițiale (toate problemele)
+      // Load initial problems (all problems)
       fetch('http://localhost:3000/problems/all', {
         method: 'POST',
       })
-      .then(response => response.json())
-      .then(data => {
-        loadProblems(data);
-      })
-      .catch(error => console.error('Error loading problems:', error));
-    };</script>
+        .then(response => response.json())
+        .then(data => {
+          loadProblems(data);
+        })
+        .catch(error => console.error('Error loading problems:', error));
+    };
+  </script>
 
 </body>
-
 
 </html>

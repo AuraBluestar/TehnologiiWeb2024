@@ -464,52 +464,82 @@ const getUserReports = (req, res) => {
 
   req.on("end", () => {
     try {
-      const { UserID } = JSON.parse(body);
+      const { UserID, userType } = JSON.parse(body);
 
-      if (!UserID) {
+      if (!UserID || !userType) {
         res.writeHead(400, { "Content-Type": "application/json" });
         res.end(
-          JSON.stringify({ success: false, message: "UserID is required" })
+          JSON.stringify({ success: false, message: "UserID and userType are required" })
         );
         return;
       }
 
-      const query = `
-        SELECT 
-          (select count(distinct problemaId) from problemeteme pe 
-          join teme t on t.id=pe.temaID join clase c on c.id=t.clasaid 
-          join claseelevi ce on ce.clasaid=c.id 
-          join elevi e on e.id=ce.elevid where e.id = ?) AS problems_submitted,
-          (select count(distinct pe.problemaid) 
-          from problemeteme pe 
-          join teme t on t.id = pe.temaid 
-          join clase c on c.id = t.clasaid 
-          join claseelevi ce on ce.clasaid = c.id 
-          join elevi e on e.id = ce.elevid 
-          join rezolvari r on r.elevid = e.id and r.problemaid = pe.problemaid 
-          where e.id = ?) AS problems_solved,
-          ( select count(distinct pe.problemaid) 
-          from problemeteme pe 
-          join teme t on t.id = pe.temaid 
-          join clase c on c.id = t.clasaid 
-          join claseelevi ce on ce.clasaid = c.id 
-          join elevi e on e.id = ce.elevid 
-          join rezolvari r on r.elevid = e.id and r.problemaid = pe.problemaid 
-          join note n on e.id=n.elevid and n.problemaid=pe.problemaid and n.valoare>=5
-          where e.id = ?) AS problems_solved_correctly
-      `;
-      pool.query(query, [UserID, UserID, UserID], (error, results) => {
-        if (error) {
-          console.error("Error querying database:", error);
-          res.writeHead(500, { "Content-Type": "application/json" });
-          res.end(
-            JSON.stringify({ success: false, message: "Database error" })
-          );
-        } else {
-          res.writeHead(200, { "Content-Type": "application/json" });
-          res.end(JSON.stringify(results[0]));
-        }
-      });
+      if (userType === "elev") {
+        const query = `
+          SELECT 
+            (SELECT COUNT(DISTINCT problemaId) 
+             FROM problemeteme pe 
+             JOIN teme t ON t.id=pe.temaID 
+             JOIN clase c ON c.id=t.clasaid 
+             JOIN claseelevi ce ON ce.clasaid=c.id 
+             JOIN elevi e ON e.id=ce.elevid 
+             WHERE e.id = ?) AS problems_assigned,
+            (SELECT COUNT(DISTINCT pe.problemaid) 
+             FROM problemeteme pe 
+             JOIN teme t ON t.id = pe.temaid 
+             JOIN clase c ON c.id = t.clasaid 
+             JOIN claseelevi ce ON ce.clasaid = c.id 
+             JOIN elevi e ON e.id = ce.elevid 
+             JOIN rezolvari r ON r.elevid = e.id AND r.problemaid = pe.problemaid 
+             WHERE e.id = ?) AS problems_solved,
+            (SELECT COUNT(DISTINCT pe.problemaid) 
+             FROM problemeteme pe 
+             JOIN teme t ON t.id = pe.temaid 
+             JOIN clase c ON c.id = t.clasaid 
+             JOIN claseelevi ce ON ce.clasaid = c.id 
+             JOIN elevi e ON e.id = ce.elevid 
+             JOIN rezolvari r ON r.elevid = e.id AND r.problemaid = pe.problemaid 
+             JOIN note n ON e.id=n.elevid AND n.problemaid=pe.problemaid AND n.valoare>=5
+             WHERE e.id = ?) AS problems_solved_correctly
+        `;
+        pool.query(query, [UserID, UserID, UserID], (error, results) => {
+          if (error) {
+            console.error("Error querying database:", error);
+            res.writeHead(500, { "Content-Type": "application/json" });
+            res.end(
+              JSON.stringify({ success: false, message: "Database error" })
+            );
+          } else {
+            res.writeHead(200, { "Content-Type": "application/json" });
+            res.end(JSON.stringify(results[0]));
+          }
+        });
+      } else if (userType === "profesor") {
+        const query = `
+          select (SELECT COUNT(r.ID) FROM rezolvari r JOIN 
+          problemeteme pt ON r.ProblemaID = pt.ProblemaID 
+          JOIN teme t ON pt.TemaID = t.ID WHERE t.ProfesorID 
+          = ?) AS ProblemeDeCorectat, (SELECT COUNT(n.ID)  
+          FROM note n WHERE n.ProfesorID = ?) AS ProblemeCorectate;
+        `;
+        pool.query(query, [UserID, UserID], (error, results) => {
+          if (error) {
+            console.error("Error querying database:", error);
+            res.writeHead(500, { "Content-Type": "application/json" });
+            res.end(
+              JSON.stringify({ success: false, message: "Database error" })
+            );
+          } else {
+            res.writeHead(200, { "Content-Type": "application/json" });
+            res.end(JSON.stringify(results[0]));
+          }
+        });
+      } else {
+        res.writeHead(400, { "Content-Type": "application/json" });
+        res.end(
+          JSON.stringify({ success: false, message: "Invalid userType" })
+        );
+      }
     } catch (err) {
       console.error("Error parsing JSON:", err);
       res.writeHead(400, { "Content-Type": "application/json" });
@@ -1565,16 +1595,21 @@ const getStudents = (req, res) => {
 
       if (!GroupID) {
         res.writeHead(400, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({ success: false, message: "GroupID is required" }));
+        res.end(
+          JSON.stringify({ success: false, message: "GroupID is required" })
+        );
         return;
       }
 
-      const query = "SELECT DISTINCT e.nume FROM claseelevi ce join elevi e on e.id=ce.elevid WHERE clasaid = ?";
+      const query =
+        "SELECT DISTINCT e.nume FROM claseelevi ce join elevi e on e.id=ce.elevid WHERE clasaid = ?";
       pool.query(query, [GroupID], (error, results) => {
         if (error) {
           console.error("Error querying database:", error);
           res.writeHead(500, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ success: false, message: "Database error" }));
+          res.end(
+            JSON.stringify({ success: false, message: "Database error" })
+          );
           return;
         }
 
@@ -1606,7 +1641,7 @@ const deleteTeacher = (res, teacherId) => {
       res.end(JSON.stringify({ success: false, message: "Teacher not found" }));
       return;
     }
- 
+
     pool.query(deleteQuery, [teacherId], (error) => {
       if (error) {
         console.error("Error deleting teacher:", error);
@@ -1638,7 +1673,7 @@ const deleteStudent = (res, studentId) => {
       res.end(JSON.stringify({ success: false, message: "student not found" }));
       return;
     }
- 
+
     pool.query(deleteQuery, [studentId], (error) => {
       if (error) {
         console.error("Error deleting student:", error);
@@ -1668,10 +1703,12 @@ const deleteHomework = (res, homeworkId) => {
 
     if (results.length === 0) {
       res.writeHead(404, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({ success: false, message: "homework not found" }));
+      res.end(
+        JSON.stringify({ success: false, message: "homework not found" })
+      );
       return;
     }
- 
+
     pool.query(deleteProblemsQuery, [homeworkId], (error) => {
       if (error) {
         console.error("Error deleting related problems:", error);
@@ -1679,22 +1716,23 @@ const deleteHomework = (res, homeworkId) => {
         res.end(JSON.stringify({ success: false, message: "Database error" }));
         return;
       }
-    
-    pool.query(deleteQuery, [homeworkId], (error) => {
-      if (error) {
-        console.error("Error deleting homework:", error);
-        res.writeHead(500, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({ success: false, message: "Database error" }));
-        return;
-      }
 
-      res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({ success: true }));
-    });
+      pool.query(deleteQuery, [homeworkId], (error) => {
+        if (error) {
+          console.error("Error deleting homework:", error);
+          res.writeHead(500, { "Content-Type": "application/json" });
+          res.end(
+            JSON.stringify({ success: false, message: "Database error" })
+          );
+          return;
+        }
+
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ success: true }));
+      });
     });
   });
 };
-
 
 const deleteGroup = (res, groupId) => {
   const checkerQuery = "SELECT * FROM teme WHERE ID = ?;";
@@ -1713,7 +1751,7 @@ const deleteGroup = (res, groupId) => {
       res.end(JSON.stringify({ success: false, message: "group not found" }));
       return;
     }
- 
+
     pool.query(deleteQuery, [groupId], (error) => {
       if (error) {
         console.error("Error deleting group:", error);
@@ -1727,8 +1765,6 @@ const deleteGroup = (res, groupId) => {
     });
   });
 };
-  
-  
 
 const getProblemsByHomework = (req, res) => {
   let body = "";
@@ -1743,7 +1779,9 @@ const getProblemsByHomework = (req, res) => {
 
       if (!temaID) {
         res.writeHead(400, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({ success: false, message: "temaID is required" }));
+        res.end(
+          JSON.stringify({ success: false, message: "temaID is required" })
+        );
         return;
       }
 
@@ -1752,7 +1790,9 @@ const getProblemsByHomework = (req, res) => {
         if (error) {
           console.error("Error querying database:", error);
           res.writeHead(500, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ success: false, message: "Database error" }));
+          res.end(
+            JSON.stringify({ success: false, message: "Database error" })
+          );
           return;
         }
 
@@ -1767,7 +1807,205 @@ const getProblemsByHomework = (req, res) => {
   });
 };
 
+const getVotesForProblem = (req, res) => {
+  let body = "";
 
+  req.on("data", (chunk) => {
+    body += chunk.toString();
+  });
+
+  req.on("end", () => {
+    try {
+      const { ProblemaID } = JSON.parse(body);
+
+      if (!ProblemaID) {
+        res.writeHead(400, { "Content-Type": "application/json" });
+        res.end(
+          JSON.stringify({ success: false, message: "ProblemaID is required" })
+        );
+        return;
+      }
+
+      const query = `
+        SELECT CASE WHEN COUNT(*) = 0 THEN 0 ELSE FLOOR(AVG(Stele)) END as avg_stars
+        FROM voturi
+        WHERE ProblemaID = ?;
+      `;
+
+      pool.query(query, [ProblemaID], (error, results) => {
+        if (error) {
+          console.error("Error querying database:", error);
+          res.writeHead(500, { "Content-Type": "application/json" });
+          res.end(
+            JSON.stringify({ success: false, message: "Database error" })
+          );
+          return;
+        }
+
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ success: true, data: results[0] }));
+      });
+    } catch (err) {
+      console.error("Error parsing JSON:", err);
+      res.writeHead(400, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ success: false, message: "Invalid JSON" }));
+    }
+  });
+};
+
+const addVoteToProblem = (req, res) => {
+  let body = "";
+
+  req.on("data", (chunk) => {
+    body += chunk.toString();
+  });
+
+  req.on("end", () => {
+    try {
+      const { ProblemaID, UtilizatorID, Stele } = JSON.parse(body);
+
+      if (!ProblemaID || !UtilizatorID || !Stele || Stele < 1 || Stele > 5) {
+        res.writeHead(400, { "Content-Type": "application/json" });
+        res.end(
+          JSON.stringify({
+            success: false,
+            message: "Missing or invalid required fields",
+          })
+        );
+        return;
+      }
+
+      const query = `
+        INSERT INTO voturi (ProblemaID, UtilizatorID, Stele)
+        VALUES (?, ?, ?)
+        ON DUPLICATE KEY UPDATE Stele = VALUES(Stele);
+      `;
+
+      pool.query(query, [ProblemaID, UtilizatorID, Stele], (error, results) => {
+        if (error) {
+          console.error("Error inserting data:", error.sqlMessage);
+          res.writeHead(500, { "Content-Type": "application/json" });
+          res.end(
+            JSON.stringify({
+              success: false,
+              message: "Database error",
+              error: error.sqlMessage,
+            })
+          );
+        } else {
+          res.writeHead(200, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ success: true }));
+        }
+      });
+    } catch (err) {
+      console.error("Error parsing JSON:", err);
+      res.writeHead(400, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ success: false, message: "Invalid JSON" }));
+    }
+  });
+};
+
+// Function to get account details
+const getAccountDetails = (req, res) => {
+  let body = "";
+
+  req.on("data", (chunk) => {
+    body += chunk.toString();
+  });
+
+  req.on("end", async () => {
+    try {
+      const { id, type } = JSON.parse(body);
+      let tableName;
+
+      if (type === "elev") {
+        tableName = "elevi";
+      } else if (type === "profesor") {
+        tableName = "profesori";
+      } else {
+        res.writeHead(400, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ success: false, message: "Invalid type" }));
+        return;
+      }
+
+      const query = `SELECT nume, email FROM ${tableName} WHERE id = ?`;
+      pool.query(query, [id], (error, results) => {
+        if (error) {
+          res.writeHead(500, { "Content-Type": "application/json" });
+          res.end(
+            JSON.stringify({ success: false, message: "Database error" })
+          );
+          return;
+        }
+
+        if (results.length === 0) {
+          res.writeHead(404, { "Content-Type": "application/json" });
+          res.end(
+            JSON.stringify({ success: false, message: "User not found" })
+          );
+          return;
+        }
+
+        const { nume, email } = results[0];
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ success: true, username: nume, email }));
+      });
+    } catch (err) {
+      res.writeHead(400, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ success: false, message: "Invalid JSON" }));
+    }
+  });
+};
+
+// Function to update account details
+const updateAccountDetails = (req, res) => {
+  let body = "";
+
+  req.on("data", (chunk) => {
+    body += chunk.toString();
+  });
+
+  req.on("end", async () => {
+    try {
+      const { id, type, password } = JSON.parse(body);
+      let tableName;
+
+      if (type === "elev") {
+        tableName = "elevi";
+      } else if (type === "profesor") {
+        tableName = "profesori";
+      } else {
+        res.writeHead(400, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ success: false, message: "Invalid type" }));
+        return;
+      }
+
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const query = `UPDATE ${tableName} SET parola = ? WHERE id = ?`;
+
+      pool.query(query, [hashedPassword, id], (error, results) => {
+        if (error) {
+          res.writeHead(500, { "Content-Type": "application/json" });
+          res.end(
+            JSON.stringify({ success: false, message: "Database error" })
+          );
+          return;
+        }
+
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(
+          JSON.stringify({
+            success: true,
+            message: "Account updated successfully",
+          })
+        );
+      });
+    } catch (err) {
+      res.writeHead(400, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ success: false, message: "Invalid JSON" }));
+    }
+  });
+};
 
 const server = http.createServer((req, res) => {
   const baseDir = path.join(__dirname, "..", "frontend");
@@ -1901,6 +2139,14 @@ const server = http.createServer((req, res) => {
     getSubjectsByGroup(req, res);
   } else if (req.method === "POST" && pathname === "/classes/students") {
     getStudents(req, res);
+  } else if (req.method === "POST" && pathname === "/votes/get") {
+    getVotesForProblem(req, res);
+  } else if (req.method === "POST" && pathname === "/votes/add") {
+    addVoteToProblem(req, res);
+  } else if (req.method === "POST" && pathname === "/getAccountDetails") {
+    getAccountDetails(req, res);
+  } else if (req.method === "POST" && pathname === "/updateAccountDetails") {
+    updateAccountDetails(req, res);
   } else if (req.method === "POST" && pathname.startsWith("/problems/")) {
     const problemId = pathname.split("/")[2];
     getProblemById(res, problemId);
@@ -1913,18 +2159,27 @@ const server = http.createServer((req, res) => {
   } else if (req.method === "POST" && pathname.startsWith("/group/")) {
     const groupId = pathname.split("/")[2];
     getGroupById(res, groupId);
-  } else if( req.method === "DELETE" && pathname.startsWith("/ProfilProfesor")){
+  } else if (
+    req.method === "DELETE" &&
+    pathname.startsWith("/ProfilProfesor")
+  ) {
     const teacherId = pathname.split("/")[2];
     deleteTeacher(res, teacherId);
-  } else if( req.method === "DELETE" && pathname.startsWith("/ProfilStudent")){
-      const studentId = pathname.split("/")[2];
-      deleteStudent(res, studentId);
-  } else if(req.method === "DELETE" && pathname.startsWith("/uniqueHWProfesor")){
+  } else if (req.method === "DELETE" && pathname.startsWith("/ProfilStudent")) {
+    const studentId = pathname.split("/")[2];
+    deleteStudent(res, studentId);
+  } else if (
+    req.method === "DELETE" &&
+    pathname.startsWith("/uniqueHWProfesor")
+  ) {
     const homeworkId = pathname.split("/")[2];
     deleteHomework(res, homeworkId);
-  } else if(req.method === "DELETE" && pathname.startsWith("/uniqueGroupProfesor")){
-  const groupId = pathname.split("/")[2];
-  deleteGroup(res, groupId);
+  } else if (
+    req.method === "DELETE" &&
+    pathname.startsWith("/uniqueGroupProfesor")
+  ) {
+    const groupId = pathname.split("/")[2];
+    deleteGroup(res, groupId);
   } else {
     res.writeHead(404, { "Content-Type": "application/json" });
     res.end(JSON.stringify({ success: false, message: "Not Found" }));

@@ -23,6 +23,11 @@
       height: 100%;
       font-family: Lato, normal;
     }
+    .chart-container {
+      width: 60%;
+      height: 400px;
+      margin: 20px auto;
+    }
   </style>
   </head>
   <body>
@@ -32,7 +37,6 @@
         <div class="logo"><a href="/loggedTeacher">In&lt;form&gt;atiX</a> </div>
       </div>
       <div class="navright">
-
         <ul>
           <li><a href="/loggedTeacher">Home</a></li>
           <li><a href="/">LogOut</a></li>
@@ -72,77 +76,184 @@
               class="navitem">LogOut</span></a></li>
       </ul>
     </nav>
-
     <div class="maincontent" style="justify-content: center;">
       <div class="ProfilePage">
         <h1>Profile</h1>
         <div class="profileContent">
-
           <div class="NumePrenume">
-            <header>Last & First Name</header>
-            <input type="text" id="name" value="NumePrenumeProfesor" />
+            <header>Username</header>
+            <input type="text" id="name" value="NumePrenume" disabled />
           </div>
-
           <div class="Mail">
             <header>Mail</header>
-            <input type="email" id="email" value="profesor@gmail.com"
-              disabled />
+            <input type="email" id="email" value="profesor@gmail.com" disabled />
           </div>
-
           <div class="Password">
             <header>Password</header>
-            <input type="password" id="password" value="password123" />
+            <input type="password" id="password" value="" />
           </div>
-
           <div class="profileButtons">
             <button id="editProfile">Edit</button>
             <button id="deleteProfile">Delete</button>
           </div>
-
         </div>
       </div>
+      <div class="chart-container">
+        <canvas id="reportChart" width="400" height="400"></canvas>
+      </div>
     </div>
-
     <script src="../scripts/script.js"></script>
     <script>
-     document.getElementById('password').addEventListener('focus', function() {
-            this.type = 'text';
+      document.addEventListener('DOMContentLoaded', () => {
+        const userType = localStorage.getItem('userType');
+        const userId = localStorage.getItem('id');
+  
+        if (userType && userId) {
+          fetch('http://localhost:3000/getAccountDetails', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id: parseInt(userId), type: userType })
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              document.getElementById('name').value = data.username;
+              document.getElementById('email').value = data.email;
+            } else {
+              alert('Failed to fetch account details');
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert('Error fetching account details');
+          });
+
+          // Fetch report data and draw the chart after fetching user details
+          fetch('http://localhost:3000/reports/user', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ UserID: parseInt(userId), userType })
+          })
+          .then(response => response.json())
+          .then(data => {
+            console.log('Report data:', data);
+            drawChart(data);
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert('Error fetching report data');
+          });
+        }
+  
+        document.getElementById('editProfile').addEventListener('click', () => {
+          const password = document.getElementById('password').value;
+  
+          if (password) {
+            fetch('http://localhost:3000/updateAccountDetails', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ id: parseInt(userId), type: userType, password })
+            })
+            .then(response => response.json())
+            .then(data => {
+              if (data.success) {
+                alert('Password updated successfully');
+                document.getElementById('password').value = '';
+              } else {
+                alert('Failed to update password');
+              }
+            })
+            .catch(error => {
+              console.error('Error:', error);
+              alert('Error updating password');
+            });
+          } else {
+            alert('Please enter a new password');
+          }
+        });
+  
+        document.getElementById('deleteProfile').addEventListener('click', () => {
+          if (confirm('Are you sure you want to delete your account?')) {
+            fetch(`http://localhost:3000/deleteAccount`, {
+              method: 'DELETE',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ id: parseInt(userId), type: userType })
+            })
+            .then(response => response.json())
+            .then(data => {
+              if (data.success) {
+                alert('Account deleted successfully');
+                window.location.href = '/';
+              } else {
+                alert('Failed to delete account');
+              }
+            })
+            .catch(error => {
+              console.error('Error:', error);
+              alert('Error deleting account');
+            });
+          }
         });
 
+        // Event listener to show password on focus
+        document.getElementById('password').addEventListener('focus', function() {
+          this.type = 'text';
+        });
+  
         // Event listener to hide password on blur
         document.getElementById('password').addEventListener('blur', function() {
-            this.type = 'password';
+          this.type = 'password';
         });
+      });
 
-        //delete profesor profile
-        document.getElementById('deleteProfile').addEventListener('click', function() {
-        const profesorId = localStorage.getItem('id'); // Assuming profesorId is stored in localStorage
+      // Function to draw the pie chart
+      function drawChart(data) {
+        const canvas = document.getElementById('reportChart');
+        const ctx = canvas.getContext('2d');
 
-    if (profesorId) {
-        fetch(`http://localhost:3000/ProfilProfesor/${parseInt(profesorId)}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Account deleted successfully');
-                window.location.href = '/'; // Redirect to home page
-            } else {
-                alert('Failed to delete account');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Error deleting account');
-        });
-    } else {
-        alert('Professor ID not found');
-    }
-});
-  
-  </script>
+        // Clear the canvas
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Define the data
+        const total = data.ProblemeDeCorectat;
+        const solved = data.ProblemeCorectate;
+        const unsolved = total - solved;
+
+        // Calculate the angles
+        const solvedAngle = (solved / total) * 2 * Math.PI;
+        const unsolvedAngle = (unsolved / total) * 2 * Math.PI;
+
+        // Draw the solved slice
+        ctx.fillStyle = '#4CAF50';
+        ctx.beginPath();
+        ctx.moveTo(canvas.width / 2, canvas.height / 2);
+        ctx.arc(canvas.width / 2, canvas.height / 2, canvas.height / 2, 0, solvedAngle);
+        ctx.closePath();
+        ctx.fill();
+
+        // Draw the unsolved slice
+        ctx.fillStyle = '#F44336';
+        ctx.beginPath();
+        ctx.moveTo(canvas.width / 2, canvas.height / 2);
+        ctx.arc(canvas.width / 2, canvas.height / 2, canvas.height / 2, solvedAngle, solvedAngle + unsolvedAngle);
+        ctx.closePath();
+        ctx.fill();
+
+        // Add the legend
+        ctx.fillStyle = '#000';
+        ctx.textAlign = 'left';
+        ctx.fillText(`Total: ${total}`, 10, 20);
+        ctx.fillText(`Solved: ${solved}`, 10, 40);
+        ctx.fillText(`Unsolved: ${unsolved}`, 10, 60);
+      }
+    </script>
   </body>
 </html>
