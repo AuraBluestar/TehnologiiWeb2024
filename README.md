@@ -28,11 +28,12 @@ Echipa:
 - Grupa&Tema unica pt profesor
 - acordarea de stele la o problema
 - pagina cu probleme propuse
+- filtrarea la probleme pt admin
+- filtrarea grupelor profesor + elev
+- filtrarea temelor profesor + elev
 - NU MAI STIU. PREA MULTE AU FOST FACUTE.
 
 # Ce mai e de facut:
-- filtrare grupe(facut la studenti dar nu merge)
-- filtrare teme 
 - Miscellaneous pentru responsivness
 - Rezolvat filter probleme(la dificultate e cu una inainte - easy nu selecteaza nimic, medium = easy si hard = medium)
 
