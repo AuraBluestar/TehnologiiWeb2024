@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../styles/nav-bar.css">
-    <link rel="stylesheet" href="../styles/side-bar.css">
-    <link rel="stylesheet" href="../styles/main-content.css">
-    <link rel="stylesheet" href="../styles/searchmenu.css">
-    <link rel="stylesheet" href="../styles/listingsPage.css">
-    <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-    <title>LandingPage</title>
-    <style>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../styles/nav-bar.css">
+  <link rel="stylesheet" href="../styles/side-bar.css">
+  <link rel="stylesheet" href="../styles/main-content.css">
+  <link rel="stylesheet" href="../styles/searchmenu.css">
+  <link rel="stylesheet" href="../styles/listingsPage.css">
+  <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+  <title>LandingPage</title>
+  <style>
     * {
       margin: 0;
       padding: 0;
@@ -24,127 +24,93 @@
       position: relative;
       height: 100%;
       font-family: Lato, normal;
-
     }
   </style>
 
-  </head>
+</head>
 
-  <body>
+<body>
 
-    <!-- This is the NavBar -->
-    <nav class="navbar">
-      <div class="navleft">
-        <div class="logo"><a href="/loggedAdmin">In&lt;form&gt;atiX</a> </div>
-      </div>
-      <div class="navright">
-
-        <ul>
-          <li><a href="/" onclick="logout()">LogOut</a></li>
-          <li><a href="mailto:assistance@informatix.com">Contact</a></li>
-        </ul>
-      </div>
-    </nav>
-
-    <!-- This is the SideBar -->
-    <nav class="sidebar">
-      <div class="top">
-        <div class="menu">
-          <i class='bx bx-code'></i>
-          <span>Menu</span>
-        </div>
-        <i class='bx bx-menu' id="btn"></i>
-      </div>
+  <!-- This is the NavBar -->
+  <nav class="navbar">
+    <div class="navleft">
+      <div class="logo"><a href="/loggedAdmin">In&lt;form&gt;atiX</a> </div>
+    </div>
+    <div class="navright">
       <ul>
-        <li><a href="mailto:assistance@informatix.com"><i class='bx bxs-contact'></i><span
-              class="navitem">Contact</span></a></li>
-        <li><a href="/" onclick="logout()"><i class='bx bx-log-out'></i><span
-              class="navitem">LogOut</span></a></li>
+        <li><a href="/" onclick="logout()">LogOut</a></li>
+        <li><a href="mailto:assistance@informatix.com">Contact</a></li>
       </ul>
-    </nav>
+    </div>
+  </nav>
 
-    <div class="maincontent">
+  <!-- This is the SideBar -->
+  <nav class="sidebar">
+    <div class="top">
+      <div class="menu">
+        <i class='bx bx-code'></i>
+        <span>Menu</span>
+      </div>
+      <i class='bx bx-menu' id="btn"></i>
+    </div>
+    <ul>
+      <li><a href="mailto:assistance@informatix.com"><i class='bx bxs-contact'></i><span class="navitem">Contact</span></a></li>
+      <li><a href="/" onclick="logout()"><i class='bx bx-log-out'></i><span class="navitem">LogOut</span></a></li>
+    </ul>
+  </nav>
 
-      <div class="searchmenu">
-        <div class="searchbox">
-          <header>Problem Number</header>
-          <div class="searchfield">
-            <form id="search">
+  <div class="maincontent">
 
-              <div class="seachBar">
-                <input class="search-input" type="search" placeholder="Search">
-                <i class='bx bx-search-alt-2'></i>
-              </div>
-            </form>
-          </div>
-        </div>
-
-        <div class="filterbox">
-
-          <form id="filtermenu">
-
-            <header>Difficulty</header>
-            <div class="diffButtons">
-
-              <input type="radio" id="radio-all" name="diffButtons" value="all"
-                checked>
-              <label class="diff" for="radio-all">All</label>
-
-              <input type="radio" id="radio-easy" name="diffButtons"
-                value="easy">
-              <label class="diff" for="radio-easy">Easy</label>
-
-              <input type="radio" id="radio-medium" name="diffButtons"
-                value="medium">
-              <label class="diff" for="radio-medium">Medium</label>
-
-              <input type="radio" id="radio-hard" name="diffButtons"
-                value="hard">
-              <label class="diff" for="radio-hard">Hard</label>
-
+    <div class="searchmenu">
+      <div class="searchbox">
+        <header>Problem Number</header>
+        <div class="searchfield">
+          <form id="search">
+            <div class="seachBar">
+              <input class="search-input" type="search" placeholder="Search">
+              <i class='bx bx-search-alt-2'></i>
             </div>
-
-            <header>Category</header>
-            <div class="dropdown">
-              <div class="selectbtn">
-                <span class="sBtn-text">Select your option</span>
-                <i class="bx bx-chevron-down"></i>
-              </div>
-
-              <ul class="dmenu">
-                <li class="option" data-value="all"><span
-                    class="option-text">None</span></li>
-                <li class="option"
-                  data-value="Basic Principles Of The Language"><span
-                    class="option-text">Basic Principles Of The
-                    Language</span></li>
-                <li class="option" data-value="algoritmi"><span
-                    class="option-text">Basic Algorithms</span></li>
-                <li class="option" data-value="Vectors"><span
-                    class="option-text">Vectors</span></li>
-                <li class="option" data-value="Matrix"><span
-                    class="option-text">Matrix</span></li>
-              </ul>
-
-            </div>
-
-            <button type="submit" class="filter">Filter</button>
-
           </form>
-
         </div>
       </div>
 
-      <div class="ProblemsPage">
-        <!-- Problem list will be dynamically inserted here -->
+      <div class="filterbox">
+        <form id="filtermenu">
+          <header>Difficulty</header>
+          <div class="diffButtons">
+            <input type="radio" id="radio-all" name="diffButtons" value="all" checked>
+            <label class="diff" for="radio-all">All</label>
+            <input type="radio" id="radio-easy" name="diffButtons" value="easy">
+            <label class="diff" for="radio-easy">Easy</label>
+            <input type="radio" id="radio-medium" name="diffButtons" value="medium">
+            <label class="diff" for="radio-medium">Medium</label>
+            <input type="radio" id="radio-hard" name="diffButtons" value="hard">
+            <label class="diff" for="radio-hard">Hard</label>
+          </div>
+          <header>Category</header>
+          <div class="dropdown">
+            <div class="selectbtn" id="selectBtnCategory">
+              <span class="sBtn-text">Select your option</span>
+              <i class="bx bx-chevron-down"></i>
+            </div>
+            <ul class="dmenu" id="categoryDropdown"></ul>
+          </div>
+          <button type="submit" class="filter">Filter</button>
+        </form>
       </div>
     </div>
 
-    <script src="../scripts/script.js"></script>
-    <script src="../scripts/logout.js"></script>
-    
-    <script>
-   // Funcție pentru a converti valoarea dificultății în cuvinte corespunzătoare
+    <div class="ProblemsPage">
+      <!-- Problem list will be dynamically inserted here -->
+    </div>
+  </div>
+
+  <script src="../scripts/script.js"></script>
+  <script src="../scripts/logout.js"></script>
+
+  <script>
+  let allCategories = [];
+
   function getDifficultyText(difficulty) {
     switch (difficulty) {
       case 1:
@@ -171,51 +137,76 @@
     }
   }
 
-  // Funcție pentru a încărca și afișa lista de probleme din fișierul JSON
-  function loadProblems(problems) {
+  async function loadProblems(problems) {
     const problemsContainer = document.querySelector('.ProblemsPage');
-    problemsContainer.innerHTML = ''; // Clear the container before inserting new elements
+    problemsContainer.innerHTML = '';
+
     problems.forEach(problem => {
       const problemElement = `
         <div class="problem" data-id="${problem.ID}" style="cursor: pointer;">
-          <!-- Details section -->
           <div class="details">
-              <!-- ID and Name -->
-              <div class="id-name">
-                  <p class="problem-id"><strong>#</strong>${problem.ID}</p>
-                  <p class="problem-name">${problem.Titlu}</h2>
-              </div>
-              <!-- Category and Difficulty -->
-              <div class="category-diff">
-                  <p class="problem-category">${problem.Capitol}</p>
-                  <p class="problem-diff" style="color: ${getDifficultyColor(problem.Dificultate)} ;">${getDifficultyText(problem.Dificultate)}</p>
-              </div>
+            <div class="id-name">
+              <p class="problem-id"><strong>#</strong>${problem.ID}</p>
+              <p class="problem-name">${problem.Titlu}</p>
+            </div>
+            <div class="category-diff">
+              <p class="problem-category">${problem.Capitol}</p>
+              <p class="problem-diff" style="color: ${getDifficultyColor(problem.Dificultate)} ;">${getDifficultyText(problem.Dificultate)}</p>
+            </div>
           </div>
-          <!-- Description section -->
           <div class="description">
-              <p class="problem-description">${problem.Descriere}</p>
+            <p class="problem-description">${problem.Descriere}</p>
           </div>
         </div>
       `;
       problemsContainer.insertAdjacentHTML('beforeend', problemElement);
     });
 
-    // Add click event listener to each problem element
     document.querySelectorAll('.problem').forEach(problemElement => {
       problemElement.addEventListener('click', () => {
         const problemId = problemElement.dataset.id;
         window.location.href = `VisProblemAdmin?problemId=${problemId}`;
       });
     });
+
+    // Populate the category dropdown if not already populated
+    if (allCategories.length === 0) {
+      populateCategoryDropdown(problems);
+    }
   }
 
-  // Funcție pentru a trimite cererea POST la server și a încărca problemele filtrate
+  function populateCategoryDropdown(problems) {
+    const categoryDropdown = document.querySelector('#categoryDropdown');
+    categoryDropdown.innerHTML = '<li class="option" data-value="all"><span class="option-text">All</span></li>';
+
+    const categories = [...new Set(problems.map(problem => problem.Capitol))];
+    allCategories = categories;
+
+    categories.forEach(category => {
+      const categoryOption = document.createElement('li');
+      categoryOption.classList.add('option');
+      categoryOption.dataset.value = category;
+      categoryOption.innerHTML = `<span class="option-text">${category}</span>`;
+      categoryDropdown.appendChild(categoryOption);
+    });
+
+    const selectBtn = document.querySelector('#selectBtnCategory');
+    const sBtnText = document.querySelector('.sBtn-text');
+    categoryDropdown.addEventListener('click', (e) => {
+      const option = e.target.closest('.option');
+      if (option) {
+        sBtnText.textContent = option.textContent;
+        selectBtn.dataset.value = option.dataset.value;
+      }
+    });
+  }
+
   function searchProblems(event) {
     event.preventDefault();
 
     const text = document.querySelector('.search-input').value;
     const difficulty = document.querySelector('input[name="diffButtons"]:checked').value;
-    const category = selectBtn.dataset.value || 'all';
+    const category = document.querySelector('#selectBtnCategory').dataset.value || 'all';
 
     const searchParams = {
       text: text,
@@ -223,7 +214,7 @@
       category: category
     };
 
-    fetch('http://localhost:3000/problems/search', {
+    fetch('http://localhost:3000/problems/admin/search', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -237,23 +228,21 @@
       .catch(error => console.error('Error loading problems:', error));
   }
 
-  // Adăugăm event listener la formularul de filtrare
   document.getElementById('filtermenu').addEventListener('submit', searchProblems);
 
-  // Apelăm funcția pentru a încărca și afișa lista de probleme la încărcarea paginii
   window.onload = function() {
-    // Încarcăm problemele inițiale (toate problemele)
     fetch('http://localhost:3000/problems/pending', {
       method: 'POST',
     })
     .then(response => response.json())
     .then(data => {
       loadProblems(data);
+      populateCategoryDropdown(data); // Ensure dropdown is populated on initial load
     })
     .catch(error => console.error('Error loading problems:', error));
   };
-</script>
+  </script>
 
-  </body>
+</body>
 
 </html>

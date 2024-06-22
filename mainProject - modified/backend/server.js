@@ -822,6 +822,62 @@ function searchProblems(req, res) {
   });
 }
 
+
+// Controller function for searching problems varianta Admin
+function searchProblemsAdmin(req, res) {
+  let body = "";
+  req.on("data", (chunk) => {
+    body += chunk.toString();
+  });
+
+  req.on("end", () => {
+    try {
+      const {
+        text = "",
+        difficulty = "all",
+        category = "all",
+      } = JSON.parse(body);
+
+      let sqlQuery = "SELECT * FROM probleme WHERE Stare=0";
+      const queryParams = [];
+
+      if (text) {
+        sqlQuery += " AND (Titlu LIKE ? OR Descriere LIKE ? OR ID LIKE ?)";
+        queryParams.push(`%${text}%`, `%${text}%`, `%${text}%`);
+      }
+
+      if (difficulty !== "all") {
+        let difficultyInt;
+        if (difficulty === "easy") {
+          difficultyInt = 1;
+        } else if (difficulty === "medium") {
+          difficultyInt = 2;
+        } else if (difficulty === "hard") {
+          difficultyInt = 3;
+        }
+        if (difficultyInt !== undefined) {
+          sqlQuery += " AND Dificultate = ?";
+          queryParams.push(difficultyInt);
+        }
+      }
+
+      if (category !== "all") {
+        sqlQuery += " AND Capitol = ?";
+        queryParams.push(category);
+      }
+
+      pool.query(sqlQuery, queryParams, (error, results) => {
+        if (error) return sendErrorResponse(res, 500, "Database error");
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify(results));
+      });
+    } catch (err) {
+      console.error("Error parsing JSON:", err);
+      sendErrorResponse(res, 400, "Invalid JSON");
+    }
+  });
+}
+
 // Functie pentru a manevra cererile de adăugare clasă
 const handleAddClass = (req, res) => {
   let body = "";
@@ -2118,6 +2174,8 @@ const server = http.createServer((req, res) => {
     getPendingProblems(res);
   } else if (req.method === "POST" && pathname === "/problems/search") {
     searchProblems(req, res);
+  } else if (req.method === "POST" && pathname === "/problems/admin/search") {
+    searchProblemsAdmin(req, res);
   } else if (req.method === "POST" && pathname === "/classes/search/Teacher") {
     searchClassesTeacher(req, res);
   } else if (req.method === "POST" && pathname === "/classes/search/Student") {
