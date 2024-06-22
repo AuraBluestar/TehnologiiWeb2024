@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../styles/nav-bar.css">
-    <link rel="stylesheet" href="../styles/side-bar.css">
-    <link rel="stylesheet" href="../styles/main-content.css">
-    <link rel="stylesheet" href="../styles/searchmenu.css">
-    <link rel="stylesheet" href="../styles/listingsPage.css">
-    <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-    <title>GroupsTeacher</title>
-    <style>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../styles/nav-bar.css">
+  <link rel="stylesheet" href="../styles/side-bar.css">
+  <link rel="stylesheet" href="../styles/main-content.css">
+  <link rel="stylesheet" href="../styles/searchmenu.css">
+  <link rel="stylesheet" href="../styles/listingsPage.css">
+  <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+  <title>GroupsTeacher</title>
+  <style>
     * {
       margin: 0;
       padding: 0;
@@ -26,57 +26,44 @@
       font-family: Lato, normal;
     }
   </style>
+</head>
 
-  </head>
+<body>
 
-  <body>
-
-    <!-- This is the NavBar -->
-    <nav class="navbar">
-      <div class="navleft">
-        <div class="logo"><a href="/loggedTeacher">In&lt;form&gt;atiX</a> </div>
-      </div>
-      <div class="navright">
-
-        <ul>
-          <li><a href="/loggedTeacher">Home</a></li>
-          <li><a href="/">LogOut</a></li>
-          <li><a href="mailto:assistance@informatix.com">Contact</a></li>
-        </ul>
-      </div>
-    </nav>
-
-    <!-- This is the SideBar -->
-    <nav class="sidebar">
-      <div class="top">
-        <div class="menu">
-          <i class='bx bx-code'></i>
-          <span>Menu</span>
-        </div>
-        <i class='bx bx-menu' id="btn"></i>
-      </div>
+  <!-- This is the NavBar -->
+  <nav class="navbar">
+    <div class="navleft">
+      <div class="logo"><a href="/loggedTeacher">In&lt;form&gt;atiX</a></div>
+    </div>
+    <div class="navright">
       <ul>
-        <li><a href="/loggedTeacher"><i class='bx bxs-home'></i><span
-              class="navitem">Home</span></a></li>
-        <li><a href="/ProfilProfesor"><i
-              class='bx bxs-user-circle'></i><span
-              class="navitem">Profile</span></a></li>
-        <li><a href="/VisGroupsTeacher"><i class='bx bxs-group'></i><span
-              class="navitem">Groups</span></a></li>
-        <li><a href="/VisHWTeacher"><i class='bx bxs-book-alt'></i><span
-              class="navitem">Homeworks</span></a></li>
-        <li><a href="/submitedProblems"><i
-              class='bx bxs-book-content'></i><span class="navitem">Proposed
-              Problems</span></a></li>
-        <li><a href="/createProblem"><i class='bx bxs-edit'></i><span
-              class="navitem">New Problem</span></a></li>
-        <li><a href="mailto:assistance@informatix.com"><i
-              class='bx bxs-contact'></i><span
-              class="navitem">Contact</span></a></li>
-        <li><a href="/"><i class='bx bx-log-out'></i><span
-              class="navitem">LogOut</span></a></li>
+        <li><a href="/loggedTeacher">Home</a></li>
+        <li><a href="/">LogOut</a></li>
+        <li><a href="mailto:assistance@informatix.com">Contact</a></li>
       </ul>
-    </nav>
+    </div>
+  </nav>
+
+  <!-- This is the SideBar -->
+  <nav class="sidebar">
+    <div class="top">
+      <div class="menu">
+        <i class='bx bx-code'></i>
+        <span>Menu</span>
+      </div>
+      <i class='bx bx-menu' id="btn"></i>
+    </div>
+    <ul>
+      <li><a href="/loggedTeacher"><i class='bx bxs-home'></i><span class="navitem">Home</span></a></li>
+      <li><a href="/ProfilProfesor"><i class='bx bxs-user-circle'></i><span class="navitem">Profile</span></a></li>
+      <li><a href="/VisGroupsTeacher"><i class='bx bxs-group'></i><span class="navitem">Groups</span></a></li>
+      <li><a href="/VisHWTeacher"><i class='bx bxs-book-alt'></i><span class="navitem">Homeworks</span></a></li>
+      <li><a href="/submitedProblems"><i class='bx bxs-book-content'></i><span class="navitem">Proposed Problems</span></a></li>
+      <li><a href="/createProblem"><i class='bx bxs-edit'></i><span class="navitem">New Problem</span></a></li>
+      <li><a href="mailto:assistance@informatix.com"><i class='bx bxs-contact'></i><span class="navitem">Contact</span></a></li>
+      <li><a href="/"><i class='bx bx-log-out'></i><span class="navitem">LogOut</span></a></li>
+    </ul>
+  </nav>
 
   <div class="maincontent">
     <div class="searchmenu">
@@ -95,13 +82,11 @@
         <form id="filtermenu">
           <header>Class</header>
           <div class="dropdown">
-            <div class="selectbtn">
+            <div class="selectbtn" id="selectBtn">
               <span class="sBtn-text">Select your option</span>
               <i class="bx bx-chevron-down"></i>
             </div>
-            <ul class="dmenu" id="groupDropdown">
-              <!-- Dropdown options will be populated here dynamically -->
-            </ul>
+            <ul class="dmenu" id="groupDropdown"></ul>
           </div>
           <button type="submit" class="filter">Filter</button>
           <div class="createnew">
@@ -119,19 +104,33 @@
 
   <script src="../scripts/script.js"></script>
   <script>
-  
     // Function to load and display the list of groups
     function loadGroups(groups) {
       const groupsContainer = document.querySelector('.GroupsPage');
       groupsContainer.innerHTML = '';
       groups.forEach(group => {
-        const problemElement = `
-          <div class="group">
+        const groupElement = `
+          <a class="group" href="http://localhost:3000/uniqueGroupProfesor" data-group-id="${group.Id}">
             <h2 class="group-title">${group.Grupa}</h2>
             <p class="group-label">${group.Materie}</p>
-          </div>
+          </a>
         `;
-        groupsContainer.insertAdjacentHTML('beforeend', problemElement);
+        console.log('Adding group with ID:', group.Id); // Debug log
+        groupsContainer.insertAdjacentHTML('beforeend', groupElement);
+      });
+      // Add click event listeners to group links to store group ID in local storage
+      document.querySelectorAll('.group').forEach(link => {
+        link.addEventListener('click', function(event) {
+          event.preventDefault();
+          const groupId = this.getAttribute('data-group-id');
+          console.log('Clicked group with ID:', groupId); // Debug log
+          if (groupId) {
+            localStorage.setItem('groupId', groupId);
+            window.location.href = this.href;
+          } else {
+            console.error('groupId is undefined');
+          }
+        });
       });
     }
 
@@ -150,6 +149,12 @@
         option.classList.add('option');
         option.dataset.value = groupName; // Store group value in dataset
         groupDropdown.appendChild(option);
+
+        // Add click event listener to each option
+        option.addEventListener('click', () => {
+          document.querySelector('.sBtn-text').innerText = groupName;
+          document.getElementById('selectBtn').dataset.value = groupName;
+        });
       });
     }
 
@@ -169,6 +174,7 @@
         })
           .then(response => response.json())
           .then(data => {
+            console.log('Fetched groups:', data); // Debug log
             loadGroups(data); // Call the function to load groups
             populateDropdown(data); // Call the function to populate dropdown
           })
@@ -177,8 +183,38 @@
         console.error('profesorID is not available in local storage');
       }
     };
-  </script>
-  
-</body>
 
+    document.getElementById('filtermenu').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const text = document.getElementById('subjectInput').value;
+      const selectBtn = document.getElementById('selectBtn');
+      const group = selectBtn.getAttribute('data-value');
+      const profesorID = localStorage.getItem('id');
+
+      if (profesorID) {
+        const requestBody = JSON.stringify({
+          "profesorID": parseInt(profesorID),
+          "text": text,
+          "subject": group
+        });
+
+        fetch('http://localhost:3000/classes/search/Teacher', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: requestBody
+        })
+          .then(response => response.json())
+          .then(data => {
+            console.log('Filtered groups:', data); // Debug log
+            loadGroups(data);
+          })
+          .catch(error => console.error('Error loading groups:', error));
+      } else {
+        console.error('profesorID is not available in local storage');
+      }
+    });
+  </script>
+</body>
 </html>
