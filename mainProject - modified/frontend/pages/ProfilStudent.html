@@ -29,75 +29,75 @@
       margin: 20px auto;
     }
   </style>
-  </head>
-  <body>
-    <!-- This is the NavBar -->
-    <nav class="navbar">
-      <div class="navleft">
-        <div class="logo"><a href="/loggedStudent">In&lt;form&gt;atiX</a></div>
-      </div>
-      <div class="navright">
-        <ul>
-          <li><a href="/loggedStudent">Home</a></li>
-          <li><a href="/">LogOut</a></li>
-          <li><a href="mailto:assistance@informatix.com">Contact</a></li>
-        </ul>
-      </div>
-    </nav>
-    <!-- This is the SideBar -->
-    <nav class="sidebar">
-      <div class="top">
-        <div class="menu">
-          <i class='bx bx-code'></i>
-          <span>Menu</span>
-        </div>
-        <i class='bx bx-menu' id="btn"></i>
-      </div>
+</head>
+<body>
+  <!-- This is the NavBar -->
+  <nav class="navbar">
+    <div class="navleft">
+      <div class="logo"><a href="/loggedStudent">In&lt;form&gt;atiX</a></div>
+    </div>
+    <div class="navright">
       <ul>
-        <li><a href="/loggedStudent"><i class='bx bxs-home'></i><span
-              class="navitem">Home</span></a></li>
-        <li><a href="/ProfilStudent"><i class='bx bxs-user-circle'></i><span
-              class="navitem">Profile</span></a></li>
-        <li><a href="/VisGroupsStudent"><i class='bx bxs-group'></i><span
-              class="navitem">Groups</span></a></li>
-        <li><a href="/VisHWStudent"><i class='bx bxs-book-alt'></i><span
-              class="navitem">Homeworks</span></a></li>
-        <li><a href="mailto:assistance@informatix.com"><i
-              class='bx bxs-contact'></i><span
-              class="navitem">Contact</span></a></li>
-        <li><a href="/"><i class='bx bx-log-out'></i><span
-              class="navitem">LogOut</span></a></li>
+        <li><a href="/loggedStudent">Home</a></li>
+        <li><a href="/">LogOut</a></li>
+        <li><a href="mailto:assistance@informatix.com">Contact</a></li>
       </ul>
-    </nav>
-    <div class="maincontent" style="justify-content: center;">
-      <div class="ProfilePage">
-        <h1>Profile</h1>
-        <div class="profileContent">
-          <div class="NumePrenume">
-            <header>Username</header>
-            <input type="text" id="name" value="NumePrenume" disabled />
-          </div>
-          <div class="Mail">
-            <header>Mail</header>
-            <input type="email" id="email" value="vatamaniuc.sebi@gmail.com"
-              disabled />
-          </div>
-          <div class="Password">
-            <header>New Password</header>
-            <input type="password" id="password" value />
-          </div>
-          <div class="profileButtons">
-            <button id="editProfile">Edit</button>
-            <button id="deleteProfile">Delete</button>
-          </div>
-        </div>
+    </div>
+  </nav>
+  <!-- This is the SideBar -->
+  <nav class="sidebar">
+    <div class="top">
+      <div class="menu">
+        <i class='bx bx-code'></i>
+        <span>Menu</span>
       </div>
-      <div class="chart-container">
-        <canvas id="reportChart" width="400" height="400"></canvas>
+      <i class='bx bx-menu' id="btn"></i>
+    </div>
+    <ul>
+      <li><a href="/loggedStudent"><i class='bx bxs-home'></i><span class="navitem">Home</span></a></li>
+      <li><a href="/ProfilStudent"><i class='bx bxs-user-circle'></i><span class="navitem">Profile</span></a></li>
+      <li><a href="/VisGroupsStudent"><i class='bx bxs-group'></i><span class="navitem">Groups</span></a></li>
+      <li><a href="/VisHWStudent"><i class='bx bxs-book-alt'></i><span class="navitem">Homeworks</span></a></li>
+      <li><a href="mailto:assistance@informatix.com"><i class='bx bxs-contact'></i><span class="navitem">Contact</span></a></li>
+      <li><a href="/"  onclick="logout()"><i class='bx bx-log-out'></i><span class="navitem">LogOut</span></a></li>
+    </ul>
+  </nav>
+  <div class="maincontent" style="justify-content: center;">
+    <div class="ProfilePage">
+      <h1>Profile</h1>
+      <div class="profileContent">
+
+        <div class="NumePrenume">
+          <header>Username</header>
+          <input type="text" id="name" value="NumePrenume" disabled />
+        </div>
+        <div class="Mail">
+          <header>Mail</header>
+          <input type="email" id="email" value="vatamaniuc.sebi@gmail.com"
+            disabled />
+        </div>
+        <div class="Password">
+          <header>New Password</header>
+          <input type="password" id="password" value />
+        </div>
+        <div class="profileButtons">
+          <button id="editProfile">Edit</button>
+          <button id="deleteProfile">Delete</button>
+        </div>
+
       </div>
     </div>
-    <script src="../scripts/script.js"></script>
-    <script>
+    <div class="chart-container">
+      <canvas id="reportChart" width="400" height="400"></canvas>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="../scripts/script.js"></script>
+  <script src="../scripts/logout.js"></script>
+  <script src="../scripts/checkStudent.js"></script>
+  <script>
     document.addEventListener('DOMContentLoaded', () => {
       const userType = localStorage.getItem('userType');
       const userId = localStorage.getItem('id');
@@ -171,31 +171,36 @@
           alert('Please enter a new password');
         }
       });
+     
 
-      document.getElementById('deleteProfile').addEventListener('click', () => {
-        if (confirm('Are you sure you want to delete your account?')) {
-          fetch(`http://localhost:3000/deleteAccount`, {
+      //delete student profile
+      document.getElementById('deleteProfile').addEventListener('click', function() {
+        const studentId = localStorage.getItem('id'); // Assuming studentId is stored in localStorage
+
+    if (studentId) {
+        fetch(`http://localhost:3000/ProfilStudent/${parseInt(studentId)}`, {
             method: 'DELETE',
             headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ id: parseInt(userId), type: userType })
-          })
-          .then(response => response.json())
-          .then(data => {
-            if (data.success) {
-              alert('Account deleted successfully');
-              window.location.href = '/';
-            } else {
-              alert('Failed to delete account');
+                'Content-Type': 'application/json'
             }
-          })
-          .catch(error => {
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Account deleted successfully');
+                window.location.href = '/'; // Redirect to home page
+            } else {
+                alert('Failed to delete account');
+            }
+        })
+        .catch(error => {
             console.error('Error:', error);
             alert('Error deleting account');
-          });
-        }
-      });
+        });
+    } else {
+        alert('Student ID not found');
+    }
+});
 
       function drawChart(data) {
         const canvas = document.getElementById('reportChart');

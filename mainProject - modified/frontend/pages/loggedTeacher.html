@@ -29,39 +29,48 @@
 </head>
 <body>
 
-  <!-- This is the NavBar -->
-  <nav class="navbar">
-    <div class="navleft">
-      <div class="logo"><a href="/loggedTeacher">In&lt;form&gt;atiX</a> </div>
-    </div>
-    <div class="navright">
-      <ul>
-        <li><a href="/ProfilProfesor">Profile</a></li>
-        <li><a href="/">LogOut</a></li>
-        <li><a href="mailto:assistance@informatix.com">Contact</a></li>
-      </ul>
-    </div>
-  </nav>
-
-  <!-- This is the SideBar -->
-  <nav class="sidebar">
-    <div class="top">
-      <div class="menu">
-        <i class='bx bx-code'></i>
-        <span>Menu</span>
+    <!-- This is the NavBar -->
+    <nav class="navbar">
+      <div class="navleft">
+        <div class="logo"><a href="/loggedTeacher">In&lt;form&gt;atiX</a> </div>
       </div>
-      <i class='bx bx-menu' id="btn"></i>
-    </div>
-    <ul>
-      <li><a href="/ProfilProfesor"><i class='bx bxs-user-circle'></i><span class="navitem">Profile</span></a></li>
-      <li><a href="/VisGroupsTeacher"><i class='bx bxs-group'></i><span class="navitem">Groups</span></a></li>
-      <li><a href="/VisHWTeacher"><i class='bx bxs-book-alt'></i><span class="navitem">Homeworks</span></a></li>
-      <li><a href="/submitedProblems"><i class='bx bxs-book-content'></i><span class="navitem">Proposed Problems</span></a></li>
-      <li><a href="/createProblem"><i class='bx bxs-edit'></i><span class="navitem">New Problem</span></a></li>
-      <li><a href="mailto:assistance@informatix.com"><i class='bx bxs-contact'></i><span class="navitem">Contact</span></a></li>
-      <li><a href="/"><i class='bx bx-log-out'></i><span class="navitem">LogOut</span></a></li>
-    </ul>
-  </nav>
+      <div class="navright">
+
+        <ul>
+          <li><a href="/ProfilProfesor">Profile</a></li>
+          <li><a href="/" onclick="logout()">LogOut</a></li>
+          <li><a href="mailto:assistance@informatix.com">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- This is the SideBar -->
+    <nav class="sidebar">
+      <div class="top">
+        <div class="menu">
+          <i class='bx bx-code'></i>
+          <span>Menu</span>
+        </div>
+        <i class='bx bx-menu' id="btn"></i>
+      </div>
+      <ul>
+        <li><a href="/ProfilProfesor"><i class='bx bxs-user-circle'></i><span
+              class="navitem">Profile</span></a></li>
+        <li><a href="/VisGroupsTeacher"><i class='bx bxs-group'></i><span
+              class="navitem">Groups</span></a></li>
+        <li><a href="/VisHWTeacher"><i class='bx bxs-book-alt'></i><span
+              class="navitem">Homeworks</span></a></li>
+        <li><a href="/submitedProblems"><i class='bx bxs-book-content'></i><span
+              class="navitem">Proposed Problems</span></a></li>
+        <li><a href="/createProblem"><i class='bx bxs-edit'></i><span
+              class="navitem">New Problem</span></a></li>
+        <li><a href="mailto:assistance@informatix.com"><i
+              class='bx bxs-contact'></i><span
+              class="navitem">Contact</span></a></li>
+        <li><a href="/" onclick="logout()"><i class='bx bx-log-out'></i><span
+              class="navitem">LogOut</span></a></li>
+      </ul>
+    </nav>
 
   <div class="maincontent">
 
@@ -115,21 +124,24 @@
     </div>
   </div>
 
-  <script src="../scripts/script.js"></script>
-  <script>
-    // Function to convert difficulty value to corresponding text
-    function getDifficultyText(difficulty) {
-      switch (difficulty) {
-        case 1:
-          return "Easy";
-        case 2:
-          return "Medium";
-        case 3:
-          return "Hard";
-        default:
-          return "Unknown";
-      }
-    }
+    <script src="../scripts/script.js"></script>
+    <script src="../scripts/logout.js"></script>
+    <script src="../scripts/checkProfesor.js"></script>
+
+    <script>
+     // Funcție pentru a converti valoarea dificultății în cuvinte corespunzătoare
+function getDifficultyText(difficulty) {
+  switch (difficulty) {
+    case 1:
+      return "Easy";
+    case 2:
+      return "Medium";
+    case 3:
+      return "Hard";
+    default:
+      return "Unknown";
+  }
+}
 
     // Function to get color based on difficulty
     function getDifficultyColor(difficulty) {

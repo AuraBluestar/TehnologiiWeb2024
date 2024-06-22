@@ -31,19 +31,20 @@
 
 <body>
 
-  <!-- This is the NavBar -->
-  <nav class="navbar">
-    <div class="navleft">
-      <div class="logo"><a href="/loggedStudent">In&lt;form&gt;atiX</a> </div>
-    </div>
-    <div class="navright">
-      <ul>
-        <li><a href="/ProfilStudent">Profile</a></li>
-        <li><a href="/">LogOut</a></li>
-        <li><a href="mailto:assistance@informatix.com">Contact</a></li>
-      </ul>
-    </div>
-  </nav>
+    <!-- This is the NavBar -->
+    <nav class="navbar">
+      <div class="navleft">
+        <div class="logo"><a href="/loggedStudent">In&lt;form&gt;atiX</a> </div>
+      </div>
+      <div class="navright">
+
+        <ul>
+          <li><a href="/ProfilStudent">Profile</a></li>
+          <li><a href="/" onclick="logout()">LogOut</a></li>
+          <li><a href="mailto:assistance@informatix.com">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
 
   <!-- This is the SideBar -->
   <nav class="sidebar">
@@ -115,21 +116,24 @@
     </div>
   </div>
 
-  <script src="../scripts/script.js"></script>
-  <script>
-    // Function to convert difficulty value to corresponding text
-    function getDifficultyText(difficulty) {
-      switch (difficulty) {
-        case 1:
-          return "Easy";
-        case 2:
-          return "Medium";
-        case 3:
-          return "Hard";
-        default:
-          return "Unknown";
-      }
+    <script src="../scripts/script.js"></script>
+    <script src="../scripts/logout.js"></script>
+    <script src="../scripts/checkStudent.js"></script>
+    
+    <script>
+   // Funcție pentru a converti valoarea dificultății în cuvinte corespunzătoare
+  function getDifficultyText(difficulty) {
+    switch (difficulty) {
+      case 1:
+        return "Easy";
+      case 2:
+        return "Medium";
+      case 3:
+        return "Hard";
+      default:
+        return "Unknown";
     }
+  }
 
     // Function to get color based on difficulty
     function getDifficultyColor(difficulty) {

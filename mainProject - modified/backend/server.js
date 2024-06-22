@@ -573,8 +573,8 @@ const getProblemReports = (req, res) => {
           (SELECT COUNT(*) FROM rezolvari WHERE ProblemaID = ?) AS users_tried,
           (SELECT COUNT(*)
           FROM rezolvari r
-          JOIN note n ON n.ProblemaID = r.ProblemaID AND n.elevid=r.elevid AND n.valoare >= 5
-          WHERE r.ProblemaID = ?) AS users_succeeded;
+          JOIN note n ON n.ProblemaID = r.ProblemaID AND n.valoare >= 5
+          WHERE r.ProblemaID = 11) AS users_succeeded;
       `;
       pool.query(query, [ProblemID, ProblemID], (error, results) => {
         if (error) {
@@ -1735,8 +1735,12 @@ const deleteHomework = (res, homeworkId) => {
 };
 
 const deleteGroup = (res, groupId) => {
-  const checkerQuery = "SELECT * FROM teme WHERE ID = ?;";
-  const deleteQuery = "DELETE FROM teme WHERE ID = ?;";
+  const checkerQuery = "SELECT * FROM clase WHERE ID = ?;";
+  const hwProblemsQuery = "SELECT ID FROM teme WHERE ClasaID = ?;";
+  const deleteProblemsQuery = "DELETE FROM problemeteme WHERE TemaID = ?;";
+  const deleteRelatedTemeQuery = "DELETE FROM teme WHERE ClasaID = ?;";
+  const deleteRelatedClaseQuery = "DELETE FROM claseelevi WHERE ClasaID = ?;";
+  const deleteQuery = "DELETE FROM clase WHERE ID = ?;";
 
   pool.query(checkerQuery, [groupId], (error, results) => {
     if (error) {
@@ -1748,20 +1752,68 @@ const deleteGroup = (res, groupId) => {
 
     if (results.length === 0) {
       res.writeHead(404, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({ success: false, message: "group not found" }));
+      res.end(JSON.stringify({ success: false, message: "Group not found" }));
       return;
     }
 
-    pool.query(deleteQuery, [groupId], (error) => {
+    pool.query(hwProblemsQuery, [groupId], (error, results) => {
       if (error) {
-        console.error("Error deleting group:", error);
+        console.error("Error querying homework problems:", error);
         res.writeHead(500, { "Content-Type": "application/json" });
         res.end(JSON.stringify({ success: false, message: "Database error" }));
         return;
       }
 
-      res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({ success: true }));
+      const homeworkIds = results.map(row => row.ID);
+      
+      const deleteProblemsPromises = homeworkIds.map(homeworkId => {
+        return new Promise((resolve, reject) => {
+          pool.query(deleteProblemsQuery, [homeworkId], (error) => {
+            if (error) {
+              return reject(error);
+            }
+            resolve();
+          });
+        });
+      });
+
+      Promise.all(deleteProblemsPromises)
+        .then(() => {
+          pool.query(deleteRelatedTemeQuery, [groupId], (error) => {
+            if (error) {
+              console.error("Error deleting related homeworks:", error);
+              res.writeHead(500, { "Content-Type": "application/json" });
+              res.end(JSON.stringify({ success: false, message: "Database error" }));
+              return;
+            }
+
+            pool.query(deleteRelatedClaseQuery, [groupId], (error) => {
+              if (error) {
+                console.error("Error deleting related class records:", error);
+                res.writeHead(500, { "Content-Type": "application/json" });
+                res.end(JSON.stringify({ success: false, message: "Database error" }));
+                return;
+              }
+
+              pool.query(deleteQuery, [groupId], (error) => {
+                if (error) {
+                  console.error("Error deleting group:", error);
+                  res.writeHead(500, { "Content-Type": "application/json" });
+                  res.end(JSON.stringify({ success: false, message: "Database error" }));
+                  return;
+                }
+
+                res.writeHead(200, { "Content-Type": "application/json" });
+                res.end(JSON.stringify({ success: true }));
+              });
+            });
+          });
+        })
+        .catch(error => {
+          console.error("Error deleting related problems:", error);
+          res.writeHead(500, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ success: false, message: "Database error" }));
+        });
     });
   });
 };
@@ -2174,10 +2226,7 @@ const server = http.createServer((req, res) => {
   ) {
     const homeworkId = pathname.split("/")[2];
     deleteHomework(res, homeworkId);
-  } else if (
-    req.method === "DELETE" &&
-    pathname.startsWith("/uniqueGroupProfesor")
-  ) {
+  } else if(req.method === "DELETE" && pathname.startsWith("/uniqueGroupProfesor")){
     const groupId = pathname.split("/")[2];
     deleteGroup(res, groupId);
   } else {
