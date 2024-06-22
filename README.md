@@ -35,7 +35,6 @@ Echipa:
 
 # Ce mai e de facut:
 - Miscellaneous pentru responsivness
-- Rezolvat filter probleme(la dificultate e cu una inainte - easy nu selecteaza nimic, medium = easy si hard = medium)
 
 # Important de facut: 
 - La final testarea tuturor paginilor
