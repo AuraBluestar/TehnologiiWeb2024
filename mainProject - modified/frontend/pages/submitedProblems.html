@@ -37,7 +37,7 @@
     <div class="navright">
       <ul>
         <li><a href="/loggedTeacher">Home</a></li>
-        <li><a href="/">LogOut</a></li>
+        <li><a href="/" onclick="logout()">LogOut</a></li>
         <li><a href="mailto:assistance@informatix.com">Contact</a></li>
       </ul>
     </div>
@@ -60,7 +60,7 @@
       <li><a href="../../to be modified/ProblemePropuse.html"><i class='bx bxs-book-content'></i><span class="navitem">Proposed Problems</span></a></li>
       <li><a href="/createProblem"><i class='bx bxs-edit'></i><span class="navitem">New Problem</span></a></li>
       <li><a href="mailto:assistance@informatix.com"><i class='bx bxs-contact'></i><span class="navitem">Contact</span></a></li>
-      <li><a href="/"><i class='bx bx-log-out'></i><span class="navitem">LogOut</span></a></li>
+      <li><a href="/" onclick="logout()"><i class='bx bx-log-out'></i><span class="navitem">LogOut</span></a></li>
     </ul>
   </nav>
 
@@ -71,6 +71,8 @@
   </div>
 
   <script src="../scripts/script.js"></script>
+  <script src="../scripts/logout.js"></script>
+  <script src="../scripts/checkProfesor.js"></script>
 
   <script>
     // Funcție pentru a converti valoarea dificultății în cuvinte corespunzătoare

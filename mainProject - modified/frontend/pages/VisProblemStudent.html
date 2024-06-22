@@ -34,7 +34,7 @@
       <div class="navright">
         <ul>
           <li><a href="/loggedStudent">Home</a></li>
-          <li><a href="/">LogOut</a></li>
+          <li><a href="/" onclick="logout()">LogOut</a></li>
           <li><a href="mailto:assistance@informatix.com"> Contact</a></li>
         </ul>
       </div>
@@ -60,7 +60,7 @@
         <li><a href="mailto:assistance@informatix.com"><i
               class='bx bxs-contact'></i><span
               class="navitem">Contact</span></a></li>
-        <li><a href="/"><i class='bx bx-log-out'></i><span
+        <li><a href="/" onclick="logout()"><i class='bx bx-log-out'></i><span
               class="navitem">LogOut</span></a></li>
       </ul>
     </nav>
@@ -126,7 +126,11 @@
         </div>
       </div>
     </div>
+
     <script src="../scripts/script.js"></script>
+    <script src="../scripts/logout.js"></script>
+    <script src="../scripts/checkStudent.js"></script>
+
     <script>
   let problemData;
   let studentProblems = []; // Array to hold the student's problems
