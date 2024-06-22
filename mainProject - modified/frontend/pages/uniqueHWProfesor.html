@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../styles/nav-bar.css">
-    <link rel="stylesheet" href="../styles/side-bar.css">
-    <link rel="stylesheet" href="../styles/main-content.css">
-    <link rel="stylesheet" href="../styles/searchmenu.css">
-    <link rel="stylesheet" href="../styles/listingsPage.css">
-    <link rel="stylesheet" href="../styles/add.css">
-    <link rel='stylesheet'
-      href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-    <title>seeHWProfesor</title>
-    <style>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../styles/nav-bar.css">
+        <link rel="stylesheet" href="../styles/side-bar.css">
+        <link rel="stylesheet" href="../styles/main-content.css">
+        <link rel="stylesheet" href="../styles/searchmenu.css">
+        <link rel="stylesheet" href="../styles/listingsPage.css">
+        <link rel="stylesheet" href="../styles/add.css">
+        <link rel='stylesheet'
+            href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Lato">
+        <title>seeHWProfesor</title>
+        <style>
     * {
       margin: 0;
       padding: 0;
@@ -28,82 +29,170 @@
       font-family: Lato, normal;
     }
   </style>
-  </head>
+    </head>
 
-  <body>
-    <!-- This is the NavBar -->
-    <nav class="navbar">
-      <div class="navleft">
-        <div class="logo"><a href="/loggedTeacher">In&lt;form&gt;atiX</a> </div>
-      </div>
-      <div class="navright">
-        <ul>
-          <li><a href="/loggedTeacher">Home</a></li>
-          <li><a href="/">LogOut</a></li>
-          <li><a href="mailto:assistance@informatix.com">Contact</a></li>
-        </ul>
-      </div>
-    </nav>
-
-    <!-- This is the SideBar -->
-    <nav class="sidebar">
-      <div class="top">
-        <div class="menu">
-          <i class='bx bx-code'></i>
-          <span>Menu</span>
-        </div>
-        <i class='bx bx-menu' id="btn"></i>
-      </div>
-      <ul>
-        <li><a href="/loggedTeacher"><i class='bx bxs-home'></i><span
-              class="navitem">Home</span></a></li>
-        <li><a href="/ProfilProfesor"><i class='bx bxs-user-circle'></i><span
-              class="navitem">Profile</span></a></li>
-        <li><a href="/VisGroupsTeacher"><i class='bx bxs-group'></i><span
-              class="navitem">Groups</span></a></li>
-        <li><a href="/VisHWTeacher"><i class='bx bxs-book-alt'></i><span
-              class="navitem">Homeworks</span></a></li>
-        <li><a href="/submitedProblems"><i class='bx bxs-book-content'></i><span
-              class="navitem">Proposed Problems</span></a></li>
-        <li><a href="/createProblem"><i class='bx bxs-edit'></i><span
-              class="navitem">New Problem</span></a></li>
-        <li><a href="mailto:assistance@informatix.com"><i
-              class='bx bxs-contact'></i><span
-              class="navitem">Contact</span></a></li>
-        <li><a href="/"><i class='bx bx-log-out'></i><span
-              class="navitem">LogOut</span></a></li>
-      </ul>
-    </nav>
-
-    <div class="maincontent">
-      <div class="search">
-        <div class="createForm">
-          <h1>Homework #ID</h1>
-          <h2>A1 - Web Technologies</h2>
-          <div class="groupHwDelete">
-            <button id="deleteProfile">Delete</button>
-          </div>
-        </div>
-      </div>
-      <div class="add">
-        <form class="addForm" id="addProblemForm">
-          <h1>Problems</h1>
-          <div class="searchbox">
-            <header id="add-header">Problem ID</header>
-            <div class="searchfield">
-              <input class="search-input" type="search"
-                placeholder="Type Problem ID..." id="problemIdInput">
-              <i class='bx bx-plus' id="addProblemButton"></i>
+    <body>
+        <!-- This is the NavBar -->
+        <nav class="navbar">
+            <div class="navleft">
+                <div class="logo"><a
+                        href="/loggedTeacher">In&lt;form&gt;atiX</a> </div>
             </div>
-          </div>
-        </form>
-        <div class="added">
-          <ul class="added-flex" id="addedProblemsList"></ul>
+            <div class="navright">
+                <ul>
+                    <li><a href="/loggedTeacher">Home</a></li>
+                    <li><a href="/">LogOut</a></li>
+                    <li><a
+                            href="mailto:assistance@informatix.com">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- This is the SideBar -->
+        <nav class="sidebar">
+            <div class="top">
+                <div class="menu">
+                    <i class='bx bx-code'></i>
+                    <span>Menu</span>
+                </div>
+                <i class='bx bx-menu' id="btn"></i>
+            </div>
+            <ul>
+                <li><a href="/loggedTeacher"><i class='bx bxs-home'></i><span
+                            class="navitem">Home</span></a></li>
+                <li><a href="/ProfilProfesor"><i
+                            class='bx bxs-user-circle'></i><span
+                            class="navitem">Profile</span></a></li>
+                <li><a href="/VisGroupsTeacher"><i
+                            class='bx bxs-group'></i><span
+                            class="navitem">Groups</span></a></li>
+                <li><a href="/VisHWTeacher"><i class='bx bxs-book-alt'></i><span
+                            class="navitem">Homeworks</span></a></li>
+                <li><a href="/submitedProblems"><i
+                            class='bx bxs-book-content'></i><span
+                            class="navitem">Proposed Problems</span></a></li>
+                <li><a href="/createProblem"><i class='bx bxs-edit'></i><span
+                            class="navitem">New Problem</span></a></li>
+                <li><a href="mailto:assistance@informatix.com"><i
+                            class='bx bxs-contact'></i><span
+                            class="navitem">Contact</span></a></li>
+                <li><a href="/"><i class='bx bx-log-out'></i><span
+                            class="navitem">LogOut</span></a></li>
+            </ul>
+        </nav>
+
+        <div class="maincontent">
+            <div class="search">
+                <div class="createForm">
+                    <h1>Homework #ID</h1>
+                    <h2>A1 - Web Technologies</h2>
+                    <div class="groupHwDelete">
+                        <button id="deleteProfile">Delete</button>
+                    </div>
+                </div>
+            </div>
+            <div class="add">
+                <form class="addForm" id="addProblemForm">
+                    <h1>Problems</h1>
+                    <div class="searchbox">
+                        <header id="add-header">Problem ID</header>
+                        <div class="searchfield">
+                            <input class="search-input" type="search"
+                                placeholder="Type Problem ID..."
+                                id="problemIdInput">
+                            <i class='bx bx-plus' id="addProblemButton"></i>
+                        </div>
+                    </div>
+                </form>
+                <div class="added">
+                    <ul class="added-flex" id="addedProblemsList"></ul>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    <script src="../scripts/script.js"></script>
-    <script src="../scripts/createHW.js"></script>
-  </body>
+        <script src="../scripts/script.js"></script>
+        <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const homeworkId = localStorage.getItem('homeworkId');
+            const className = localStorage.getItem('className');
+
+            if (homeworkId && className) {
+                document.querySelector('.createForm h1').textContent = `Homework #${homeworkId}`;
+                document.querySelector('.createForm h2').textContent = className;
+
+                fetch("http://localhost:3000/homeworks/problems", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ temaID: homeworkId })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const problemsList = document.getElementById('addedProblemsList');
+                        problemsList.innerHTML = ""; // Clear any existing content
+
+                        data.data.forEach(problem => {
+                            const li = document.createElement('li');
+                            li.textContent = `${problem.ProblemaID}`;
+                            li.style.cursor = "pointer"; // Set cursor to pointer to indicate it's clickable
+                            li.addEventListener('click', () => {
+                                window.location.href = `VisProblemTeacher?problemId=${problem.ProblemaID}`;
+                            });
+                            problemsList.appendChild(li);
+                        });
+                    } else {
+                        console.error("Failed to fetch problems data");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                });
+            } else {
+                console.error("Homework ID or Class Name is not available in local storage");
+            }
+        });
+        // Handle adding problem to homework
+    document.getElementById('addProblemButton').addEventListener('click', function () {
+        const problemId = document.getElementById('problemIdInput').value;
+        const homeworkId = localStorage.getItem('homeworkId');
+
+        if (!problemId || !homeworkId) {
+            alert('Please enter a valid problem ID and ensure a homework is created.');
+            return;
+        }
+
+        const requestBody = JSON.stringify({
+            HomeworkID: parseInt(homeworkId),
+            ProblemID: parseInt(problemId)
+        });
+
+        fetch('http://localhost:3000/homework/addProblem', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: requestBody
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const addedProblemsList = document.getElementById('addedProblemsList');
+                const li = document.createElement('li');
+                li.textContent = problemId;
+                addedProblemsList.appendChild(li);
+                document.getElementById('problemIdInput').value = ''; // Clear the input field
+                alert('Problem added to homework successfully!');
+            } else {
+                alert('Failed to add problem to homework');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error adding problem to homework');
+        });
+    });
+    </script>
+    </body>
 
 </html>

@@ -8,8 +8,7 @@
     <link rel="stylesheet" href="../styles/main-content.css">
     <link rel="stylesheet" href="../styles/searchmenu.css">
     <link rel="stylesheet" href="../styles/listingsPage.css">
-    <link rel='stylesheet'
-      href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+    <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
     <title>HomeworksTeacher</title>
     <style>
@@ -50,23 +49,14 @@
         <i class='bx bx-menu' id="btn"></i>
       </div>
       <ul>
-        <li><a href="/loggedTeacher"><i class='bx bxs-home'></i><span
-              class="navitem">Home</span></a></li>
-        <li><a href="/ProfilProfesor"><i class='bx bxs-user-circle'></i><span
-              class="navitem">Profile</span></a></li>
-        <li><a href="/VisGroupsTeacher"><i class='bx bxs-group'></i><span
-              class="navitem">Groups</span></a></li>
-        <li><a href="/VisHWTeacher"><i class='bx bxs-book-alt'></i><span
-              class="navitem">Homeworks</span></a></li>
-        <li><a href="/submitedProblems"><i class='bx bxs-book-content'></i><span
-              class="navitem">Proposed Problems</span></a></li>
-        <li><a href="/createProblem"><i class='bx bxs-edit'></i><span
-              class="navitem">New Problem</span></a></li>
-        <li><a href="mailto:assistance@informatix.com"><i
-              class='bx bxs-contact'></i><span
-              class="navitem">Contact</span></a></li>
-        <li><a href="/"><i class='bx bx-log-out'></i><span
-              class="navitem">LogOut</span></a></li>
+        <li><a href="/loggedTeacher"><i class='bx bxs-home'></i><span class="navitem">Home</span></a></li>
+        <li><a href="/ProfilProfesor"><i class='bx bxs-user-circle'></i><span class="navitem">Profile</span></a></li>
+        <li><a href="/VisGroupsTeacher"><i class='bx bxs-group'></i><span class="navitem">Groups</span></a></li>
+        <li><a href="/VisHWTeacher"><i class='bx bxs-book-alt'></i><span class="navitem">Homeworks</span></a></li>
+        <li><a href="/submitedProblems"><i class='bx bxs-book-content'></i><span class="navitem">Proposed Problems</span></a></li>
+        <li><a href="/createProblem"><i class='bx bxs-edit'></i><span class="navitem">New Problem</span></a></li>
+        <li><a href="mailto:assistance@informatix.com"><i class='bx bxs-contact'></i><span class="navitem">Contact</span></a></li>
+        <li><a href="/"><i class='bx bx-log-out'></i><span class="navitem">LogOut</span></a></li>
       </ul>
     </nav>
 
@@ -93,13 +83,7 @@
               </div>
               <ul class="dmenu">
                 <li class="option"><span class="option-text">None</span></li>
-                <li class="option"><span class="option-text">A1-Advanced
-                    Programming</span></li>
-                <li class="option"><span class="option-text">B1-SGBD</span></li>
-                <li class="option"><span class="option-text">A1-Software
-                    Engineering</span></li>
-                <li class="option"><span class="option-text">A4-Web
-                    Technologies</span></li>
+                <!-- Dynamic options will be appended here -->
               </ul>
             </div>
             <button type="submit" class="filter">Filter</button>
@@ -119,6 +103,9 @@
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         const profesorId = localStorage.getItem('id');
+        let uniqueClasses = new Set();
+
+        // Fetch homeworks
         fetch("http://localhost:3000/homeworks/teacher", {
           method: "POST",
           headers: {
@@ -142,11 +129,11 @@
               
               const homeworkId = document.createElement('p');
               homeworkId.classList.add('homework-id');
-              homeworkId.innerHTML = `<strong>ID:</strong> ${homework.temaID}`;
+              homeworkId.innerHTML = `<strong>Professor:</strong> Loading...`;
               
               const group = document.createElement('p');
               group.classList.add('homework-group');
-              group.innerHTML = `<strong>Class ID:</strong> ${homework.clasaID}`;
+              group.innerHTML = `<strong>Class:</strong> Loading...`;
               
               const problemCount = document.createElement('p');
               problemCount.classList.add('homework-problem-count');
@@ -158,6 +145,62 @@
               homeworkDiv.appendChild(problemCount);
               
               homeworksContainer.appendChild(homeworkDiv);
+
+              // Fetch class details
+              fetch(`http://localhost:3000/group/${homework.clasaID}`, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                }
+              })
+              .then(response => response.json())
+              .then(classData => {
+                const className = classData['Grupa-Materie'];
+                uniqueClasses.add(className); // Add class to the set of unique classes
+                group.innerHTML = `<strong>Class:</strong> ${className}`;
+                
+                // Add click event to the homeworkDiv
+                homeworkDiv.addEventListener('click', () => {
+                  localStorage.setItem('homeworkId', homework.temaID);
+                  localStorage.setItem('className', className);
+                  window.location.href = '/uniqueHWProfesor';
+                });
+
+                // Fetch professor details
+                return fetch(`http://localhost:3000/Teacher/${classData.ProfesorID}`, {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  }
+                })
+                .then(response => response.json())
+                .then(professorData => {
+                  const professorName = professorData.nume;
+                  homeworkId.innerHTML = `<strong>Professor:</strong> ${professorName}`;
+
+                  // Populate filter options
+                  const classDropdown = document.querySelector('.dmenu');
+                  classDropdown.innerHTML = '<li class="option"><span class="option-text">None</span></li>'; // Clear existing options and add "None" option
+                  uniqueClasses.forEach(classItem => {
+                    const classOption = document.createElement('li');
+                    classOption.classList.add('option');
+                    classOption.innerHTML = `<span class="option-text">${classItem}</span>`;
+                    classDropdown.appendChild(classOption);
+                  });
+
+                  // Event listener to update selected option
+                  const selectBtn = document.querySelector('.selectbtn');
+                  const sBtnText = document.querySelector('.sBtn-text');
+                  classDropdown.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('option-text')) {
+                      sBtnText.textContent = e.target.textContent;
+                    }
+                  });
+                });
+              })
+              .catch(error => {
+                console.error('Error fetching details:', error);
+              });
             });
           } else {
             console.error("Failed to fetch homeworks data");
