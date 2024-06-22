@@ -25,6 +25,7 @@ Echipa:
 - IMPORT Json la creare problema
 - grupa unica + tema unica pt elevi
 - pagina cu teme pt elev
+- - Grupa&Tema unica pt profesor
 
 # Ce mai e de facut:
 - filtrare grupe(facut la studenti dar nu merge)
@@ -32,7 +33,6 @@ Echipa:
 - la createHW acum nu mai merge dropdown-ul pt grupe + de facut pt materii
 - partea de acordare stele la probleme 
 - Miscellaneous pentru responsivness
-- Grupa&Tema unica pt profesor
 - Rezolvat filter probleme(la dificultate e cu una inainte - easy nu selecteaza nimic, medium = easy si hard = medium)
 
 
