@@ -97,6 +97,37 @@
         document.getElementById('password').addEventListener('blur', function() {
             this.type = 'password';
         });
+
+
+
+      //delete student profile
+      document.getElementById('deleteProfile').addEventListener('click', function() {
+        const studentId = localStorage.getItem('id'); // Assuming studentId is stored in localStorage
+
+    if (studentId) {
+        fetch(`http://localhost:3000/ProfilStudent/${parseInt(studentId)}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Account deleted successfully');
+                window.location.href = '/'; // Redirect to home page
+            } else {
+                alert('Failed to delete account');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error deleting account');
+        });
+    } else {
+        alert('Student ID not found');
+    }
+});
   
   </script>
 </body>

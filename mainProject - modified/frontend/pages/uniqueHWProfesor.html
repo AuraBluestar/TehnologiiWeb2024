@@ -192,6 +192,36 @@
             alert('Error adding problem to homework');
         });
     });
+
+
+    //delete homework
+document.getElementById('deleteProfile').addEventListener('click', function() {
+    const homeworkId = localStorage.getItem('homeworkId');
+
+    if (homeworkId) {
+        fetch(`http://localhost:3000/uniqueHWProfesor/${parseInt(homeworkId)}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Homework deleted successfully');
+                window.location.href = '/VisHWTeacher'; // Redirect to teacher's home page
+            } else {
+                alert('Failed to delete homework');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error deleting homework');
+        });
+    } else {
+        alert('Homework ID not found');
+    }
+});
     </script>
     </body>
 

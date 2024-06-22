@@ -67,7 +67,7 @@
               class="navitem">Homeworks</span></a></li>
         <li><a href="mailto:assistance@informatix.com"><i class='bx bxs-contact'></i><span
               class="navitem">Contact</span></a></li>
-        <li><a href="/"><i class='bx bx-log-out'></i><span
+        <li><a href="/" onclick="logout()"><i class='bx bx-log-out'></i><span
               class="navitem">LogOut</span></a></li>
       </ul>
     </nav>
@@ -151,6 +151,20 @@
 
     <script src="../scripts/script.js"></script>
     <script>
+
+  //Functie pentru logout
+  function logout() {
+    deleteallfromlocalstorage();
+    window.location.href = "/";
+  }
+
+  function deleteallfromlocalstorage()
+  {
+    localStorage.removeItem('classId');
+    localStorage.removeItem('id');
+    localStorage.removeItem('userType');
+  };
+
    // Funcție pentru a converti valoarea dificultății în cuvinte corespunzătoare
   function getDifficultyText(difficulty) {
     switch (difficulty) {
