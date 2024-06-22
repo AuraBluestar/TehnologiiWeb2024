@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ profesorID: 8 }), // Replace with dynamic ID if needed
+      body: JSON.stringify({ profesorID: localStorage.getItem('id') }), // Replace with dynamic ID if needed
     })
       .then((response) => response.json())
       .then((data) => {

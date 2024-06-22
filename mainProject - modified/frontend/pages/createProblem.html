@@ -137,7 +137,7 @@
             const problemDescription = document.getElementById('problemDescription').value;
             const problemCategory = document.getElementById('problemCategory').value;
             const problemDifficulty = document.querySelector('input[name="diffButtons"]:checked').value;
-            const profesorID = localStorage.getItem('id');
+            const profesorID = Storage.getItem('id'local);
 
             const problemData = {
                 titlu: problemName,
