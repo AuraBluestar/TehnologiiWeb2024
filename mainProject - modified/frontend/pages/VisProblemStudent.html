@@ -26,46 +26,40 @@
       font-family: Lato, normal;
     }
   </style>
-  </head>
-  <body>
-    <!-- This is the NavBar -->
-    <nav class="navbar">
-      <div class="navleft">
-        <div class="logo"><a href="/loggedStudent">In&lt;form&gt;atiX</a></div>
-      </div>
-      <div class="navright">
-        <ul>
-          <li><a href="/loggedStudent">Home</a></li>
-          <li><a href="/" onclick="logout()">LogOut</a></li>
-          <li><a href="mailto:assistance@informatix.com"> Contact</a></li>
-        </ul>
-      </div>
-    </nav>
-    <!-- This is the SideBar -->
-    <nav class="sidebar">
-      <div class="top">
-        <div class="menu">
-          <i class='bx bx-code'></i>
-          <span>Menu</span>
-        </div>
-        <i class='bx bx-menu' id="btn"></i>
-      </div>
+</head>
+
+<body>
+  <!-- This is the NavBar -->
+  <nav class="navbar">
+    <div class="navleft">
+      <div class="logo"><a href="/loggedStudent">In&lt;form&gt;atiX</a></div>
+    </div>
+    <div class="navright">
       <ul>
-        <li><a href="/loggedStudent"><i class='bx bxs-home'></i><span
-              class="navitem">Home</span></a></li>
-        <li><a href="/ProfilStudent"><i class='bx bxs-user-circle'></i><span
-              class="navitem">Profile</span></a></li>
-        <li><a href="/VisGroupsStudent"><i class='bx bxs-group'></i><span
-              class="navitem">Groups</span></a></li>
-        <li><a href="/VisHWStudent"><i class='bx bxs-book-alt'></i><span
-              class="navitem">Homeworks</span></a></li>
-        <li><a href="mailto:assistance@informatix.com"><i
-              class='bx bxs-contact'></i><span
-              class="navitem">Contact</span></a></li>
-        <li><a href="/" onclick="logout()"><i class='bx bx-log-out'></i><span
-              class="navitem">LogOut</span></a></li>
+        <li><a href="/loggedStudent">Home</a></li>
+        <li><a href="/" onclick="logout()">LogOut</a></li>
+        <li><a href="mailto:assistance@informatix.com"> Contact</a></li>
       </ul>
-    </nav>
+    </div>
+  </nav>
+  <!-- This is the SideBar -->
+  <nav class="sidebar">
+    <div class="top">
+      <div class="menu">
+        <i class='bx bx-code'></i>
+        <span>Menu</span>
+      </div>
+      <i class='bx bx-menu' id="btn"></i>
+    </div>
+    <ul>
+      <li><a href="/loggedStudent"><i class='bx bxs-home'></i><span class="navitem">Home</span></a></li>
+      <li><a href="/ProfilStudent"><i class='bx bxs-user-circle'></i><span class="navitem">Profile</span></a></li>
+      <li><a href="/VisGroupsStudent"><i class='bx bxs-group'></i><span class="navitem">Groups</span></a></li>
+      <li><a href="/VisHWStudent"><i class='bx bxs-book-alt'></i><span class="navitem">Homeworks</span></a></li>
+      <li><a href="mailto:assistance@informatix.com"><i class='bx bxs-contact'></i><span class="navitem">Contact</span></a></li>
+      <li><a href="/" onclick="logout()"><i class='bx bx-log-out'></i><span class="navitem">LogOut</span></a></li>
+    </ul>
+  </nav>
 
   <div class="maincontent" style="margin-top:10px;">
     <div class="ProblemPage" style="font-size:20px;">
@@ -83,60 +77,59 @@
               </div>
             </div>
 
-              <div class="grading-section">
-                <div class="star-rating">
-                  <span class="star" data-value="1">&#9733;</span>
-                  <span class="star" data-value="2">&#9733;</span>
-                  <span class="star" data-value="3">&#9733;</span>
-                  <span class="star" data-value="4">&#9733;</span>
-                  <span class="star" data-value="5">&#9733;</span>
-                </div>
-                <div class="average-rating">
-                  <p>Average Rating: <span id="average-rating">0</span></p>
-                </div>
+            <div class="grading-section">
+              <div class="star-rating">
+                <span class="star" data-value="1">&#9733;</span>
+                <span class="star" data-value="2">&#9733;</span>
+                <span class="star" data-value="3">&#9733;</span>
+                <span class="star" data-value="4">&#9733;</span>
+                <span class="star" data-value="5">&#9733;</span>
               </div>
-            </div>
-            <div class="right-section">
-              <div class="author">
-                <p>Author: <span id="author-name">Author Name</span></p>
+              <div class="average-rating">
+                <p>Average Rating: <span id="average-rating">0</span></p>
               </div>
             </div>
           </div>
-          <div class="description-section">
-            <h3 style="font-weight: bolder;">Description</h3>
-            <div class="description">
-              <p class="problem-description">Write functions to perform various
-                string manipulation tasks such as reversal, concatenation, and
-                substring extraction.</p>
+          <div class="right-section">
+            <div class="author">
+              <p>Author: <span id="author-name">Author Name</span></p>
             </div>
           </div>
         </div>
-        <div class="submissions-section">
-          <h3 style="font-weight: bolder;">Submissions</h3>
-          <div class="submissions">
-            <!-- Submissions will be appended here by JavaScript -->
+        <div class="description-section">
+          <h3 style="font-weight: bolder;">Description</h3>
+          <div class="description">
+            <p class="problem-description">Write functions to perform various
+              string manipulation tasks such as reversal, concatenation, and
+              substring extraction.</p>
           </div>
-        </div>
-        <div class="export-button">
-          <button class="json-export">Export to JSON</button>
-        </div>
-        <div class="submit-section" style="display: none;">
-          <textarea class="solution-box"
-            placeholder="Enter your solution here..."></textarea>
-          <button class="submit-button">Submit</button>
-        </div>
-        <div class="submission-message" style="display: none;">
-          <p>You have already submitted a solution for this problem.</p>
         </div>
       </div>
+      <div class="submissions-section">
+        <h3 style="font-weight: bolder;">Submissions</h3>
+        <div class="submissions">
+          <!-- Submissions will be appended here by JavaScript -->
+        </div>
+      </div>
+      <div class="export-button">
+        <button class="json-export">Export to JSON</button>
+      </div>
+      <div class="submit-section" style="display: none;">
+        <textarea class="solution-box" placeholder="Enter your solution here..."></textarea>
+        <button class="submit-button">Submit</button>
+      </div>
+      <div class="submission-message" style="display: none;">
+        <p>You have already submitted a solution for this problem.</p>
+      </div>
     </div>
-    <script src="../scripts/script.js"></script>
-    <script src="../scripts/logout.js"></script>
-    <script src="../scripts/checkStudent.js"></script>
-    <script>
-      let problemData;
-      let studentProblems = [];
-      let submissions = [];
+  </div>
+  <script src="../scripts/script.js"></script>
+  <script src="../scripts/logout.js"></script>
+  <script src="../scripts/checkStudent.js"></script>
+  <script>
+    let problemData;
+    let studentProblems = [];
+    let submissions = [];
 
     document.addEventListener('DOMContentLoaded', function () {
       const params = new URLSearchParams(window.location.search);
@@ -165,6 +158,8 @@
       const problemId = params.get('problemId');
       const elevID = localStorage.getItem('id');
       const profesorId = studentProblems.find(problem => problem.problemaid == problemId)?.profesorid;
+
+      console.log(`Attempting to submit: problemId=${problemId}, elevID=${elevID}, profesorId=${profesorId}`);
 
       if (solutionText && problemId && elevID && profesorId) {
         submitSolution(elevID, problemId, profesorId, solutionText);
@@ -209,7 +204,8 @@
             console.log('Submissions:', submissions);
             const alreadySubmitted = submissions.some(submission => {
               console.log('Checking submission:', submission);
-              return submission.problemaID == problemId && submission.ProfesorID == problemDetails.profesorid;
+              const match = submission.ProfesorID == problemDetails.profesorid;
+              return match;
             });
             console.log(`Already submitted: ${alreadySubmitted}`);
             if (!alreadySubmitted) {
@@ -448,7 +444,6 @@
 
     handleStarHover();
   </script>
-
 </body>
 
 </html>
