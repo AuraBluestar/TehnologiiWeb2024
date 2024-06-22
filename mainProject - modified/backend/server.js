@@ -610,7 +610,7 @@ function getProblemById(res, id) {
   });
 }
 
-// Function to handle adding homework
+// Functie pentru a manevra cererile de adăugare temă
 const handleAddHomework = (req, res) => {
   let body = "";
 
@@ -620,19 +620,44 @@ const handleAddHomework = (req, res) => {
 
   req.on("end", () => {
     try {
-      const { ClasaID, ProfesorID } = JSON.parse(body);
+      const { Grupa, Materie, ProfesorID } = JSON.parse(body);
 
-      const insertQuery =
-        "INSERT INTO teme (ClasaID, ProfesorID) VALUES (?, ?)";
-      pool.query(insertQuery, [ClasaID, ProfesorID], (insertError, insertResults) => {
-        if (insertError) {
-          console.error("Error inserting data:", insertError);
+      const findClassQuery =
+        "SELECT ID FROM clase WHERE Grupa = ? AND Materie = ?";
+      pool.query(findClassQuery, [Grupa, Materie], (findError, findResults) => {
+        if (findError) {
+          console.error("Error finding class:", findError);
           res.writeHead(500, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ success: false, message: "Database error" }));
+          res.end(
+            JSON.stringify({ success: false, message: "Database error" })
+          );
+        } else if (findResults.length === 0) {
+          res.writeHead(404, { "Content-Type": "application/json" });
+          res.end(
+            JSON.stringify({ success: false, message: "Class not found" })
+          );
         } else {
-          const homeworkId = insertResults.insertId;
-          res.writeHead(200, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ success: true, id: homeworkId }));
+          const ClasaID = findResults[0].ID;
+
+          const insertQuery =
+            "INSERT INTO teme (ClasaID, ProfesorID) VALUES (?, ?)";
+          pool.query(
+            insertQuery,
+            [ClasaID, ProfesorID],
+            (insertError, insertResults) => {
+              if (insertError) {
+                console.error("Error inserting data:", insertError);
+                res.writeHead(500, { "Content-Type": "application/json" });
+                res.end(
+                  JSON.stringify({ success: false, message: "Database error" })
+                );
+              } else {
+                const homeworkId = insertResults.insertId;
+                res.writeHead(200, { "Content-Type": "application/json" });
+                res.end(JSON.stringify({ success: true, id: homeworkId }));
+              }
+            }
+          );
         }
       });
     } catch (err) {
@@ -763,11 +788,11 @@ function searchProblems(req, res) {
       if (difficulty !== "all") {
         let difficultyInt;
         if (difficulty === "easy") {
-          difficultyInt = 0;
-        } else if (difficulty === "medium") {
           difficultyInt = 1;
-        } else if (difficulty === "hard") {
+        } else if (difficulty === "medium") {
           difficultyInt = 2;
+        } else if (difficulty === "hard") {
+          difficultyInt = 3;
         }
         if (difficultyInt !== undefined) {
           sqlQuery += " AND Dificultate = ?";
@@ -880,7 +905,7 @@ function getAllGroupsForProfesor(req, res) {
 
       // Verificare dacă profesorID este furnizat
       if (!profesorID) {
-        return sendErrorResponse(res, 400, "profesorID is required");
+        return sendErrorResponse(res, 400, "ProfesorID is required");
       }
 
       // Interogare pentru a obține toate clasele pentru profesorul dat
@@ -1564,6 +1589,147 @@ const getStudents = (req, res) => {
   });
 };
 
+const deleteTeacher = (res, teacherId) => {
+  const checkerQuery = "SELECT * FROM profesori WHERE ID = ?;";
+  const deleteQuery = "DELETE FROM profesori WHERE ID = ?;";
+
+  pool.query(checkerQuery, [teacherId], (error, results) => {
+    if (error) {
+      console.error("Error querying database:", error);
+      res.writeHead(500, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ success: false, message: "Database error" }));
+      return;
+    }
+
+    if (results.length === 0) {
+      res.writeHead(404, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ success: false, message: "Teacher not found" }));
+      return;
+    }
+ 
+    pool.query(deleteQuery, [teacherId], (error) => {
+      if (error) {
+        console.error("Error deleting teacher:", error);
+        res.writeHead(500, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ success: false, message: "Database error" }));
+        return;
+      }
+
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ success: true }));
+    });
+  });
+};
+
+const deleteStudent = (res, studentId) => {
+  const checkerQuery = "SELECT * FROM elevi WHERE ID = ?;";
+  const deleteQuery = "DELETE FROM elevi WHERE ID = ?;";
+
+  pool.query(checkerQuery, [studentId], (error, results) => {
+    if (error) {
+      console.error("Error querying database:", error);
+      res.writeHead(500, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ success: false, message: "Database error" }));
+      return;
+    }
+
+    if (results.length === 0) {
+      res.writeHead(404, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ success: false, message: "student not found" }));
+      return;
+    }
+ 
+    pool.query(deleteQuery, [studentId], (error) => {
+      if (error) {
+        console.error("Error deleting student:", error);
+        res.writeHead(500, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ success: false, message: "Database error" }));
+        return;
+      }
+
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ success: true }));
+    });
+  });
+};
+
+const deleteHomework = (res, homeworkId) => {
+  const checkerQuery = "SELECT * FROM teme WHERE ID = ?;";
+  const deleteProblemsQuery = "DELETE FROM problemeteme WHERE TemaID = ?;";
+  const deleteQuery = "DELETE FROM teme WHERE ID = ?;";
+
+  pool.query(checkerQuery, [homeworkId], (error, results) => {
+    if (error) {
+      console.error("Error querying database:", error);
+      res.writeHead(500, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ success: false, message: "Database error" }));
+      return;
+    }
+
+    if (results.length === 0) {
+      res.writeHead(404, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ success: false, message: "homework not found" }));
+      return;
+    }
+ 
+    pool.query(deleteProblemsQuery, [homeworkId], (error) => {
+      if (error) {
+        console.error("Error deleting related problems:", error);
+        res.writeHead(500, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ success: false, message: "Database error" }));
+        return;
+      }
+    
+    pool.query(deleteQuery, [homeworkId], (error) => {
+      if (error) {
+        console.error("Error deleting homework:", error);
+        res.writeHead(500, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ success: false, message: "Database error" }));
+        return;
+      }
+
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ success: true }));
+    });
+    });
+  });
+};
+
+
+const deleteGroup = (res, groupId) => {
+  const checkerQuery = "SELECT * FROM teme WHERE ID = ?;";
+  const deleteQuery = "DELETE FROM teme WHERE ID = ?;";
+
+  pool.query(checkerQuery, [groupId], (error, results) => {
+    if (error) {
+      console.error("Error querying database:", error);
+      res.writeHead(500, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ success: false, message: "Database error" }));
+      return;
+    }
+
+    if (results.length === 0) {
+      res.writeHead(404, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ success: false, message: "group not found" }));
+      return;
+    }
+ 
+    pool.query(deleteQuery, [groupId], (error) => {
+      if (error) {
+        console.error("Error deleting group:", error);
+        res.writeHead(500, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ success: false, message: "Database error" }));
+        return;
+      }
+
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ success: true }));
+    });
+  });
+};
+  
+  
+
 const getProblemsByHomework = (req, res) => {
   let body = "";
 
@@ -1600,6 +1766,8 @@ const getProblemsByHomework = (req, res) => {
     }
   });
 };
+
+
 
 const server = http.createServer((req, res) => {
   const baseDir = path.join(__dirname, "..", "frontend");
@@ -1745,6 +1913,18 @@ const server = http.createServer((req, res) => {
   } else if (req.method === "POST" && pathname.startsWith("/group/")) {
     const groupId = pathname.split("/")[2];
     getGroupById(res, groupId);
+  } else if( req.method === "DELETE" && pathname.startsWith("/ProfilProfesor")){
+    const teacherId = pathname.split("/")[2];
+    deleteTeacher(res, teacherId);
+  } else if( req.method === "DELETE" && pathname.startsWith("/ProfilStudent")){
+      const studentId = pathname.split("/")[2];
+      deleteStudent(res, studentId);
+  } else if(req.method === "DELETE" && pathname.startsWith("/uniqueHWProfesor")){
+    const homeworkId = pathname.split("/")[2];
+    deleteHomework(res, homeworkId);
+  } else if(req.method === "DELETE" && pathname.startsWith("/uniqueGroupProfesor")){
+  const groupId = pathname.split("/")[2];
+  deleteGroup(res, groupId);
   } else {
     res.writeHead(404, { "Content-Type": "application/json" });
     res.end(JSON.stringify({ success: false, message: "Not Found" }));

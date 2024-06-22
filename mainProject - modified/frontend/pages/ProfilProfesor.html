@@ -116,15 +116,14 @@
 
         //delete profesor profile
         document.getElementById('deleteProfile').addEventListener('click', function() {
-    const profesorId = localStorage.getItem('id'); // Assuming profesorId is stored in localStorage
+        const profesorId = localStorage.getItem('id'); // Assuming profesorId is stored in localStorage
 
     if (profesorId) {
-        fetch(`http://localhost:3000/ProfilProfesor/delete`, {
+        fetch(`http://localhost:3000/ProfilProfesor/${parseInt(profesorId)}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ profesorId: parseInt(profesorId) })
+            }
         })
         .then(response => response.json())
         .then(data => {
