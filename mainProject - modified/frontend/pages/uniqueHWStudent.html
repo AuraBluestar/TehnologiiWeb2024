@@ -106,7 +106,7 @@
 
             data.data.forEach(problem => {
               const li = document.createElement('li');
-              li.textContent = `Problem ID: ${problem.ProblemaID}`;
+              li.textContent = `${problem.ProblemaID}`;
               li.style.cursor = "pointer"; // Set cursor to pointer to indicate it's clickable
               li.addEventListener('click', () => {
                 window.location.href = `VisProblemStudent?problemId=${problem.ProblemaID}`;
