@@ -25,6 +25,21 @@
       height: 100%;
       font-family: Lato, normal;
     }
+
+    .comments-button {
+      display: block;
+      margin: 10px 0;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .comments-button:hover {
+      background-color: #0056b3;
+    }
   </style>
 </head>
 
@@ -120,6 +135,12 @@
       </div>
       <div class="submission-message" style="display: none;">
         <p>You have already submitted a solution for this problem.</p>
+        <button class="comments-button" onclick="redirectToComments()">Comments</button>
+      </div>
+      <!-- Comment Section -->
+      <div class="comment-section" style="display: none;">
+        <textarea class="comment-box" placeholder="Write your comment here..."></textarea>
+        <button class="add-comment-button">Add Comment</button>
       </div>
     </div>
   </div>
@@ -212,6 +233,7 @@
               document.querySelector('.submit-section').style.display = 'block';
             } else {
               document.querySelector('.submission-message').style.display = 'block';
+              document.querySelector('.comment-section').style.display = 'block'; // Show comment section
             }
           }
           return fetch(`http://localhost:3000/problems/${problemId}`, {
@@ -369,6 +391,7 @@
             alert('Solution submitted successfully!');
             document.querySelector('.submit-section').style.display = 'none';
             document.querySelector('.submission-message').style.display = 'block';
+            document.querySelector('.comment-section').style.display = 'block'; // Show comment section
           } else if (data.error === "Duplicate entry '11-9-8' for key 'rezolvari.unique_problem_elev_prof'") {
             alert('Already submitted a response.');
           } else {
@@ -443,6 +466,63 @@
     }
 
     handleStarHover();
+
+    // Handle adding comments
+    document.querySelector('.add-comment-button').addEventListener('click', function () {
+      const commentText = document.querySelector('.comment-box').value;
+      const params = new URLSearchParams(window.location.search);
+      const problemId = params.get('problemId');
+      const elevID = localStorage.getItem('id');
+
+      if (commentText && problemId && elevID) {
+        addComment(elevID, problemId, commentText);
+      } else {
+        alert('Please write a comment before submitting.');
+      }
+    });
+
+    function addComment(elevID, problemId, commentText) {
+      const commentData = {
+        elevID: elevID,
+        problemaID: problemId,
+        comentariu: commentText
+      };
+      console.log('Sending comment data:', commentData); // Log comment data
+      fetch('http://localhost:3000/comments/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(commentData)
+      })
+        .then(response => {
+          console.log('Response status:', response.status); // Log response status
+          return response.json();
+        })
+        .then(data => {
+          console.log('Comment submission response:', data); // Log response data
+          if (data.success) {
+            alert('Comment added successfully!');
+            document.querySelector('.comment-box').value = '';
+          } else {
+            alert('Failed to add comment.');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred while adding the comment.');
+        });
+    }
+
+    function redirectToComments() {
+      const params = new URLSearchParams(window.location.search);
+      const problemId = params.get('problemId');
+      if (problemId) {
+        window.location.href = `/VisComments/${problemId}`;
+      } else {
+        alert('Problem ID is missing.');
+      }
+    }
   </script>
 </body>
 

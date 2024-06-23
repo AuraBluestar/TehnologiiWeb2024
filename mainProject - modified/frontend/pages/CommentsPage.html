@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../styles/nav-bar.css">
+  <link rel="stylesheet" href="../styles/side-bar.css">
+  <link rel="stylesheet" href="../styles/main-content.css">
+  <link rel="stylesheet" href="../styles/searchmenu.css">
+  <link rel="stylesheet" href="../styles/listingsPage.css">
+  <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+  <title>Comments</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body,
+    html {
+      position: relative;
+      height: 100%;
+      font-family: Lato, normal;
+    }
+
+    .problem {
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin: 10px 0;
+    }
+
+    .details {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .id-name {
+      font-weight: bold;
+    }
+
+    .description {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- This is the NavBar -->
+  <nav class="navbar">
+    <div class="navleft">
+      <div class="logo"><a href="/loggedStudent">In&lt;form&gt;atiX</a></div>
+    </div>
+    <div class="navright">
+      <ul>
+        <li><a href="/loggedStudent">Home</a></li>
+        <li><a href="/" onclick="logout()">LogOut</a></li>
+        <li><a href="mailto:assistance@informatix.com"> Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+  <!-- This is the SideBar -->
+  <nav class="sidebar">
+    <div class="top">
+      <div class="menu">
+        <i class='bx bx-code'></i>
+        <span>Menu</span>
+      </div>
+      <i class='bx bx-menu' id="btn"></i>
+    </div>
+    <ul>
+      <li><a href="/loggedStudent"><i class='bx bxs-home'></i><span class="navitem">Home</span></a></li>
+      <li><a href="/ProfilStudent"><i class='bx bxs-user-circle'></i><span class="navitem">Profile</span></a></li>
+      <li><a href="/VisGroupsStudent"><i class='bx bxs-group'></i><span class="navitem">Groups</span></a></li>
+      <li><a href="/VisHWStudent"><i class='bx bxs-book-alt'></i><span class="navitem">Homeworks</span></a></li>
+      <li><a href="mailto:assistance@informatix.com"><i class='bx bxs-contact'></i><span class="navitem">Contact</span></a></li>
+      <li><a href="/" onclick="logout()"><i class='bx bx-log-out'></i><span class="navitem">LogOut</span></a></li>
+    </ul>
+  </nav>
+
+  <div class="maincontent">
+    <h2>Comments</h2>
+    <div class="ProblemsPage">
+      <!-- Comments will be appended here by JavaScript -->
+    </div>
+  </div>
+  <script src="../scripts/script.js"></script>
+  <script src="../scripts/logout.js"></script>
+  <script src="../scripts/checkStudent.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Get the full URL
+      const url = new URL(window.location.href);
+
+      // Get the problemId parameter from the URL
+      const problemId = url.pathname.split('/').pop();
+      
+      console.log(`Problem ID: ${problemId}`);
+    
+      if (problemId) {
+        fetchComments(problemId);
+      } else {
+        console.error('Problem ID is missing');
+      }
+    });
+    
+    function fetchComments(problemId) {
+      fetch(`http://localhost:3000/comments/${problemId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data); // Add this line to debug the response
+          if (data.success) {
+            displayComments(data.data);
+          } else {
+            console.error('Failed to fetch comments');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    }
+
+    function fetchStudentName(elevID) {
+      return fetch(`http://localhost:3000/student/${elevID}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          return data.nume;
+        })
+        .catch(error => {
+          console.error('Error fetching student name:', error);
+          return 'Unknown';
+        });
+    }
+
+    async function displayComments(comments) {
+      const commentsContainer = document.querySelector('.ProblemsPage');
+      commentsContainer.innerHTML = '';
+
+      for (const comment of comments) {
+        const studentName = await fetchStudentName(comment.elevID);
+        
+        const commentElement = `
+          <div class="problem">
+            <!-- Details section -->
+            <div class="details">
+              <!-- Student Name -->
+              <p class="id-name">${studentName}</p>
+            </div>
+            <!-- Description section -->
+            <div class="description">
+              <p class="problem-description">${comment.comentariu}</p>
+            </div>
+          </div>
+        `;
+        commentsContainer.insertAdjacentHTML('beforeend', commentElement);
+      }
+    }
+  </script>
+</body>
+
+</html>

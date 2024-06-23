@@ -1958,15 +1958,14 @@ const addVoteToProblem = (req, res) => {
         return;
       }
 
-      const query = `
-        INSERT INTO voturi (ProblemaID, UtilizatorID, Stele)
-        VALUES (?, ?, ?)
-        ON DUPLICATE KEY UPDATE Stele = VALUES(Stele);
+      const checkQuery = `
+        SELECT COUNT(*) AS count FROM voturi 
+        WHERE ProblemaID = ? AND UtilizatorID = ?
       `;
 
-      pool.query(query, [ProblemaID, UtilizatorID, Stele], (error, results) => {
+      pool.query(checkQuery, [ProblemaID, UtilizatorID], (error, results) => {
         if (error) {
-          console.error("Error inserting data:", error.sqlMessage);
+          console.error("Error checking data:", error.sqlMessage);
           res.writeHead(500, { "Content-Type": "application/json" });
           res.end(
             JSON.stringify({
@@ -1975,9 +1974,56 @@ const addVoteToProblem = (req, res) => {
               error: error.sqlMessage,
             })
           );
+          return;
+        }
+
+        const count = results[0].count;
+
+        if (count > 0) {
+          const updateQuery = `
+            UPDATE voturi 
+            SET Stele = ?
+            WHERE ProblemaID = ? AND UtilizatorID = ?
+          `;
+
+          pool.query(updateQuery, [Stele, ProblemaID, UtilizatorID], (error) => {
+            if (error) {
+              console.error("Error updating data:", error.sqlMessage);
+              res.writeHead(500, { "Content-Type": "application/json" });
+              res.end(
+                JSON.stringify({
+                  success: false,
+                  message: "Database error",
+                  error: error.sqlMessage,
+                })
+              );
+            } else {
+              res.writeHead(200, { "Content-Type": "application/json" });
+              res.end(JSON.stringify({ success: true }));
+            }
+          });
         } else {
-          res.writeHead(200, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ success: true }));
+          const insertQuery = `
+            INSERT INTO voturi (ProblemaID, UtilizatorID, Stele)
+            VALUES (?, ?, ?)
+          `;
+
+          pool.query(insertQuery, [ProblemaID, UtilizatorID, Stele], (error) => {
+            if (error) {
+              console.error("Error inserting data:", error.sqlMessage);
+              res.writeHead(500, { "Content-Type": "application/json" });
+              res.end(
+                JSON.stringify({
+                  success: false,
+                  message: "Database error",
+                  error: error.sqlMessage,
+                })
+              );
+            } else {
+              res.writeHead(200, { "Content-Type": "application/json" });
+              res.end(JSON.stringify({ success: true }));
+            }
+          });
         }
       });
     } catch (err) {
@@ -2090,6 +2136,92 @@ const updateAccountDetails = (req, res) => {
   });
 };
 
+const addComment = (req, res) => {
+  let body = "";
+
+  req.on("data", (chunk) => {
+    body += chunk.toString();
+  });
+
+  req.on("end", () => {
+    try {
+      const { elevID, problemaID, comentariu } = JSON.parse(body);
+
+      if (!elevID || !problemaID || !comentariu) {
+        res.writeHead(400, { "Content-Type": "application/json" });
+        res.end(
+          JSON.stringify({
+            success: false,
+            message: "Missing required fields",
+          })
+        );
+        return;
+      }
+
+      const insertQuery = `
+        INSERT INTO Comentarii (elevID, problemaID, comentariu)
+        VALUES (?, ?, ?)
+      `;
+
+      pool.query(insertQuery, [elevID, problemaID, comentariu], (error) => {
+        if (error) {
+          console.error("Error inserting data:", error.sqlMessage);
+          res.writeHead(500, { "Content-Type": "application/json" });
+          res.end(
+            JSON.stringify({
+              success: false,
+              message: "Database error",
+              error: error.sqlMessage,
+            })
+          );
+        } else {
+          res.writeHead(200, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ success: true }));
+        }
+      });
+    } catch (err) {
+      console.error("Error parsing JSON:", err);
+      res.writeHead(400, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ success: false, message: "Invalid JSON" }));
+    }
+  });
+};
+
+const getCommentsByProblemID = (res, problemaID) => {
+  if (!problemaID) {
+    res.writeHead(400, { "Content-Type": "application/json" });
+    res.end(
+      JSON.stringify({
+        success: false,
+        message: "Missing problemaID",
+      })
+    );
+    return;
+  }
+
+  const query = `
+    SELECT elevID, comentariu FROM Comentarii
+    WHERE problemaID = ?
+  `;
+
+  pool.query(query, [problemaID], (error, results) => {
+    if (error) {
+      console.error("Error fetching data:", error.sqlMessage);
+      res.writeHead(500, { "Content-Type": "application/json" });
+      res.end(
+        JSON.stringify({
+          success: false,
+          message: "Database error",
+          error: error.sqlMessage,
+        })
+      );
+    } else {
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ success: true, data: results }));
+    }
+  });
+};
+
 const server = http.createServer((req, res) => {
   const baseDir = path.join(__dirname, "..", "frontend");
   const parsedUrl = url.parse(req.url, true);
@@ -2149,6 +2281,8 @@ const server = http.createServer((req, res) => {
       filePath = path.join(baseDir, "pages", "VisProblemTeacher.html");
     } else if (req.url.startsWith("/VisProblemAdmin")) {
       filePath = path.join(baseDir, "pages", "VisProblemAdmin.html");
+    } else if (req.url.startsWith("/VisComments")) {
+      filePath = path.join(baseDir, "pages", "CommentsPage.html");
     } else {
       // Serve static files (CSS, images, etc.)
       filePath = path.join(baseDir, req.url);
@@ -2232,6 +2366,11 @@ const server = http.createServer((req, res) => {
     getAccountDetails(req, res);
   } else if (req.method === "POST" && pathname === "/updateAccountDetails") {
     updateAccountDetails(req, res);
+  } else if (req.method === "POST" && pathname === "/comments/add") {
+    addComment(req, res);
+  } else if (req.method === "POST" && pathname.startsWith("/comments/")) {
+    const commentId = pathname.split("/")[2];
+    getCommentsByProblemID(res, commentId);
   } else if (req.method === "POST" && pathname.startsWith("/problems/")) {
     const problemId = pathname.split("/")[2];
     getProblemById(res, problemId);
