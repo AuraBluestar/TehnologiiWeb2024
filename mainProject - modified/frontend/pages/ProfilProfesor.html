@@ -25,12 +25,6 @@
       height: 100%;
       font-family: Lato, normal;
     }
-
-    .chart-container {
-      width: 60%;
-      height: 400px;
-      margin: 20px auto;
-    }
   </style>
 </head>
 
@@ -72,7 +66,7 @@
       <li><a href="/" onclick="logout()"><i class='bx bx-log-out'></i><span class="navitem">LogOut</span></a></li>
     </ul>
   </nav>
-  <div class="maincontent" style="justify-content: center;">
+  <div class="maincontent" style="flex-direction:column; justify-content: center; align-items: center;">
     <div class="ProfilePage">
       <h1>Profile</h1>
       <div class="profileContent">
@@ -94,8 +88,8 @@
         </div>
       </div>
     </div>
-    <div class="chart-container">
-      <canvas id="reportChart" width="400" height="400"></canvas>
+    <div class="chart-container" style="margin-top: 20px;">
+      <canvas id="reportChart" width="280" height="200"></canvas>
     </div>
   </div>
   <script src="../scripts/script.js"></script>

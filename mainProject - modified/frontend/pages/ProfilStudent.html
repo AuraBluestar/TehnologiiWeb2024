@@ -25,12 +25,6 @@
       height: 100%;
       font-family: Lato, normal;
     }
-
-    .chart-container {
-      width: 60%;
-      height: 400px;
-      margin: 20px auto;
-    }
   </style>
 </head>
 
@@ -68,7 +62,7 @@
       <li><a href="/" onclick="logout()"><i class='bx bx-log-out'></i><span class="navitem">LogOut</span></a></li>
     </ul>
   </nav>
-  <div class="maincontent" style="justify-content: center;">
+  <div class="maincontent" style="flex-direction:column; justify-self:center; align-items: center;">
     <div class="ProfilePage">
       <h1>Profile</h1>
       <div class="profileContent">
@@ -93,7 +87,7 @@
       </div>
     </div>
     <div class="chart-container">
-      <canvas id="reportChart" width="400" height="400"></canvas>
+      <canvas id="reportChart" width="280" height="250"></canvas>
 
     </div>
   </div>
@@ -216,7 +210,7 @@
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         // Define the data
-        const labels = ['Problems Assigned', 'Problems Solved', 'Solved Correctly'];
+        const labels = ['Assigned', 'Submitted', 'Solved'];
         const values = [data.problems_assigned, data.problems_solved, data.problems_solved_correctly];
 
         // Define the chart dimensions
