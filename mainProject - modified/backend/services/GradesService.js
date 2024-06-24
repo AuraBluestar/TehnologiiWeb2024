@@ -7,7 +7,7 @@ export default class GradesService {
     this.pool = pool;
   }
 
-  async AddGrade(body, red) {
+  async AddGrade(body, res) {
     try {
       const { ProblemaID, ElevID, ProfesorID, Valoare } = JSON.parse(body);
 

@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../styles/nav-bar.css">
-    <link rel="stylesheet" href="../styles/side-bar.css">
-    <link rel="stylesheet" href="../styles/main-content.css">
-    <link rel="stylesheet" href="../styles/searchmenu.css">
-    <link rel="stylesheet" href="../styles/listingsPage.css">
-    <link rel='stylesheet'
-      href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-    <title>Problem</title>
-    <style>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../styles/nav-bar.css">
+  <link rel="stylesheet" href="../styles/side-bar.css">
+  <link rel="stylesheet" href="../styles/main-content.css">
+  <link rel="stylesheet" href="../styles/searchmenu.css">
+  <link rel="stylesheet" href="../styles/listingsPage.css">
+  <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+  <title>Problem</title>
+  <style>
     * {
       margin: 0;
       padding: 0;
@@ -26,108 +25,94 @@
       height: 100%;
       font-family: Lato, normal;
     }
+
     .hidden {
       display: none;
     }
   </style>
-  </head>
+</head>
 
-  <body>
+<body>
 
-    <!-- This is the NavBar -->
-    <nav class="navbar">
-      <div class="navleft">
-        <div class="logo"><a href="/loggedTeacher">In&lt;form&gt;atiX</a> </div>
-      </div>
-      <div class="navright">
-        <ul>
-          <li><a href="/loggedTeacher">Home</a></li>
-          <li><a href="/" onclick="logout()">LogOut</a></li>
-          <li><a href="mailto:assistance@informatix.com">Contact</a></li>
-        </ul>
-      </div>
-    </nav>
-
-    <!-- This is the SideBar -->
-    <nav class="sidebar">
-      <div class="top">
-        <div class="menu">
-          <i class='bx bx-code'></i>
-          <span>Menu</span>
-        </div>
-        <i class='bx bx-menu' id="btn"></i>
-      </div>
+  <!-- This is the NavBar -->
+  <nav class="navbar">
+    <div class="navleft">
+      <div class="logo"><a href="/loggedTeacher">In&lt;form&gt;atiX</a> </div>
+    </div>
+    <div class="navright">
       <ul>
-        <li><a href="/loggedTeacher"><i class='bx bxs-home'></i><span
-              class="navitem">Home</span></a></li>
-        <li><a href="/ProfilProfesor"><i class='bx bxs-user-circle'></i><span
-              class="navitem">Profile</span></a></li>
-        <li><a href="/VisGroupsTeacher"><i class='bx bxs-group'></i><span
-              class="navitem">Groups</span></a></li>
-        <li><a href="/VisHWTeacher"><i class='bx bxs-book-alt'></i><span
-              class="navitem">Homeworks</span></a></li>
-        <li><a href="/submitedProblems"><i class='bx bxs-book-content'></i><span
-              class="navitem">Proposed Problems</span></a></li>
-        <li><a href="/createProblem"><i class='bx bxs-edit'></i><span
-              class="navitem">New Problem</span></a></li>
-        <li><a href="mailto:assistance@informatix.com"><i
-              class='bx bxs-contact'></i><span
-              class="navitem">Contact</span></a></li>
-        <li><a href="/" onclick="logout()"><i class='bx bx-log-out'></i><span
-              class="navitem">LogOut</span></a></li>
+        <li><a href="/loggedTeacher">Home</a></li>
+        <li><a href="/" onclick="logout()">LogOut</a></li>
+        <li><a href="mailto:assistance@informatix.com">Contact</a></li>
       </ul>
-    </nav>
+    </div>
+  </nav>
 
-    <div class="maincontent" style="margin-top:10px;">
-      <div class="ProblemPage" style="font-size:20px;">
-        <div class="problem-container" style="cursor:default;">
-          <!-- Left Section -->
-          <div class="up-section">
-            <div class="left-section">
-              <!-- Details section -->
-              <div class="details" style="margin-left:0px;">
-                <!-- ID and Name -->
-                <div class="id-name">
-                  <p class="problem-id">#ID</p>
-                  <p class="problem-name">titlu</p>
-                </div>
+  <!-- This is the SideBar -->
+  <nav class="sidebar">
+    <div class="top">
+      <div class="menu">
+        <i class='bx bx-code'></i>
+        <span>Menu</span>
+      </div>
+      <i class='bx bx-menu' id="btn"></i>
+    </div>
+    <ul>
+      <li><a href="/loggedTeacher"><i class='bx bxs-home'></i><span class="navitem">Home</span></a></li>
+      <li><a href="/ProfilProfesor"><i class='bx bxs-user-circle'></i><span class="navitem">Profile</span></a></li>
+      <li><a href="/VisGroupsTeacher"><i class='bx bxs-group'></i><span class="navitem">Groups</span></a></li>
+      <li><a href="/VisHWTeacher"><i class='bx bxs-book-alt'></i><span class="navitem">Homeworks</span></a></li>
+      <li><a href="/submitedProblems"><i class='bx bxs-book-content'></i><span class="navitem">Proposed Problems</span></a></li>
+      <li><a href="/createProblem"><i class='bx bxs-edit'></i><span class="navitem">New Problem</span></a></li>
+      <li><a href="mailto:assistance@informatix.com"><i class='bx bxs-contact'></i><span class="navitem">Contact</span></a></li>
+      <li><a href="/" onclick="logout()"><i class='bx bx-log-out'></i><span class="navitem">LogOut</span></a></li>
+    </ul>
+  </nav>
+
+  <div class="maincontent" style="margin-top:10px;">
+    <div class="ProblemPage" style="font-size:20px;">
+      <div class="problem-container" style="cursor:default;">
+        <!-- Left Section -->
+        <div class="up-section">
+          <div class="left-section">
+            <!-- Details section -->
+            <div class="details" style="margin-left:0px;">
+              <!-- ID and Name -->
+              <div class="id-name">
+                <p class="problem-id">#ID</p>
+                <p class="problem-name">titlu</p>
               </div>
             </div>
           </div>
-
-          <!-- Description section -->
-          <div class="description-section">
-            <h3 style="font-weight: bolder;">Description</h3>
-            <div class="description">
-              <p class="problem-description">Write functions to perform various
-                string manipulation tasks such as reversal, concatenation, and
-                substring extraction.</p>
-            </div>
-          </div>
         </div>
 
-        <div class="submission">
-          <h3 style="font-weight: bolder;">Submission</h3>
-          <textarea class="submission-code"
-            readonly>#include iostream using namespace std; int n, m; return 0;</textarea>
-          <div class="grading-section">
-            <div class="grade">
-              <label>Grade: </label>
-              <input type="number" id="grade" name="grade" min="1" max="10"
-                required class="grade-input hidden">/10
-            </div>
-            <button class="submit-button hidden"
-              style="margin: 5px;">Submit</button>
-            <p class="grade-value" style="display:none;">Grade:</p>
+        <!-- Description section -->
+        <div class="description-section">
+          <h3 style="font-weight: bolder;">Description</h3>
+          <div class="description">
+            <p class="problem-description">Write functions to perform various string manipulation tasks such as reversal, concatenation, and substring extraction.</p>
           </div>
         </div>
       </div>
-    </div>
-    <script src="../scripts/script.js"></script>
-    <script src="../scripts/logout.js"></script>
-    <script src="../scripts/checkProfesor.js"></script>
 
-    <script>
+      <div class="submission">
+        <h3 style="font-weight: bolder;">Submission</h3>
+        <textarea class="submission-code" readonly>#include iostream using namespace std; int n, m; return 0;</textarea>
+        <div class="grading-section">
+          <div class="grade">
+            <input type="number" id="grade" name="grade" min="1" max="10" required class="grade-input hidden">
+          </div>
+          <button class="submit-button hidden" style="margin: 5px;">Submit</button>
+          <p class="grade-value" style="display:none;"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../scripts/script.js"></script>
+  <script src="../scripts/logout.js"></script>
+  <script src="../scripts/checkProfesor.js"></script>
+
+  <script>
     document.addEventListener('DOMContentLoaded', function () {
       const submissionDetails = JSON.parse(localStorage.getItem('submissionDetails'));
 
@@ -147,7 +132,6 @@
           problemDescriptionElement.textContent = submissionDetails.description;
           submissionCodeElement.textContent = submissionDetails.solution;
 
-          // Fetch existing grades for the problem and professor
           fetch('http://localhost:3000/grades/teacher', {
             method: 'POST',
             headers: {
@@ -155,87 +139,83 @@
             },
             body: JSON.stringify({ ProfesorID: localStorage.getItem('id') })
           })
-          .then(response => response.json())
-          .then(grades => {
-            console.log('Grades received:', grades);
-            const profesorID = parseInt(localStorage.getItem('id'), 10); // Convert ProfessorID to integer
-            console.log('Converted ProfesorID:', profesorID);
-            console.log('elevID:', submissionDetails.elevId, 'ProfesorID:', profesorID, 'ProblemID:', submissionDetails.problemId);
+            .then(response => response.json())
+            .then(grades => {
+              console.log('Grades received:', grades);
+              const profesorID = parseInt(localStorage.getItem('id'), 10);
+              console.log('Converted ProfesorID:', profesorID);
+              console.log('elevID:', submissionDetails.elevId, 'ProfesorID:', profesorID, 'ProblemID:', submissionDetails.problemId);
 
-            grades.forEach(grade => {
-              console.log('Checking grade:', grade);
-              console.log('ProblemaID type:', typeof grade.ProblemaID, 'value:', grade.ProblemaID);
-              console.log('ElevID type:', typeof grade.ElevID, 'value:', grade.ElevID);
-              console.log('ProfesorID type:', typeof grade.ProfesorID, 'value:', grade.ProfesorID);
+              grades.forEach(grade => {
+                console.log('Checking grade:', grade);
+                console.log('ProblemaID type:', typeof grade.ProblemaID, 'value:', grade.ProblemaID);
+                console.log('ElevID type:', typeof grade.ElevID, 'value:', grade.ElevID);
+                console.log('ProfesorID type:', typeof grade.ProfesorID, 'value:', grade.ProfesorID);
+              });
+
+              const problemIdInt = parseInt(submissionDetails.problemId, 10);
+              const elevIdInt = parseInt(submissionDetails.elevId, 10);
+
+              const matchingGrade = grades.find(grade =>
+                grade.ProblemaID === problemIdInt &&
+                grade.ElevID === elevIdInt &&
+                grade.ProfesorID === profesorID
+              );
+
+              if (matchingGrade) {
+                console.log('Matching grade found:', matchingGrade);
+                gradeValueElement.textContent = `Grade: ${matchingGrade.Valoare}/10`;
+                gradeValueElement.style.display = 'block';
+                gradeInputElement.classList.add('hidden');
+                submitButtonElement.classList.add('hidden');
+              } else {
+                console.log('No matching grade found.');
+                gradeInputElement.classList.remove('hidden');
+                submitButtonElement.classList.remove('hidden');
+              }
+            })
+            .catch(error => {
+              console.error('Error fetching grades:', error);
             });
 
-            // Ensure all comparisons are made between the same data types
-            const problemIdInt = parseInt(submissionDetails.problemId, 10);
-            const elevIdInt = parseInt(submissionDetails.elevId, 10);
+          submitButtonElement.addEventListener('click', function () {
+            const grade = gradeInputElement.value;
 
-            const matchingGrade = grades.find(grade =>
-              grade.ProblemaID === problemIdInt &&
-              grade.ElevID === elevIdInt &&
-              grade.ProfesorID === profesorID
-            );
-
-            if (matchingGrade) {
-              console.log('Matching grade found:', matchingGrade);
-              gradeValueElement.textContent = `Grade: ${matchingGrade.Valoare}`;
-              gradeValueElement.style.display = 'block';
-              gradeInputElement.classList.add('hidden');
-              submitButtonElement.classList.add('hidden');
+            if (grade >= 1 && grade <= 10) {
+              fetch('http://localhost:3000/grades/add', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                  ProblemaID: submissionDetails.problemId,
+                  ElevID: submissionDetails.elevId,
+                  ProfesorID: localStorage.getItem('id'),
+                  Valoare: grade
+                })
+              })
+                .then(response => response.json())
+                .then(data => {
+                  console.log('Grade submission response:', data);
+                  if (data.success) {
+                    alert('Grade submitted successfully!');
+                    gradeInputElement.classList.add('hidden');
+                    submitButtonElement.classList.add('hidden');
+                  } else {
+                    alert('Failed to submit grade');
+                  }
+                })
+                .catch(error => {
+                  console.error('Error:', error);
+                  alert('Error submitting grade');
+                });
             } else {
-              console.log('No matching grade found.');
-              gradeInputElement.classList.remove('hidden');
-              submitButtonElement.classList.remove('hidden');
+              alert('Please enter a valid grade between 1 and 10');
             }
-          })
-          .catch(error => {
-            console.error('Error fetching grades:', error);
           });
         }
       }
-
-      submitButtonElement.addEventListener('click', function () {
-        const grade = gradeInputElement.value;
-
-        if (grade >= 1 && grade <= 10) {
-          // Submit the grade
-          fetch('http://localhost:3000/grades/add', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              ProblemaID: submissionDetails.problemId,
-              ElevID: submissionDetails.elevId,
-              ProfesorID: localStorage.getItem('id'),
-              Valoare: grade
-            })
-          })
-          .then(response => response.json())
-          .then(data => {
-            console.log('Grade submission response:', data);
-            if (data.success) {
-              alert('Grade submitted successfully!');
-              // Optionally, disable the grade input and submit button
-              gradeInputElement.classList.add('hidden');
-              submitButtonElement.classList.add('hidden');
-            } else {
-              alert('Failed to submit grade');
-            }
-          })
-          .catch(error => {
-            console.error('Error:', error);
-            alert('Error submitting grade');
-          });
-        } else {
-          alert('Please enter a valid grade between 1 and 10');
-        }
-      });
     });
   </script>
-  </body>
-
+</body>
 </html>
