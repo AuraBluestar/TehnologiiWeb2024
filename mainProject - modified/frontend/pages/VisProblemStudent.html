@@ -106,7 +106,7 @@
           </div>
         </div>
       </div>
-      <div class="submissions-section">
+      <div class="submissions-section" style="display: none;">
         <h3 style="font-weight: bolder;">Submissions</h3>
         <div class="submissions">
           <!-- Submissions will be appended here by JavaScript -->
@@ -188,70 +188,50 @@
           console.log('Data received from problems/student:', data);
           if (data.success) {
             studentProblems = data.data;
-            const problemExists = studentProblems.some(problem => problem.problemaid == problemId);
-            console.log(`Problem exists: ${problemExists}`);
-            if (problemExists) {
-              return fetch('http://localhost:3000/solutions/student', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ elevID: elevID, problemaID: problemId })
-              });
-            }
-          }
-        })
-        .then(response => response.json())
-        .then(data => {
-          console.log('Data received from solutions/student:', data);
-          if (data.success) {
-            submissions = data.data;
             const problemDetails = studentProblems.find(problem => problem.problemaid == problemId);
-            console.log('Problem details from studentProblems:', problemDetails);
-            console.log('Submissions:', submissions);
-            const alreadySubmitted = submissions.some(submission => {
-              console.log('Checking submission:', submission);
-              const match = submission.ProfesorID == problemDetails.profesorid;
-              return match;
-            });
-            console.log(`Already submitted: ${alreadySubmitted}`);
-            if (!alreadySubmitted) {
-              document.querySelector('.submit-section').style.display = 'block';
+            if (problemDetails) {
+              fetchDirectProblemDetails(problemId, elevID);
+              console.log('Problem details from studentProblems:', problemDetails);
+              fetchSubmissions(problemId, elevID, problemDetails.profesorid);
+              displayProblemDetails(problemDetails);
             } else {
-              document.querySelector('.submission-message').style.display = 'block';
-              document.querySelector('.comment-section').style.display = 'block'; // Show comment section
+              fetchDirectProblemDetails(problemId, elevID);
             }
+          } else {
+            fetchDirectProblemDetails(problemId, elevID);
           }
-          return fetch(`http://localhost:3000/problems/${problemId}`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          });
         })
+        .catch(error => {
+          console.error('Error fetching problem/student data:', error);
+          fetchDirectProblemDetails(problemId, elevID);
+        });
+    }
+
+    function fetchDirectProblemDetails(problemId, elevID) {
+      fetch(`http://localhost:3000/problems/${problemId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
         .then(response => response.json())
         .then(problem => {
           console.log('Problem details:', problem);
           problemData = problem;
-          document.querySelector('.problem-id').textContent = `#${problem.ID}`;
-          document.querySelector('.problem-name').textContent = problem.Titlu;
-          document.querySelector('.problem-category').textContent = problem.Capitol;
-          document.querySelector('.problem-diff').textContent = getDifficultyText(problem.Dificultate);
-          document.querySelector('.problem-description').textContent = problem.Descriere;
+          displayProblemDetails(problem);
 
-          return fetch(`http://localhost:3000/Teacher/${problem.ProfesorID}`, {
+          fetch(`http://localhost:3000/Teacher/${problem.ProfesorID}`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
             }
-          });
-        })
-        .then(response => response.json())
-        .then(teacher => {
-          console.log('Teacher details:', teacher);
-          document.getElementById('author-name').textContent = teacher.nume;
-
-          fetchSubmissions(problemId, elevID);
+          })
+            .then(response => response.json())
+            .then(teacher => {
+              console.log('Teacher details:', teacher);
+              document.getElementById('author-name').textContent = teacher.nume;
+            })
+            .catch(error => console.error('Error fetching teacher:', error));
 
           fetch(`http://localhost:3000/votes/get`, {
             method: 'POST',
@@ -270,12 +250,18 @@
             })
             .catch(error => console.error('Error fetching average rating:', error));
         })
-        .catch(error => {
-          console.error('Error:', error);
-        });
+        .catch(error => console.error('Error fetching problem:', error));
     }
 
-    function fetchSubmissions(problemId, elevID) {
+    function displayProblemDetails(problem) {
+      document.querySelector('.problem-id').textContent = `#${problem.ID}`;
+      document.querySelector('.problem-name').textContent = problem.Titlu;
+      document.querySelector('.problem-category').textContent = problem.Capitol;
+      document.querySelector('.problem-diff').textContent = getDifficultyText(problem.Dificultate);
+      document.querySelector('.problem-description').textContent = problem.Descriere;
+    }
+
+    function fetchSubmissions(problemId, elevID, profesorId) {
       fetch('http://localhost:3000/solutions/student', {
         method: 'POST',
         headers: {
@@ -285,63 +271,71 @@
       })
         .then(response => response.json())
         .then(data => {
-          console.log('Submissions data received:', data);
+          console.log('Data received from solutions/student:', data);
           if (data.success) {
-            const submissions = data.data;
-            const submissionsContainer = document.querySelector('.submissions');
-            submissionsContainer.innerHTML = '';
-            submissions.forEach(submission => {
-              fetch(`http://localhost:3000/Teacher/${submission.ProfesorID}`, {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json'
-                }
-              })
-                .then(response => response.json())
-                .then(teacher => {
-                  fetch(`http://localhost:3000/group/${submission.ClasaID}`, {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json'
-                    }
-                  })
-                    .then(response => response.json())
-                    .then(group => {
-                      const submissionBox = document.createElement('div');
-                      submissionBox.classList.add('submission-box');
-                      submissionBox.innerHTML = `
-                        <a href="/solutionSubmittedStudent" class="submission-link" data-problem-id="${problemId}" data-titlu="${problemData.Titlu}" data-descriere="${problemData.Descriere}" data-rezolvare="${submission.Rezolvare}" data-profesor-id="${submission.ProfesorID}">
-                          <p class="submitter-name">${teacher.nume}</p>
-                          <p class="class-subject">${group['Grupa-Materie']}</p>
-                        </a>
-                      `;
-                      submissionsContainer.appendChild(submissionBox);
-
-                      submissionBox.querySelector('.submission-link').addEventListener('click', function (event) {
-                        event.preventDefault();
-                        const problemId = this.dataset.problemId;
-                        const titlu = this.dataset.titlu;
-                        const descriere = this.dataset.descriere;
-                        const rezolvare = this.dataset.rezolvare;
-                        const profesorId = this.dataset.profesorId;
-
-                        localStorage.setItem('solutionData', JSON.stringify({ problemId, titlu, descriere, rezolvare, profesorId }));
-                        window.location.href = this.href;
-                      });
-                    })
-                    .catch(error => {
-                      console.error('Error fetching group:', error);
-                    });
-                })
-                .catch(error => {
-                  console.error('Error fetching teacher:', error);
-                });
-            });
+            submissions = data.data;
+            if (submissions.length > 0) {
+              document.querySelector('.submissions-section').style.display = 'block';
+              displaySubmissions(submissions, problemId);
+            }
+            const alreadySubmitted = submissions.some(submission => submission.ProfesorID == profesorId);
+            if (!alreadySubmitted) {
+              document.querySelector('.submit-section').style.display = 'block';
+            } else {
+              document.querySelector('.submission-message').style.display = 'block';
+              document.querySelector('.comment-section').style.display = 'block';
+            }
           }
         })
-        .catch(error => {
-          console.error('Error fetching submissions:', error);
-        });
+        .catch(error => console.error('Error fetching submissions:', error));
+    }
+
+    function displaySubmissions(submissions, problemId) {
+      const submissionsContainer = document.querySelector('.submissions');
+      submissionsContainer.innerHTML = '';
+      submissions.forEach(submission => {
+        fetch(`http://localhost:3000/Teacher/${submission.ProfesorID}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(teacher => {
+            fetch(`http://localhost:3000/group/${submission.ClasaID}`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            })
+              .then(response => response.json())
+              .then(group => {
+                const submissionBox = document.createElement('div');
+                submissionBox.classList.add('submission-box');
+                submissionBox.innerHTML = `
+                  <a href="/solutionSubmittedStudent" class="submission-link" data-problem-id="${problemId}" data-titlu="${problemData.Titlu}" data-descriere="${problemData.Descriere}" data-rezolvare="${submission.Rezolvare}" data-profesor-id="${submission.ProfesorID}">
+                    <p class="submitter-name">${teacher.nume}</p>
+                    <p class="class-subject">${group['Grupa-Materie']}</p>
+                  </a>
+                `;
+                submissionsContainer.appendChild(submissionBox);
+
+                submissionBox.querySelector('.submission-link').addEventListener('click', function (event) {
+                  event.preventDefault();
+                  const problemId = this.dataset.problemId;
+                  const titlu = this.dataset.titlu;
+                  const descriere = this.dataset.descriere;
+                  const rezolvare = this.dataset.rezolvare;
+                  const profesorId = this.dataset.profesorId;
+
+                  localStorage.setItem('solutionData', JSON.stringify({ problemId, titlu, descriere, rezolvare, profesorId }));
+                  window.location.href = this.href;
+                });
+              })
+              .catch(error => console.error('Error fetching group:', error));
+          })
+          .catch(error => console.error('Error fetching teacher:', error));
+      });
     }
 
     function getDifficultyText(difficulty) {
@@ -377,7 +371,7 @@
             alert('Solution submitted successfully!');
             document.querySelector('.submit-section').style.display = 'none';
             document.querySelector('.submission-message').style.display = 'block';
-            document.querySelector('.comment-section').style.display = 'block'; // Show comment section
+            document.querySelector('.comment-section').style.display = 'block';
           } else if (data.error === "Duplicate entry '11-9-8' for key 'rezolvari.unique_problem_elev_prof'") {
             alert('Already submitted a response.');
           } else {
@@ -446,9 +440,7 @@
             alert('Failed to submit rating.');
           }
         })
-        .catch(error => {
-          console.error('Error submitting rating:', error);
-        });
+        .catch(error => console.error('Error submitting rating:', error));
     }
 
     handleStarHover();
