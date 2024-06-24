@@ -67,6 +67,18 @@ export default class ClassesController {
     await this.classesService.getGroupById(res, groupId);
   }
 
+  async deleteStudentFromGroup(req, res) {
+    let body = "";
+
+    req.on("data", (chunk) => {
+      body += chunk.toString();
+    });
+
+    req.on("end", async () => {
+      await this.classesService.deleteStudentFromGroup(body, res);
+    });
+  }
+
   async deleteGroup(res, groupId) {
     await this.classesService.deleteGroup(res, groupId);
   }

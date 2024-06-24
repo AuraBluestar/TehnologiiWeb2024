@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../styles/nav-bar.css">
-    <link rel="stylesheet" href="../styles/side-bar.css">
-    <link rel="stylesheet" href="../styles/main-content.css">
-    <link rel="stylesheet" href="../styles/searchmenu.css">
-    <link rel="stylesheet" href="../styles/listingsPage.css">
-    <link rel="stylesheet" href="../styles/add.css">
-    <link rel='stylesheet'
-      href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-    <title>seeGroupProfesor</title>
-    <style>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../styles/nav-bar.css">
+  <link rel="stylesheet" href="../styles/side-bar.css">
+  <link rel="stylesheet" href="../styles/main-content.css">
+  <link rel="stylesheet" href="../styles/searchmenu.css">
+  <link rel="stylesheet" href="../styles/listingsPage.css">
+  <link rel="stylesheet" href="../styles/add.css">
+  <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+  <title>seeGroupProfesor</title>
+  <style>
     * {
       margin: 0;
       padding: 0;
@@ -29,97 +28,89 @@
     }
   </style>
 
-  </head>
+</head>
 
-  <body>
+<body>
 
-    <!-- This is the NavBar -->
-    <nav class="navbar">
-      <div class="navleft">
-        <div class="logo"><a href="/loggedTeacher">In&lt;form&gt;atiX</a> </div>
-      </div>
-      <div class="navright">
-        <ul>
-          <li><a href="/loggedTeacher">Home</a></li>
-          <li><a href="/" onclick="logout()">LogOut</a></li>
-          <li><a href="mailto:assistance@informatix.com">Contact</a></li>
-        </ul>
-      </div>
-    </nav>
-
-    <!-- This is the SideBar -->
-    <nav class="sidebar">
-      <div class="top">
-        <div class="menu">
-          <i class='bx bx-code'></i>
-          <span>Menu</span>
-        </div>
-        <i class='bx bx-menu' id="btn"></i>
-      </div>
+  <!-- This is the NavBar -->
+  <nav class="navbar">
+    <div class="navleft">
+      <div class="logo"><a href="/loggedTeacher">In&lt;form&gt;atiX</a> </div>
+    </div>
+    <div class="navright">
       <ul>
-        <li><a href="/loggedTeacher"><i class='bx bxs-home'></i><span
-              class="navitem">Home</span></a></li>
-        <li><a href="/ProfilProfesor"><i class='bx bxs-user-circle'></i><span
-              class="navitem">Profile</span></a></li>
-        <li><a href="/VisGroupsTeacher"><i class='bx bxs-group'></i><span
-              class="navitem">Groups</span></a></li>
-        <li><a href="/VisHWTeacher"><i class='bx bxs-book-alt'></i><span
-              class="navitem">Homeworks</span></a></li>
-        <li><a href="/submitedProblems"><i class='bx bxs-book-content'></i><span
-              class="navitem">Proposed Problems</span></a></li>
-        <li><a href="/createProblem"><i class='bx bxs-edit'></i><span
-              class="navitem">New Problem</span></a></li>
-        <li><a href="mailto:assistance@informatix.com"><i
-              class='bx bxs-contact'></i><span
-              class="navitem">Contact</span></a></li>
-        <li><a href="/" onclick="logout()"><i class='bx bx-log-out'></i><span
-              class="navitem">LogOut</span></a></li>
+        <li><a href="/loggedTeacher">Home</a></li>
+        <li><a href="/" onclick="logout()">LogOut</a></li>
+        <li><a href="mailto:assistance@informatix.com">Contact</a></li>
       </ul>
-    </nav>
+    </div>
+  </nav>
 
-    <div class="maincontent">
-
-      <div class="search">
-        <div class="createForm">
-          <h2 id="groupTitle">Group Title</h2>
-          <div class="groupHwDelete">
-            <button id="deleteProfile">Delete</button>
-          </div>
-        </div>
+  <!-- This is the SideBar -->
+  <nav class="sidebar">
+    <div class="top">
+      <div class="menu">
+        <i class='bx bx-code'></i>
+        <span>Menu</span>
       </div>
+      <i class='bx bx-menu' id="btn"></i>
+    </div>
+    <ul>
+      <li><a href="/loggedTeacher"><i class='bx bxs-home'></i><span class="navitem">Home</span></a></li>
+      <li><a href="/ProfilProfesor"><i class='bx bxs-user-circle'></i><span class="navitem">Profile</span></a></li>
+      <li><a href="/VisGroupsTeacher"><i class='bx bxs-group'></i><span class="navitem">Groups</span></a></li>
+      <li><a href="/VisHWTeacher"><i class='bx bxs-book-alt'></i><span class="navitem">Homeworks</span></a></li>
+      <li><a href="/submitedProblems"><i class='bx bxs-book-content'></i><span class="navitem">Proposed
+            Problems</span></a></li>
+      <li><a href="/createProblem"><i class='bx bxs-edit'></i><span class="navitem">New Problem</span></a></li>
+      <li><a href="mailto:assistance@informatix.com"><i class='bx bxs-contact'></i><span
+            class="navitem">Contact</span></a></li>
+      <li><a href="/" onclick="logout()"><i class='bx bx-log-out'></i><span class="navitem">LogOut</span></a></li>
+    </ul>
+  </nav>
 
-      <div class="add">
-        <form class="addForm" id="addStudentForm">
-          <form class="addForm" id="addStudentForm">
-            <h1>Group</h1>
-          </form>
+  <div class="maincontent">
 
-          <div class="searchbox">
-            <header id="add-header">Student Name</header>
-            <div class="searchfield">
-              <div class="searchBar">
-                <input class="search-input" type="search"
-                  placeholder="Type Student Name..." id="studentNameInput">
-                <i class='bx bx-plus' id="addStudentBtn"></i>
-              </div>
-            </div>
-          </div>
-        </form>
-
-        <div class="added">
-          <ul class="added-flex" id="addedStudentsList">
-            <!-- Dynamic student list will be appended here -->
-          </ul>
+    <div class="search">
+      <div class="createForm">
+        <h2 id="groupTitle">Group Title</h2>
+        <div class="groupHwDelete">
+          <button id="deleteProfile">Delete</button>
         </div>
       </div>
     </div>
 
-    <script src="../scripts/script.js"></script>
-    <script src="../scripts/logout.js"></script>
-    <script src="../scripts/checkProfesor.js"></script>
+    <div class="add">
+      <form class="addForm" id="addStudentForm">
+        <form class="addForm" id="addStudentForm">
+          <h1>Group</h1>
+        </form>
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
+        <div class="searchbox">
+          <header id="add-header">Student Name</header>
+          <div class="searchfield">
+            <div class="searchBar">
+              <input class="search-input" type="search" placeholder="Type Student Name..." id="studentNameInput">
+              <i class='bx bx-plus' id="addStudentBtn"></i>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <div class="added">
+        <ul class="added-flex" id="addedStudentsList">
+          <!-- Dynamic student list will be appended here -->
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script src="../scripts/script.js"></script>
+  <script src="../scripts/logout.js"></script>
+  <script src="../scripts/checkProfesor.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
       const groupId = localStorage.getItem('groupId');
       if (groupId) {
         // Fetch group details
@@ -129,54 +120,71 @@
             'Content-Type': 'application/json'
           }
         })
-        .then(response => response.json())
-        .then(groupData => {
-          console.log('Group Data:', groupData);
-          document.getElementById('groupTitle').textContent = groupData['Grupa-Materie'];
-
-          // Fetch professor details
-          fetch(`http://localhost:3000/Teacher/${groupData.ProfesorID}`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          })
           .then(response => response.json())
-          .then(professorData => {
-            console.log('Professor Data:', professorData);
-            document.getElementById('professorName').textContent = `Professor: ${professorData.nume}`;
+          .then(groupData => {
+            console.log('Group Data:', groupData);
+            document.getElementById('groupTitle').textContent = groupData['Grupa-Materie'];
+
+            // Fetch professor details
+            fetch(`http://localhost:3000/Teacher/${groupData.ProfesorID}`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            })
+              .then(response => response.json())
+              .then(professorData => {
+                console.log('Professor Data:', professorData);
+                document.getElementById('professorName').textContent = `Professor: ${professorData.nume}`;
+              })
+              .catch(error => {
+                console.error('Error fetching professor data:', error);
+              });
+
+            // Fetch student details
+            fetch(`http://localhost:3000/classes/students`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ GroupID: groupId })
+            })
+              .then(response => response.json())
+              .then(studentData => {
+                console.log('Student Data:', studentData);
+                const studentList = document.getElementById('addedStudentsList');
+                studentList.innerHTML = ''; // Clear existing content
+                studentData.data.forEach(student => {
+                  const li = document.createElement('li');
+                  li.className = 'added-flex';
+
+                  const studentName = document.createElement('span');
+                  studentName.className = 'studentName';
+                  studentName.textContent = student.nume;
+
+                  const icon = document.createElement('i');
+                  icon.className = 'bx bx-x';
+                  icon.style.cursor = "pointer";
+                  icon.id = 'deleteStudentFromGroup';
+                  icon.addEventListener('click', () => {
+                    // Implement delete problem functionality here
+                    // For example, you can call a function to handle the deletion
+                    deleteStudentFromGroup(student.nume, groupId);
+                  });
+
+                  li.appendChild(studentName);
+                  li.appendChild(icon);
+                  studentList.appendChild(li);
+                });
+              })
+              .catch(error => {
+                console.error('Error fetching student data:', error);
+              });
+
           })
           .catch(error => {
-            console.error('Error fetching professor data:', error);
+            console.error('Error fetching group data:', error);
           });
-
-          // Fetch student details
-          fetch(`http://localhost:3000/classes/students`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ GroupID: groupId })
-          })
-          .then(response => response.json())
-          .then(studentData => {
-            console.log('Student Data:', studentData);
-            const studentList = document.getElementById('addedStudentsList');
-            studentList.innerHTML = ''; // Clear existing content
-            studentData.data.forEach(student => {
-              const li = document.createElement('li');
-              li.textContent = student.nume;
-              studentList.appendChild(li);
-            });
-          })
-          .catch(error => {
-            console.error('Error fetching student data:', error);
-          });
-
-        })
-        .catch(error => {
-          console.error('Error fetching group data:', error);
-        });
       } else {
         console.error('groupId is not available in local storage');
       }
@@ -196,84 +204,108 @@
         },
         body: JSON.stringify({ nume: studentName })
       })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          const studentId = data.id;
-          const classId = localStorage.getItem('groupId');
-          if (!classId) {
-            alert('Missing class id.');
-            return;
-          }
-
-          fetch('http://localhost:3000/classes/addStudent', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ classId: parseInt(classId), studentId: parseInt(studentId) })
-          })
-          .then(response => response.json())
-          .then(data => {
-            if (data.success) {
-              const addedStudentsList = document.getElementById('addedStudentsList');
-              const listItem = document.createElement('li');
-              listItem.textContent = studentName;
-              addedStudentsList.appendChild(listItem);
-              document.getElementById('studentNameInput').value = '';
-              alert('Student added to class successfully!');
-            } else {
-              alert('Failed to add student to class');
-            }
-          })
-          .catch(error => {
-            console.error('Error:', error);
-            alert('Error adding student to class');
-          });
-        } else {
-          alert('Student not found');
-        }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        alert('Error fetching student ID');
-      });
-    });
-
-
-    //delete group
-
-    document.getElementById('deleteProfile').addEventListener('click', function() {
-    const groupId = localStorage.getItem('groupId');
-
-    if (groupId) {
-        fetch(`http://localhost:3000/uniqueGroupProfesor/${parseInt(groupId)}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
         .then(response => response.json())
         .then(data => {
-            if (data.success) {
-                alert('Group deleted successfully');
-                window.location.href = '/loggedTeacher'; // Redirect to teacher's home page
-            } else {
-                alert('Failed to delete group');
+          if (data.success) {
+            const studentId = data.id;
+            const classId = localStorage.getItem('groupId');
+            if (!classId) {
+              alert('Missing class id.');
+              return;
             }
+
+            fetch('http://localhost:3000/classes/addStudent', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ classId: parseInt(classId), studentId: parseInt(studentId) })
+            })
+              .then(response => response.json())
+              .then(data => {
+                if (data.success) {
+                  const addedStudentsList = document.getElementById('addedStudentsList');
+                  const li = document.createElement('li');
+                  li.className = 'added-flex';
+
+                  const studentNameSpan = document.createElement('span');
+                  studentNameSpan.className = 'studentName';
+                  studentNameSpan.textContent = studentName;
+
+                  const icon = document.createElement('i');
+                  icon.className = 'bx bx-x';
+                  icon.style.cursor = "pointer";
+                  icon.id = 'deleteStudentFromGroup';
+                  icon.addEventListener('click', () => {
+                    deleteStudentFromGroup(studentName, classId);
+                  });
+
+                  li.appendChild(studentNameSpan);
+                  li.appendChild(icon);
+
+                  addedStudentsList.appendChild(li);
+
+                  document.getElementById('studentNameInput').value = ''; // Clear the input field
+                  alert('Student added to class successfully!');
+                } else {
+                  alert('Failed to add student to class');
+                }
+              })
+              .catch(error => {
+                console.error('Error:', error);
+                alert('Error adding student to class');
+              });
+          } else {
+            alert('Student not found');
+          }
         })
         .catch(error => {
-            console.error('Error:', error);
-            alert('Error deleting group');
+          console.error('Error:', error);
+          alert('Error fetching student ID');
         });
-    } else {
-        alert('Group ID not found');
+    });
+    //delete student from group
+
+    function deleteStudentFromGroup(studentName, groupId) {
+      const requestBody = JSON.stringify({
+        groupId: parseInt(groupId, 10),
+        studentName: studentName
+      });
+
+      console.log("Request Body:", requestBody);
+
+      fetch('http://localhost:3000/group/deleteStudent', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: requestBody
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            const studentList = document.getElementById('addedStudentsList');
+            const studentItems = studentList.getElementsByTagName('li');
+            for (let i = 0; i < studentItems.length; i++) {
+              if (studentItems[i].querySelector('.studentName').textContent.trim() === studentName) {
+                studentList.removeChild(studentItems[i]);
+                break;
+              }
+            }
+            alert('Student deleted from group successfully!');
+          } else {
+            alert('Failed to delete student from group');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('Error deleting student from group');
+        });
     }
-});
 
 
 
-    </script>
-  </body>
+  </script>
+</body>
 
 </html>

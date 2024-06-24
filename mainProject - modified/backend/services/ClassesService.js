@@ -4,7 +4,6 @@ import { pool } from "../server.js";
 
 export default class ClassesService {
   constructor() {
-
     this.pool = pool;
   }
 
@@ -171,6 +170,55 @@ export default class ClassesService {
       res.statusCode = 200;
       res.end(JSON.stringify(results[0]));
     });
+  }
+
+  async deleteStudentFromGroup(body, res) {
+    try {
+      const { studentName, groupId } = JSON.parse(body);
+
+      const getIdQuery = "SELECT ID FROM elevi WHERE nume = ?";
+
+      this.pool.query(getIdQuery, [studentName], (error, results) => {
+        if (error) {
+          console.error("Error querying database:", error);
+          res.writeHead(500, { "Content-Type": "application/json" });
+          res.end(
+            JSON.stringify({ success: false, message: "Database error" })
+          );
+          return;
+        }
+
+        if (results.length === 0) {
+          res.writeHead(404, { "Content-Type": "application/json" });
+          res.end(
+            JSON.stringify({ success: false, message: "Student not found" })
+          );
+          return;
+        }
+
+        const studentId = results[0].ID;
+
+        const deleteQuery =
+          "DELETE FROM claseelevi WHERE ElevID = ? AND ClasaID = ?";
+        this.pool.query(deleteQuery, [studentId, groupId], (error, results) => {
+          if (error) {
+            console.error("Error querying database:", error);
+            res.writeHead(500, { "Content-Type": "application/json" });
+            res.end(
+              JSON.stringify({ success: false, message: "Database error" })
+            );
+            return;
+          }
+
+          res.writeHead(200, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ success: true }));
+        });
+      });
+    } catch (err) {
+      console.error("Error parsing JSON:", err);
+      res.writeHead(400, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ success: false, message: "Invalid JSON" }));
+    }
   }
 
   async deleteGroup(res, groupId) {
