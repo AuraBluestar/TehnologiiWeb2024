@@ -302,33 +302,7 @@
           alert('Error deleting student from group');
         });
     }
-    document.getElementById('deleteProfile').addEventListener('click', function () {
-      const groupId = localStorage.getItem('groupId');
 
-      if (groupId) {
-        fetch(`http://localhost:3000/uniqueGroupProfesor/${parseInt(groupId)}`, {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        })
-          .then(response => response.json())
-          .then(data => {
-            if (data.success) {
-              alert('Group deleted successfully');
-              window.location.href = '/visGroupsTeacher';
-            } else {
-              alert('Failed to delete group');
-            }
-          })
-          .catch(error => {
-            console.error('Error:', error);
-            alert('Error deleting group');
-          });
-      } else {
-        alert('Group ID not found');
-      }
-    });
 
 
   </script>
