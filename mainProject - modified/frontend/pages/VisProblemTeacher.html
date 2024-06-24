@@ -149,11 +149,18 @@
     });
 
     document.querySelector('.json-export').addEventListener('click', function () {
-        if (problemData) {
-            exportToJsonFile(problemData);
-        } else {
-            alert('Problem data is not available to export.');
-        }
+      if (problemData) {
+        const transformedData = {
+          titlu: problemData.Titlu,
+          descriere: problemData.Descriere,
+          profesorID: problemData.ProfesorID,
+          dificultate: problemData.Dificultate,
+          capitol: problemData.Capitol
+        };
+        exportToJsonFile(transformedData);
+      } else {
+        alert('Problem data is not available to export.');
+      }
     });
 
     let problemData = null;
@@ -291,7 +298,7 @@
         const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(jsonData));
         const downloadAnchorNode = document.createElement('a');
         downloadAnchorNode.setAttribute("href", dataStr);
-        downloadAnchorNode.setAttribute("download", `problem_${jsonData.ID}.json`);
+        downloadAnchorNode.setAttribute("download", `problem_${jsonData.titlu}.json`);
         document.body.appendChild(downloadAnchorNode); // Required for Firefox
         downloadAnchorNode.click();
         downloadAnchorNode.remove();
