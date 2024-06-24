@@ -81,6 +81,12 @@
   }
 }
 
+@media only screen and (max-width: 496px) {
+  .navright {
+    display: none;
+  }
+}
+
 @media only screen and (min-width: 601px) {
   .maincontent .searchmenu,
   .maincontent .searchmenu-2 {
