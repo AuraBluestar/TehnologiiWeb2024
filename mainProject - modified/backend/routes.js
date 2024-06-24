@@ -5,11 +5,12 @@ import ProblemsController from "./controllers/ProblemsController.js";
 import ClassesController from "./controllers/ClassesController.js";
 import HomeworksController from "./controllers/HomeworksController.js";
 import SolutionsController from "./controllers/SolutionsController.js";
-import GradesService from "./services/GradesService.js";
-import ReportsService from "./services/ReportsService.js";
-import SubjectsService from "./services/SubjectsService.js";
-import VotesService from "./services/VotesService.js";
-import CommentsService from "./services/CommentsService.js";
+import GradesController from "./controllers/GradesController.js";
+import ReportsController from "./controllers/ReportsController.js";
+import SubjectsController from "./controllers/SubjectsController.js";
+import VotesController from "./controllers/VotesController.js";
+import CommentsController from "./controllers/CommentsController.js";
+
 //vezi ca s ar putea sa trebuiasca import cu {}
 
 export default class Router {
@@ -21,11 +22,11 @@ export default class Router {
     this.classesController = new ClassesController();
     this.homeworksController = new HomeworksController();
     this.solutionsController = new SolutionsController();
-    this.gradesService = new GradesService();
-    this.reportsService = new ReportsService();
-    this.subjectsService = new SubjectsService();
-    this.votesService = new VotesService();
-    this.commentsService = new CommentsService();
+    this.gradesController = new GradesController();
+    this.reportsController = new ReportsController();
+    this.subjectsController = new SubjectsController();
+    this.votesController = new VotesController();
+    this.commentsController = new CommentsController();
   }
 
   route(req, res) {
@@ -83,23 +84,23 @@ export default class Router {
       } else if (req.url === "/problems/approval") {
         this.problemsController.ProblemApproval(req, res);
       } else if (req.url === "/grades/add") {
-        this.gradesService.AddGrade(req, res);
+        this.gradesController.AddGrade(req, res);
       } else if (req.url === "/grades/teacher") {
-        this.gradesService.getGradesByTeacher(req, res);
+        this.gradesController.getGradesByTeacher(req, res);
       } else if (req.url === "/grades/student") {
-        this.gradesService.getGradesByStudent(req, res);
+        this.gradesController.getGradesByStudent(req, res);
       } else if (req.url === "/reports/user") {
-        this.reportsService.getUserReports(req, res);
+        this.reportsController.getUserReports(req, res);
       } else if (req.url === "/reports/problem") {
-        this.reportsService.getProblemReports(req, res);
+        this.reportsController.getProblemReports(req, res);
       } else if (req.url === "/subjects") {
-        this.subjectsService.getSubjectsByGroup(req, res);
+        this.subjectsController.getSubjectsByGroup(req, res);
       } else if (req.url === "/classes/students") {
         this.studentController.getStudents(req, res);
       } else if (req.url === "/votes/get") {
-        this.votesService.getVotesForProblem(req, res);
+        this.votesController.getVotesForProblem(req, res);
       } else if (req.url === "/votes/add") {
-        this.votesService.addVoteToProblem(req, res);
+        this.votesController.addVoteToProblem(req, res);
       } else if (req.url === "/getAccountDetails") {
         this.authController.getAccountDetails(req, res);
       } else if (req.url === "/updateAccountDetails") {
@@ -123,17 +124,17 @@ export default class Router {
         this.classesController.getGroupById(res, groupId);
       }
     } else if (req.method === "DELETE") {
-      if (pathname.startsWith("/ProfilProfesor")) {
-        const teacherId = pathname.split("/")[2];
+      if (req.url.startsWith("/ProfilProfesor")) {
+        const teacherId = req.url.split("/")[2];
         this.teacherController.deleteTeacher(res, teacherId);
-      } else if (pathname.startsWith("/ProfilStudent")) {
-        const studentId = pathname.split("/")[2];
+      } else if (req.url.startsWith("/ProfilStudent")) {
+        const studentId = req.url.split("/")[2];
         this.studentController.deleteStudent(res, studentId);
-      } else if (pathname.startsWith("/uniqueHWProfesor")) {
-        const homeworkId = pathname.split("/")[2];
+      } else if (req.url.startsWith("/uniqueHWProfesor")) {
+        const homeworkId = req.url.split("/")[2];
         this.homeworksController.deleteHomework(res, homeworkId);
-      } else if (pathname.startsWith("/uniqueGroupProfesor")) {
-        const groupId = pathname.split("/")[2];
+      } else if (req.url.startsWith("/uniqueGroupProfesor")) {
+        const groupId = req.url.split("/")[2];
         deleteGroup(res, groupId);
       }
     } else {
