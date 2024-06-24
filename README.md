@@ -3,6 +3,8 @@ Echipa:
 - Onisor Maria-Patricia
 - Vatamaniuc Eusebiu
 
+# Videoclipul de prezentare
+- https://youtu.be/5Gbv9b7cKHU
 
 # Pt rulare:
 - deschidem terminalul in folderul radacina, mainProject, rulam mai intai npm i, pt a se instala dependentele, si apoi npm start.
@@ -31,10 +33,6 @@ Echipa:
 - filtrarea la probleme pt admin
 - filtrarea grupelor profesor + elev
 - filtrarea temelor profesor + elev
+- împărțirea serverului in routes, controllers si services
 - NU MAI STIU. PREA MULTE AU FOST FACUTE.
 
-# Ce mai e de facut:
-- Miscellaneous pentru responsivness
-
-# Important de facut: 
-- La final testarea tuturor paginilor
