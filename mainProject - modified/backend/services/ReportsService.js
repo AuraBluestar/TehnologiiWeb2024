@@ -114,7 +114,7 @@ export default class ReportsService {
             (SELECT COUNT(*)
             FROM rezolvari r
             JOIN note n ON n.ProblemaID = r.ProblemaID AND n.valoare >= 5
-            WHERE r.ProblemaID = 11) AS users_succeeded;
+            WHERE r.ProblemaID = ?) AS users_succeeded;
         `;
       this.pool.query(query, [ProblemID, ProblemID], (error, results) => {
         if (error) {
