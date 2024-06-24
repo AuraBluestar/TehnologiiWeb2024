@@ -127,14 +127,16 @@
                                 const numberProblem = document.createElement('span');
                                 numberProblem.className = 'numberproblem';
                                 numberProblem.textContent = `${problem.ProblemaID}`;
+                                numberProblem.style.cursor = "pointer";
+                                numberProblem.addEventListener('click', () => {
+                                    window.location.href = `VisProblemTeacher?problemId=${problem.ProblemaID}`;
+                                });
 
                                 const icon = document.createElement('i');
                                 icon.className = 'bx bx-x';
                                 icon.style.cursor = "pointer";
                                 icon.id = 'deleteProblemFromHomework';
                                 icon.addEventListener('click', () => {
-                                    // Implement delete problem functionality here
-                                    // For example, you can call a function to handle the deletion
                                     deleteProblemFromHomework(problem.ProblemaID, homeworkId);
                                 });
 
@@ -185,6 +187,10 @@
                         const numberProblem = document.createElement('span');
                         numberProblem.className = 'numberproblem';
                         numberProblem.textContent = problemId;
+                        numberProblem.style.cursor = "pointer";
+                        numberProblem.addEventListener('click', () => {
+                            window.location.href = `VisProblemTeacher?problemId=${problemId}`;
+                        });
 
                         const icon = document.createElement('i');
                         icon.className = 'bx bx-x';
@@ -196,7 +202,6 @@
                         li.appendChild(icon);
 
                         addedProblemsList.appendChild(li);
-
 
                         document.getElementById('problemIdInput').value = ''; // Clear the input field
                         alert('Problem added to homework successfully!');
@@ -210,9 +215,7 @@
                 });
         });
 
-        //delete problem from homework
         function deleteProblemFromHomework(problemId, homeworkId) {
-            // Example function to handle the deletion of a problem from the homework
             const requestBody = JSON.stringify({
                 HomeworkID: homeworkId,
                 ProblemID: problemId
@@ -247,8 +250,6 @@
                 });
         }
 
-
-        //delete homework
         document.getElementById('deleteProfile').addEventListener('click', function () {
             const homeworkId = localStorage.getItem('homeworkId');
 
