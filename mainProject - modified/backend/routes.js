@@ -125,12 +125,17 @@ export default class Router {
         this.classesController.getGroupById(res, groupId);
       }
     } else if (req.method === "DELETE") {
+      console.log(req.url, "delete-routes1");
       if (req.url.startsWith("/ProfilProfesor")) {
+        console.log("delete-routes2");
         const teacherId = req.url.split("/")[2];
         this.teacherController.deleteTeacher(res, teacherId);
       } else if (req.url.startsWith("/ProfilStudent")) {
         const studentId = req.url.split("/")[2];
         this.studentController.deleteStudent(res, studentId);
+      } else if (req.url === "/homework/deleteProblem") {
+        this.homeworksController.deleteProblemFromHomework(req, res);
+        // } else if{
       } else if (req.url.startsWith("/uniqueHWProfesor")) {
         const homeworkId = req.url.split("/")[2];
         this.homeworksController.deleteHomework(res, homeworkId);

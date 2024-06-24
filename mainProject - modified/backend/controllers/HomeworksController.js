@@ -77,6 +77,18 @@ export default class HomeworksController {
     });
   }
 
+  async deleteProblemFromHomework(req, res) {
+    let body = "";
+
+    req.on("data", (chunk) => {
+      body += chunk.toString();
+    });
+
+    req.on("end", async () => {
+      await this.homeworksService.deleteProblemFromHomework(body, res);
+    });
+  }
+
   async deleteHomework(res, homeworkId) {
     await this.homeworksService.deleteHomework(res, homeworkId);
   }

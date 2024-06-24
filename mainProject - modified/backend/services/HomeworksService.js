@@ -216,6 +216,44 @@ export default class HomeworksService {
     }
   }
 
+  async deleteProblemFromHomework(body, res) {
+    try {
+      const { HomeworkID: temaID, ProblemID: problemaID } = JSON.parse(body);
+
+      console.log(body, temaID, problemaID);
+
+      if (!temaID || !problemaID) {
+        res.writeHead(400, { "Content-Type": "application/json" });
+        res.end(
+          JSON.stringify({
+            success: false,
+            message: "temaID and problemaID are required",
+          })
+        );
+        return;
+      }
+
+      const query =
+        "DELETE FROM problemeteme WHERE TemaID = ? AND ProblemaID = ?";
+      this.pool.query(query, [temaID, problemaID], (error) => {
+        if (error) {
+          console.error("Error deleting data:", error);
+          res.writeHead(500, { "Content-Type": "application/json" });
+          res.end(
+            JSON.stringify({ success: false, message: "Database error" })
+          );
+        } else {
+          res.writeHead(200, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ success: true }));
+        }
+      });
+    } catch (err) {
+      console.error("Error parsing JSON:", err);
+      res.writeHead(400, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ success: false, message: "Invalid JSON" }));
+    }
+  }
+
   async deleteHomework(res, homeworkId) {
     const checkerQuery = "SELECT * FROM teme WHERE ID = ?;";
     const deleteProblemsQuery = "DELETE FROM problemeteme WHERE TemaID = ?;";
