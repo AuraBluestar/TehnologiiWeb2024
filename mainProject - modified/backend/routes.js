@@ -30,6 +30,7 @@ export default class Router {
   }
 
   route(req, res) {
+    console.log(req.method, req.url, "route");
     if (req.method === "POST") {
       if (req.url === "/addTeacher") {
         this.teacherController.addTeacher(req, res);
@@ -135,7 +136,7 @@ export default class Router {
         this.homeworksController.deleteHomework(res, homeworkId);
       } else if (req.url.startsWith("/uniqueGroupProfesor")) {
         const groupId = req.url.split("/")[2];
-        deleteGroup(res, groupId);
+        this.classesController.deleteGroup(res, groupId);
       }
     } else {
       res.writeHead(404, { "Content-Type": "application/json" });
