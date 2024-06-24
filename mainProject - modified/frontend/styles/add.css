@@ -1,55 +1,56 @@
-.addForm{
-    padding: 20px 20px 20px 20px;
-    border-bottom: 1px solid black;
-  }
-
-.bx-plus{
-    position:relative;
-    top: 1px;
-    color: rgba(0,0,0,1.0);
-    border:1px;
-    border-radius: 50%;
-    width:16px;
-    height:16px;
-    background-color: white;
-    cursor: pointer;
+.addForm {
+  padding: 20px 20px 20px 20px;
+  border-bottom: 1px solid black;
 }
 
-#add-header{
-    padding-top: 10px;
-    padding-left: 28px;
+.bx-plus {
+  position: relative;
+  top: 1px;
+  color: rgba(0, 0, 0, 1);
+  border: 1px;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  background-color: white;
+  cursor: pointer;
 }
 
-.added{
-    padding: 10px;
-    padding-top: 5px;
-    font-size: 20px;
-    width: 100%;
-    overflow:auto;
-    height: 625px;
-
+#add-header {
+  padding-top: 10px;
+  padding-left: 28px;
 }
 
-.added-flex{
-    display: flex;
-    flex-wrap: wrap;
-    list-style-type: none;
+.added {
+  padding: 10px;
+  padding-top: 5px;
+  font-size: 20px;
+  width: 100%;
+  overflow: auto;
+  height: 625px;
 }
 
-.added-flex li{
-    padding: 10px;
-    margin: 5px;
-    width: max-content;
-    align-items:center;
-    border-radius: 28px;
-    background: #FBCEB1;
-    border: 1px solid black;
-    cursor: pointer;
+.added-flex {
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
 }
 
-
-.added-flex li:hover{
-    background: white;
-    transition: 0.4s;
+.added-flex i {
+  margin-left: 5px;
 }
 
+.added-flex li {
+  padding: 10px;
+  margin: 5px;
+  width: max-content;
+  align-items: center;
+  border-radius: 28px;
+  background: #fbceb1;
+  border: 1px solid black;
+}
+
+.added-flex i:hover {
+  border-radius: 28px;
+  background: white;
+  transition: 0.4s;
+}
