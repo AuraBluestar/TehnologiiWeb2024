@@ -161,6 +161,10 @@ export default class StudentService {
 
   async deleteStudent(res, studentId) {
     const checkerQuery = "SELECT * FROM elevi WHERE ID = ?;";
+    const updateVoturiQuery =
+      "UPDATE voturi SET UtilizatorID = 22 WHERE UtilizatorID = ?;";
+    const updateComentariiQuery =
+      "UPDATE Comentarii SET elevID = 22 WHERE elevID = ?;";
     const deleteQuery = "DELETE FROM elevi WHERE ID = ?;";
 
     this.pool.query(checkerQuery, [studentId], (error, results) => {
@@ -179,9 +183,9 @@ export default class StudentService {
         return;
       }
 
-      this.pool.query(deleteQuery, [studentId], (error) => {
+      this.pool.query(updateVoturiQuery, [studentId], (error) => {
         if (error) {
-          console.error("Error deleting student:", error);
+          console.error("Error updating voturi:", error);
           res.writeHead(500, { "Content-Type": "application/json" });
           res.end(
             JSON.stringify({ success: false, message: "Database error" })
@@ -189,8 +193,30 @@ export default class StudentService {
           return;
         }
 
-        res.writeHead(200, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({ success: true }));
+        this.pool.query(updateComentariiQuery, [studentId], (error) => {
+          if (error) {
+            console.error("Error updating comentarii:", error);
+            res.writeHead(500, { "Content-Type": "application/json" });
+            res.end(
+              JSON.stringify({ success: false, message: "Database error" })
+            );
+            return;
+          }
+
+          this.pool.query(deleteQuery, [studentId], (error) => {
+            if (error) {
+              console.error("Error deleting student:", error);
+              res.writeHead(500, { "Content-Type": "application/json" });
+              res.end(
+                JSON.stringify({ success: false, message: "Database error" })
+              );
+              return;
+            }
+
+            res.writeHead(200, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ success: true }));
+          });
+        });
       });
     });
   }

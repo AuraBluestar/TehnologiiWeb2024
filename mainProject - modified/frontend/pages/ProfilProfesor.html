@@ -177,20 +177,23 @@
         }
       });
 
-      document.getElementById('deleteProfile').addEventListener('click', () => {
-        if (confirm('Are you sure you want to delete your account?')) {
-          fetch(`http://localhost:3000/deleteAccount`, {
+      //delete prof account
+      document.getElementById('deleteProfile').addEventListener('click', function () {
+        const profesorId = localStorage.getItem('id'); // Assuming studentId is stored in localStorage
+
+        if (profesorId) {
+          fetch(`http://localhost:3000/ProfilProfesor/${parseInt(profesorId)}`, {
             method: 'DELETE',
             headers: {
               'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ id: parseInt(userId), type: userType })
+            }
           })
             .then(response => response.json())
             .then(data => {
               if (data.success) {
                 alert('Account deleted successfully');
-                window.location.href = '/';
+                logout();
+                window.location.href = '/'; // Redirect to home page
               } else {
                 alert('Failed to delete account');
               }
@@ -199,6 +202,8 @@
               console.error('Error:', error);
               alert('Error deleting account');
             });
+        } else {
+          alert('Professor ID not found');
         }
       });
 

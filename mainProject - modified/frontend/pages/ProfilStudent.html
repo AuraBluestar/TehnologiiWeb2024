@@ -178,8 +178,8 @@
       });
 
 
-      //delete student profile
-      document.getElementById('deleteProfile').addEventListener('click', function () {
+        //delete student profile
+        document.getElementById('deleteProfile').addEventListener('click', function () {
         const studentId = localStorage.getItem('id'); // Assuming studentId is stored in localStorage
 
         if (studentId) {
@@ -193,6 +193,7 @@
             .then(data => {
               if (data.success) {
                 alert('Account deleted successfully');
+                logout();
                 window.location.href = '/'; // Redirect to home page
               } else {
                 alert('Failed to delete account');
