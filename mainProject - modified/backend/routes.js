@@ -135,7 +135,8 @@ export default class Router {
         this.studentController.deleteStudent(res, studentId);
       } else if (req.url === "/homework/deleteProblem") {
         this.homeworksController.deleteProblemFromHomework(req, res);
-        // } else if{
+      } else if (req.url === "/group/deleteStudent") {
+        this.classesController.deleteStudentFromGroup(req, res);
       } else if (req.url.startsWith("/uniqueHWProfesor")) {
         const homeworkId = req.url.split("/")[2];
         this.homeworksController.deleteHomework(res, homeworkId);
