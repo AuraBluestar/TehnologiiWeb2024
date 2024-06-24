@@ -66,7 +66,7 @@ export default class SolutionsService {
       }
 
       const query = `
-          SELECT t.ProfesorID, ce.ClasaID, r.Rezolvare
+          SELECT distinct t.ProfesorID, ce.ClasaID, r.Rezolvare
           FROM claseelevi ce
           JOIN teme t ON ce.ClasaID = t.ClasaID
           JOIN problemeteme pt ON t.ID = pt.TemaID
