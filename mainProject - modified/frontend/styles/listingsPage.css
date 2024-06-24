@@ -128,9 +128,8 @@
 /*Pagina Profil*/
 
 .ProfilePage {
-  position: absolute;
-  top: 15%;
-  width: 300px;
+  width: 280px;
+  min-height: 375px;
   background: white;
   border-radius: 28px;
   box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.75);
