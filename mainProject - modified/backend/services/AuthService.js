@@ -1,18 +1,10 @@
 import mysql from "mysql";
 import bcrypt from "bcrypt";
+import { pool } from "../server.js";
 
 export default class AuthService {
   constructor() {
-    this.dbConfig = {
-      host: "informatix-informatix.h.aivencloud.com",
-      user: "avnadmin",
-      password: "AVNS_1u_r2mfq1FxPl9dd3yX",
-      database: "defaultdb",
-      port: 22933,
-    };
-
-    // Crearea unui pool de conexiuni MySQL
-    this.pool = mysql.createPool(this.dbConfig);
+    this.pool = pool;
   }
 
   async login(body, res) {

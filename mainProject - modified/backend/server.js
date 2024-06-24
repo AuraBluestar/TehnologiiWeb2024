@@ -154,3 +154,5 @@ const server = http.createServer((req, res) => {
 server.listen(port, ip, () => {
   console.log(`Server is listening at http://${ip}:${port}`);
 });
+
+export { pool };
