@@ -110,10 +110,13 @@
         homeworks.forEach(homework => {
           const homeworkDiv = document.createElement('div');
           homeworkDiv.classList.add('homework');
+
+          const contentDiv = document.createElement('div');
+          contentDiv.classList.add('homework-content');
           
           const title = document.createElement('h2');
           title.classList.add('homework-title');
-          title.textContent = `Homework ID: ${homework.temaID}`;
+          title.textContent = `ID: ${homework.temaID}`;
           
           const homeworkId = document.createElement('p');
           homeworkId.classList.add('homework-id');
@@ -125,13 +128,14 @@
           
           const problemCount = document.createElement('p');
           problemCount.classList.add('homework-problem-count');
-          problemCount.innerHTML = `<strong>Number of Problems:</strong> ${homework.nrProbleme}`;
+          problemCount.innerHTML = `<strong>Problems:${homework.nrProbleme}</strong> `;
 
-          homeworkDiv.appendChild(title);
-          homeworkDiv.appendChild(homeworkId);
-          homeworkDiv.appendChild(group);
-          homeworkDiv.appendChild(problemCount);
-          
+          contentDiv.appendChild(title);
+          contentDiv.appendChild(homeworkId);
+          contentDiv.appendChild(group);
+          contentDiv.appendChild(problemCount);
+          homeworkDiv.appendChild(contentDiv);
+    
           homeworksContainer.appendChild(homeworkDiv);
 
           fetch(`http://localhost:3000/group/${homework.clasaID}`, {

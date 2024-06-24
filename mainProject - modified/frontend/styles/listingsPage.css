@@ -4,7 +4,7 @@
 .ProblemsPage,
 .ProblemPage,
 .ProfilePage,
-.CreateProblemPage{
+.CreateProblemPage {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,63 +17,80 @@
 
 .submission,
 .submission-info,
-.grading-section{
+.grading-section {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.submission-info{
+.submission-info {
   margin-bottom: 20px;
 }
 
-.grading-section input{
+.grading-section input {
   width: 28px;
   max-height: 20px;
   font-size: 20px;
 }
 
-.grading-section input[type=number]::-webkit-outer-spin-button,
-        .grading-section input[type=number]::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-        /* Hide the spinner for Firefox */
-        .grading-section input[type=number] {
-            -moz-appearance: textfield;
-        }
+.grading-section input[type="number"]::-webkit-outer-spin-button,
+.grading-section input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Hide the spinner for Firefox */
+.grading-section input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/*Comments*/
+
+.comments-button {
+  display: block;
+  margin: 10px 0;
+  padding: 10px 20px;
+  background-color: #007bff;
+  border-radius: 28px;
+  color: white;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+}
+
+.comments-button:hover {
+  background-color: #0056b3;
+}
 
 /*Pagina createProblem*/
 
-.CreateProblemPage{
+.CreateProblemPage {
   font-size: 20px;
   justify-content: flex-start;
-  width: 600px;
+  width: 100%;
   align-items: left;
   padding: 20px;
   border-radius: 28px;
   border: 1px solid black;
   box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.75);
-  min-height: 730px;
+  height: 80vh;
+  background-color: white;
 }
 
 .problemNameSection,
 .problemCategorySection,
 .problemDifficultySection,
-.problemDescriptionSection{
+.problemDescriptionSection {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin: 10px;
+  width: 100%;
 }
-
-
 
 .problemNameSection input,
 .problemDescriptionSection textarea,
-.problemCategorySection input
-{
+.problemCategorySection input {
   background: none;
   border-radius: 28px;
   outline: none;
@@ -84,40 +101,35 @@
 }
 
 .problemNameSection input,
-.problemCategorySection input{
-  width: 350px;
+.problemCategorySection input {
+  width: 75%;
 }
 
-.problemDescriptionSection textarea{
-  width: 500px;
-  height: 300px;
+.problemDescriptionSection textarea {
+  width: 90%;
+  height: 15vh;
   resize: none;
 }
 
-
-#submitButton
-{
+#submitButton {
   background: lightgrey;
   border-radius: 28px;
   padding: 10px;
   cursor: pointer;
 }
 
-#jsonImportButton
-{
+#jsonImportButton {
   background: lightgrey;
   border-radius: 28px;
   padding: 10px;
   cursor: pointer;
 }
-
-
 
 /*Pagina Profil*/
 
 .ProfilePage {
   position: absolute;
-  top:15%;
+  top: 15%;
   width: 300px;
   background: white;
   border-radius: 28px;
@@ -131,7 +143,7 @@
   border-bottom: 1px solid black;
 }
 
-.profileContent{
+.profileContent {
   padding: 10px 0px 10px;
   font-size: x-large;
   display: flex;
@@ -139,17 +151,16 @@
   justify-content: center;
 }
 
-.profileContent h5{
+.profileContent h5 {
   text-align: center;
-  padding-top:10px;
+  padding-top: 10px;
   margin-top: 15px;
   border-top: 1px solid black;
 }
 
 .NumePrenume,
 .Mail,
-.Password
-{
+.Password {
   margin-top: 5px;
   display: flex;
   flex-direction: column;
@@ -159,8 +170,7 @@
 
 .NumePrenume input,
 .Mail input,
-.Password input
-{
+.Password input {
   background: none;
   border-radius: 28px;
   outline: none;
@@ -170,31 +180,29 @@
   width: calc(100% - 20px);
 }
 
-.profileButtons
-{
+.profileButtons {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   margin-top: 10px;
 }
 
-#deleteProfile
-{
+#deleteProfile {
   background: #fd4444;
   border-radius: 28px;
   padding: 10px;
   cursor: pointer;
 }
 
-#editProfile
-{
+#editProfile {
   background: lightgrey;
   border-radius: 28px;
   padding: 10px;
   cursor: pointer;
 }
 
-.GroupsPage{
+.GroupsPage,
+.HomeworksPage {
   flex-direction: row;
   flex-wrap: wrap;
 }
@@ -207,60 +215,68 @@
   display: flex;
   position: relative;
   width: 100%;
-  min-height:10em ;
+  min-height: 10em;
   background: #ffac1c;
   border-radius: 24px;
   margin-bottom: 5px;
   text-overflow: hidden;
 }
 
-.group{
-  min-width: 240px;
-  width:32%;
+.group {
+  flex: 1 1 200px;
   margin-left: 5px;
   margin-right: 5px;
+  text-decoration: none;
 }
 
-.groupHwDelete{
+.group:visited {
+  text-decoration: none;
+}
+
+.groupHwDelete {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-bottom: 20px;
 }
 
-
 /*problem things*/
-.problem{
+.problem {
   flex-direction: column;
 }
 
-.details{
+.details {
   margin: 10px 10px 10px 10px;
   display: flex;
   flex-direction: row;
-  
+
   justify-content: space-between;
 }
 
-.id-name, .category-diff{
+.id-name,
+.category-diff {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
 }
 
-.problem-id, .problem-name, .problem-category, .problem-statistic, .problem-diff{
+.problem-id,
+.problem-name,
+.problem-category,
+.problem-statistic,
+.problem-diff {
   padding: 3px 5px 3px 5px;
   margin: 2px 2px 2px 2px;
   border-radius: 28px;
   background-color: white;
 }
 
-.description{
+.description {
   display: flex;
-  margin:0px 15px 15px 15px;
-  padding:6px;
-  background-color:white;
-  border-radius:14px;
+  margin: 0px 15px 15px 15px;
+  padding: 6px;
+  background-color: white;
+  border-radius: 14px;
   flex-wrap: wrap;
   overflow: hidden;
   height: 100%;
@@ -268,74 +284,109 @@
 
 /*group things*/
 
-.group{
+.group,
+.homework {
   flex-direction: row;
   align-items: center;
 }
 
-.group-title{
-  margin:25px;
+.group-title {
+  text-decoration: none;
+  margin: 25px;
   padding: 10px;
   background-color: white;
   border-radius: 14px;
-  font-size:50px;
+  font-size: 50px;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.75);
 }
 
-.group-label{
-  margin:10px;
+.group-label {
+  margin: 10px;
   padding: 10px;
-  max-width:55%;
+  max-width: 55%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   background-color: white;
   border-radius: 14px;
-  font-size:36px;
+  font-size: 36px;
   font-weight: bolder;
+  text-decoration: none;
 }
 
-.group-label.overflowing{
-  font-size: 80%; 
+.group-label.overflowing {
+  font-size: 80%;
 }
 
+/*homework things*/
+
+.homework-content {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  justify-content: space-around;
+}
+
+.homework-title,
+.homework-id,
+.homework-group,
+.homework-problem-count {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  padding: 10px;
+  height: fit-content;
+  border-radius: 28px;
+  background-color: white;
+  justify-content: center;
+}
+
+.homework-title h2,
+.homework-id p,
+.homework-group p,
+.homework-problem-count p {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
 /*problem-show*/
 
-.problem-container{
+.problem-container {
   cursor: pointer;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
   position: relative;
   width: 100%;
-  min-height:10em ;
   text-overflow: hidden;
 }
 
-.up-section{
+.up-section {
   display: flex;
   justify-content: space-between;
 }
 
-.up-section .problem-id,.problem-name{
+.up-section .problem-id,
+.problem-name {
   background-color: #ffac1c;
-  padding-left: 8px;
-  padding-right: 8px;
 }
 
-.up-section .problem-category{
-  background-color: #FBCEB1;
+.up-section .problem-category {
+  background-color: #fbceb1;
 }
 
-.left-section{
+.left-section {
   display: flex;
   flex-direction: row;
 }
 
-.json-export{
+.json-export {
   align-self: flex-start;
-  padding:5px;
+  padding: 5px;
   border: none;
   background-color: #c9c6c6;
   border-radius: 28px;
@@ -344,12 +395,12 @@
 }
 
 .json-export:hover,
-.jsonImportButton:hover{
+.jsonImportButton:hover {
   background-color: #6d6c6c;
   transition: 0.3s;
 }
 
-.right-section{
+.right-section {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -361,10 +412,11 @@
   flex-direction: column;
 }
 
-.description-section .description{
+.description-section .description {
+  flex-wrap: wrap;
   flex-grow: 1;
-  border:5px;
-  margin:5px;
+  border: 5px;
+  margin: 5px;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.75);
 }
 /*Submit solution*/
@@ -384,8 +436,8 @@
   margin-bottom: 10px;
   border-radius: 14px;
   border: 1px solid #ccc;
-  resize: none; 
-  overflow: auto; 
+  resize: none;
+  overflow: auto;
 }
 
 .comment-box {
@@ -395,8 +447,8 @@
   margin-bottom: 10px;
   border-radius: 14px;
   border: 1px solid #ccc;
-  resize: none; 
-  overflow: auto; 
+  resize: none;
+  overflow: auto;
 }
 
 .comment-section {
@@ -418,7 +470,7 @@
 }
 
 .submit-button:hover {
-  background-color: #FBCEB1;
+  background-color: #fbceb1;
   transition: 0.3s;
 }
 
@@ -436,13 +488,17 @@
   margin-bottom: 10px;
 }
 
-.submissions{
+.submissions {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .submission-box {
+  display: flex;
+  flex-direction: row;
   cursor: pointer;
+  flex: 1 1 20px;
   width: 100%;
   padding: 10px;
   margin-bottom: 10px;
@@ -464,12 +520,11 @@
 
 /*grading*/
 
-
 .star-rating {
   display: flex;
   flex-direction: row;
-  align-items:center;
-  font-size: 40px; 
+  align-items: center;
+  font-size: 40px;
 }
 
 .star {
@@ -560,7 +615,8 @@
   border-bottom: 1px solid black;
 }
 
-.createForm h2,h3 {
+.createForm h2,
+h3 {
   text-align: center;
   padding: 20px 0;
 }

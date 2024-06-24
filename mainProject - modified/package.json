@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Proiect pentru cursul de Tehnologii Web 2024",
   "main": "backend/server.js",
+  "type": "module",
   "scripts": {
     "start": "node backend/server.js"
   },

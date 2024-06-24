@@ -5,7 +5,9 @@
     display: flex;
     position: relative;
     align-items:center;
-    padding: var(--padding);
+    padding-left: var(--padding);
+    padding-top: var(--padding);
+    padding-bottom: var(--padding);
     border-radius: 28px;
     background: #FBCEB1;
     transition: box-shadow 0.2s;

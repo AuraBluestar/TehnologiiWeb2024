@@ -30,7 +30,8 @@
 
 </head>
 
-<body style="background: url('../styles/background.svg');">
+<body
+    style="background-image: url('data:image/svg+xml;base64,PHN2ZyBpZD0idmlzdWFsIiB2aWV3Qm94PSIwIDAgMTkyMCAxMDgwIiB3aWR0aD0iMTkyMCIgaGVpZ2h0PSIxMDgwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiPjxwYXRoIGQ9Ik0wIDIzOUwxNzUgMTk1TDM0OSAxNTJMNTI0IDk4TDY5OCAxMjBMODczIDIwNkwxMDQ3IDk4TDEyMjIgMTMxTDEzOTYgMTUyTDE1NzEgMjA2TDE3NDUgMjI4TDE5MjAgMTMxTDE5MjAgMEwxNzQ1IDBMMTU3MSAwTDEzOTYgMEwxMjIyIDBMMTA0NyAwTDg3MyAwTDY5OCAwTDUyNCAwTDM0OSAwTDE3NSAwTDAgMFoiIGZpbGw9IiNmZmZmZmYiPjwvcGF0aD48cGF0aCBkPSJNMCAzMzZMMTc1IDMzNkwzNDkgNDMzTDUyNCAxOTVMNjk4IDMyNUw4NzMgMzAzTDEwNDcgMjYwTDEyMjIgNDAxTDEzOTYgMzM2TDE1NzEgNDIyTDE3NDUgNDc2TDE5MjAgMzU3TDE5MjAgMTI5TDE3NDUgMjI2TDE1NzEgMjA0TDEzOTYgMTUwTDEyMjIgMTI5TDEwNDcgOTZMODczIDIwNEw2OTggMTE4TDUyNCA5NkwzNDkgMTUwTDE3NSAxOTNMMCAyMzdaIiBmaWxsPSIjZmZmMmViIj48L3BhdGg+PHBhdGggZD0iTTAgNjcxTDE3NSA4MDBMMzQ5IDU4NEw1MjQgNjYwTDY5OCA1OTVMODczIDU1MkwxMDQ3IDQ2NUwxMjIyIDYzOEwxMzk2IDc0NkwxNTcxIDY5MkwxNzQ1IDY0OUwxOTIwIDYyN0wxOTIwIDM1NUwxNzQ1IDQ3NEwxNTcxIDQyMEwxMzk2IDMzNEwxMjIyIDM5OUwxMDQ3IDI1OEw4NzMgMzAxTDY5OCAzMjNMNTI0IDE5M0wzNDkgNDMxTDE3NSAzMzRMMCAzMzRaIiBmaWxsPSIjZmVlNmQ4Ij48L3BhdGg+PHBhdGggZD0iTTAgNzM1TDE3NSA4NzZMMzQ5IDY4MUw1MjQgNzg5TDY5OCA3NjhMODczIDY5MkwxMDQ3IDYxN0wxMjIyIDc2OEwxMzk2IDkxOUwxNTcxIDgxMUwxNzQ1IDc1N0wxOTIwIDc2OEwxOTIwIDYyNUwxNzQ1IDY0N0wxNTcxIDY5MEwxMzk2IDc0NEwxMjIyIDYzNkwxMDQ3IDQ2M0w4NzMgNTUwTDY5OCA1OTNMNTI0IDY1OEwzNDkgNTgyTDE3NSA3OThMMCA2NjlaIiBmaWxsPSIjZmRkYWM0Ij48L3BhdGg+PHBhdGggZD0iTTAgMTA4MUwxNzUgMTA4MUwzNDkgMTA4MUw1MjQgMTA4MUw2OTggMTA4MUw4NzMgMTA4MUwxMDQ3IDEwODFMMTIyMiAxMDgxTDEzOTYgMTA4MUwxNTcxIDEwODFMMTc0NSAxMDgxTDE5MjAgMTA4MUwxOTIwIDc2NkwxNzQ1IDc1NUwxNTcxIDgwOUwxMzk2IDkxN0wxMjIyIDc2NkwxMDQ3IDYxNUw4NzMgNjkwTDY5OCA3NjZMNTI0IDc4N0wzNDkgNjc5TDE3NSA4NzRMMCA3MzNaIiBmaWxsPSIjZmJjZWIxIj48L3BhdGg+PC9zdmc+');">
 
     <!-- This is the NavBar -->
     <nav class="navbar">
@@ -59,7 +60,8 @@
         <ul>
             <li><a href="/"><i class='bx bxs-home'></i><span class="navitem">Home</span></a></li>
             <li><a href="/signup"><i class='bx bxs-edit-alt'></i><span class="navitem">Sign Up</span></a></li>
-            <li><a href="mailto:assistance@informatix.com"><i class='bx bxs-contact'></i><span class="navitem">Contact</span></a></li>
+            <li><a href="mailto:assistance@informatix.com"><i class='bx bxs-contact'></i><span
+                        class="navitem">Contact</span></a></li>
         </ul>
     </nav>
     <div class="authcontent" style="left: 60px; width:calc(100dvw - 160px);">
@@ -84,46 +86,46 @@
     <script src="../scripts/checkGuest.js"></script>
 
     <script>
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
-        event.preventDefault();
+        document.getElementById('loginForm').addEventListener('submit', function (event) {
+            event.preventDefault();
 
-        const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
 
-        console.log('Username:', username);
-        console.log('Password:', password);
+            console.log('Username:', username);
+            console.log('Password:', password);
 
-        fetch('http://localhost:3000/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ username, password })
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Response:', data);
-            if (data.success) {
-                // Storing userType and id in localStorage
-                localStorage.setItem('userType', data.userType);
-                localStorage.setItem('id', data.id);
+            fetch('http://localhost:3000/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Response:', data);
+                    if (data.success) {
+                        // Storing userType and id in localStorage
+                        localStorage.setItem('userType', data.userType);
+                        localStorage.setItem('id', data.id);
 
-                // Redirecting based on userType
-                if (data.userType === 'elev') {
-                    window.location.href = '/loggedStudent';
-                } else if (data.userType === 'profesor') {
-                    window.location.href = '/loggedTeacher';
-                } else if (data.userType === 'admin') {
-                    window.location.href = '/loggedAdmin';
-                }
-            } else {
-                alert('Login failed: ' + data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    });</script>
+                        // Redirecting based on userType
+                        if (data.userType === 'elev') {
+                            window.location.href = '/loggedStudent';
+                        } else if (data.userType === 'profesor') {
+                            window.location.href = '/loggedTeacher';
+                        } else if (data.userType === 'admin') {
+                            window.location.href = '/loggedAdmin';
+                        }
+                    } else {
+                        alert('Login failed: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });</script>
 
 </body>
 

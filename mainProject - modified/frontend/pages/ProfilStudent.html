@@ -1,28 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../styles/nav-bar.css">
-    <link rel="stylesheet" href="../styles/side-bar.css">
-    <link rel="stylesheet" href="../styles/main-content.css">
-    <link rel="stylesheet" href="../styles/searchmenu.css">
-    <link rel="stylesheet" href="../styles/listingsPage.css">
-    <link rel='stylesheet'
-      href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-    <title>ProfilStudent</title>
-    <style>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../styles/nav-bar.css">
+  <link rel="stylesheet" href="../styles/side-bar.css">
+  <link rel="stylesheet" href="../styles/main-content.css">
+  <link rel="stylesheet" href="../styles/searchmenu.css">
+  <link rel="stylesheet" href="../styles/listingsPage.css">
+  <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+  <title>ProfilStudent</title>
+  <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-    body, html {
+
+    body,
+    html {
       position: relative;
       height: 100%;
       font-family: Lato, normal;
     }
+
     .chart-container {
       width: 60%;
       height: 400px;
@@ -30,7 +33,9 @@
     }
   </style>
 </head>
-<body>
+
+<body
+  style="background-image: url('data:image/svg+xml;base64,PHN2ZyBpZD0idmlzdWFsIiB2aWV3Qm94PSIwIDAgMTkyMCAxMDgwIiB3aWR0aD0iMTkyMCIgaGVpZ2h0PSIxMDgwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiPjxwYXRoIGQ9Ik0wIDIzOUwxNzUgMTk1TDM0OSAxNTJMNTI0IDk4TDY5OCAxMjBMODczIDIwNkwxMDQ3IDk4TDEyMjIgMTMxTDEzOTYgMTUyTDE1NzEgMjA2TDE3NDUgMjI4TDE5MjAgMTMxTDE5MjAgMEwxNzQ1IDBMMTU3MSAwTDEzOTYgMEwxMjIyIDBMMTA0NyAwTDg3MyAwTDY5OCAwTDUyNCAwTDM0OSAwTDE3NSAwTDAgMFoiIGZpbGw9IiNmZmZmZmYiPjwvcGF0aD48cGF0aCBkPSJNMCAzMzZMMTc1IDMzNkwzNDkgNDMzTDUyNCAxOTVMNjk4IDMyNUw4NzMgMzAzTDEwNDcgMjYwTDEyMjIgNDAxTDEzOTYgMzM2TDE1NzEgNDIyTDE3NDUgNDc2TDE5MjAgMzU3TDE5MjAgMTI5TDE3NDUgMjI2TDE1NzEgMjA0TDEzOTYgMTUwTDEyMjIgMTI5TDEwNDcgOTZMODczIDIwNEw2OTggMTE4TDUyNCA5NkwzNDkgMTUwTDE3NSAxOTNMMCAyMzdaIiBmaWxsPSIjZmZmMmViIj48L3BhdGg+PHBhdGggZD0iTTAgNjcxTDE3NSA4MDBMMzQ5IDU4NEw1MjQgNjYwTDY5OCA1OTVMODczIDU1MkwxMDQ3IDQ2NUwxMjIyIDYzOEwxMzk2IDc0NkwxNTcxIDY5MkwxNzQ1IDY0OUwxOTIwIDYyN0wxOTIwIDM1NUwxNzQ1IDQ3NEwxNTcxIDQyMEwxMzk2IDMzNEwxMjIyIDM5OUwxMDQ3IDI1OEw4NzMgMzAxTDY5OCAzMjNMNTI0IDE5M0wzNDkgNDMxTDE3NSAzMzRMMCAzMzRaIiBmaWxsPSIjZmVlNmQ4Ij48L3BhdGg+PHBhdGggZD0iTTAgNzM1TDE3NSA4NzZMMzQ5IDY4MUw1MjQgNzg5TDY5OCA3NjhMODczIDY5MkwxMDQ3IDYxN0wxMjIyIDc2OEwxMzk2IDkxOUwxNTcxIDgxMUwxNzQ1IDc1N0wxOTIwIDc2OEwxOTIwIDYyNUwxNzQ1IDY0N0wxNTcxIDY5MEwxMzk2IDc0NEwxMjIyIDYzNkwxMDQ3IDQ2M0w4NzMgNTUwTDY5OCA1OTNMNTI0IDY1OEwzNDkgNTgyTDE3NSA3OThMMCA2NjlaIiBmaWxsPSIjZmRkYWM0Ij48L3BhdGg+PHBhdGggZD0iTTAgMTA4MUwxNzUgMTA4MUwzNDkgMTA4MUw1MjQgMTA4MUw2OTggMTA4MUw4NzMgMTA4MUwxMDQ3IDEwODFMMTIyMiAxMDgxTDEzOTYgMTA4MUwxNTcxIDEwODFMMTc0NSAxMDgxTDE5MjAgMTA4MUwxOTIwIDc2NkwxNzQ1IDc1NUwxNTcxIDgwOUwxMzk2IDkxN0wxMjIyIDc2NkwxMDQ3IDYxNUw4NzMgNjkwTDY5OCA3NjZMNTI0IDc4N0wzNDkgNjc5TDE3NSA4NzRMMCA3MzNaIiBmaWxsPSIjZmJjZWIxIj48L3BhdGg+PC9zdmc+');">
   <!-- This is the NavBar -->
   <nav class="navbar">
     <div class="navleft">
@@ -58,8 +63,9 @@
       <li><a href="/ProfilStudent"><i class='bx bxs-user-circle'></i><span class="navitem">Profile</span></a></li>
       <li><a href="/VisGroupsStudent"><i class='bx bxs-group'></i><span class="navitem">Groups</span></a></li>
       <li><a href="/VisHWStudent"><i class='bx bxs-book-alt'></i><span class="navitem">Homeworks</span></a></li>
-      <li><a href="mailto:assistance@informatix.com"><i class='bx bxs-contact'></i><span class="navitem">Contact</span></a></li>
-      <li><a href="/"  onclick="logout()"><i class='bx bx-log-out'></i><span class="navitem">LogOut</span></a></li>
+      <li><a href="mailto:assistance@informatix.com"><i class='bx bxs-contact'></i><span
+            class="navitem">Contact</span></a></li>
+      <li><a href="/" onclick="logout()"><i class='bx bx-log-out'></i><span class="navitem">LogOut</span></a></li>
     </ul>
   </nav>
   <div class="maincontent" style="justify-content: center;">
@@ -73,8 +79,7 @@
         </div>
         <div class="Mail">
           <header>Mail</header>
-          <input type="email" id="email" value="vatamaniuc.sebi@gmail.com"
-            disabled />
+          <input type="email" id="email" value="vatamaniuc.sebi@gmail.com" disabled />
         </div>
         <div class="Password">
           <header>New Password</header>
@@ -90,8 +95,8 @@
     <div class="chart-container">
       <canvas id="reportChart" width="400" height="400"></canvas>
 
-      </div>
     </div>
+  </div>
   </div>
 
   <script src="../scripts/script.js"></script>
@@ -110,19 +115,19 @@
           },
           body: JSON.stringify({ id: parseInt(userId), type: userType })
         })
-        .then(response => response.json())
-        .then(data => {
-          if (data.success) {
-            document.getElementById('name').value = data.username;
-            document.getElementById('email').value = data.email;
-          } else {
-            alert('Failed to fetch account details');
-          }
-        })
-        .catch(error => {
-          console.error('Error:', error);
-          alert('Error fetching account details');
-        });
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              document.getElementById('name').value = data.username;
+              document.getElementById('email').value = data.email;
+            } else {
+              alert('Failed to fetch account details');
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert('Error fetching account details');
+          });
 
         // Fetch report data and draw the chart after fetching user details
         fetch('http://localhost:3000/reports/user', {
@@ -132,15 +137,15 @@
           },
           body: JSON.stringify({ UserID: parseInt(userId), userType })
         })
-        .then(response => response.json())
-        .then(data => {
-          console.log('Report data:', data);
-          drawChart(data);
-        })
-        .catch(error => {
-          console.error('Error:', error);
-          alert('Error fetching report data');
-        });
+          .then(response => response.json())
+          .then(data => {
+            console.log('Report data:', data);
+            drawChart(data);
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert('Error fetching report data');
+          });
       }
 
       document.getElementById('editProfile').addEventListener('click', () => {
@@ -154,53 +159,53 @@
             },
             body: JSON.stringify({ id: parseInt(userId), type: userType, password })
           })
-          .then(response => response.json())
-          .then(data => {
-            if (data.success) {
-              alert('Password updated successfully');
-              document.getElementById('password').value = '';
-            } else {
-              alert('Failed to update password');
-            }
-          })
-          .catch(error => {
-            console.error('Error:', error);
-            alert('Error updating password');
-          });
+            .then(response => response.json())
+            .then(data => {
+              if (data.success) {
+                alert('Password updated successfully');
+                document.getElementById('password').value = '';
+              } else {
+                alert('Failed to update password');
+              }
+            })
+            .catch(error => {
+              console.error('Error:', error);
+              alert('Error updating password');
+            });
         } else {
           alert('Please enter a new password');
         }
       });
-     
+
 
       //delete student profile
-      document.getElementById('deleteProfile').addEventListener('click', function() {
+      document.getElementById('deleteProfile').addEventListener('click', function () {
         const studentId = localStorage.getItem('id'); // Assuming studentId is stored in localStorage
 
-    if (studentId) {
-        fetch(`http://localhost:3000/ProfilStudent/${parseInt(studentId)}`, {
+        if (studentId) {
+          fetch(`http://localhost:3000/ProfilStudent/${parseInt(studentId)}`, {
             method: 'DELETE',
             headers: {
-                'Content-Type': 'application/json'
+              'Content-Type': 'application/json'
             }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
+          })
+            .then(response => response.json())
+            .then(data => {
+              if (data.success) {
                 alert('Account deleted successfully');
                 window.location.href = '/'; // Redirect to home page
-            } else {
+              } else {
                 alert('Failed to delete account');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Error deleting account');
-        });
-    } else {
-        alert('Student ID not found');
-    }
-});
+              }
+            })
+            .catch(error => {
+              console.error('Error:', error);
+              alert('Error deleting account');
+            });
+        } else {
+          alert('Student ID not found');
+        }
+      });
 
       function drawChart(data) {
         const canvas = document.getElementById('reportChart');
@@ -239,15 +244,16 @@
       }
 
       // Event listener to show password on focus
-      document.getElementById('password').addEventListener('focus', function() {
+      document.getElementById('password').addEventListener('focus', function () {
         this.type = 'text';
       });
 
       // Event listener to hide password on blur
-      document.getElementById('password').addEventListener('blur', function() {
+      document.getElementById('password').addEventListener('blur', function () {
         this.type = 'password';
       });
     });
   </script>
-  </body>
+</body>
+
 </html>

@@ -12,13 +12,14 @@
   margin: 50px;
 }
 
-.create{
+.create {
   display: flex;
   flex-direction: row;
 }
 
 /*SearchMenu*/
-.searchmenu {
+.searchmenu,
+.searchmenu-2 {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -28,14 +29,14 @@
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.75);
 }
 
-.searchmenu header {
-
+.searchmenu header,
+.searchmenu-2 header {
   margin-top: 5px;
   margin-bottom: 5px;
   font-size: 20px;
 }
 
-.add{
+.add {
   width: 100%;
   height: 790px;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.75);
@@ -45,108 +46,117 @@
 /*responsivnes*/
 
 @media only screen and (max-width: 600px) {
-    .maincontent .searchmenu {
-        margin:5%;
-        flex-direction: column;
-        width:300px;
-        margin-bottom: 20px;
-      }
+  .maincontent .searchmenu,
+  .maincontent .searchmenu-2 {
+    margin: 5%;
+    flex-direction: column;
+    width: 280px;
+    margin-bottom: 20px;
+  }
 
-      .maincontent {
-        left: 60px;
-        width:calc(100dvw - 60px - 10%);
-        flex-direction: column;
-        align-items: center;
-        margin:5%;
-      }
+  .maincontent {
+    left: 60px;
+    width: calc(100dvw - 60px - 10%);
+    flex-direction: column;
+    align-items: center;
+    margin: 5%;
+  }
 
-      .GroupsPage,
-      .HomeworksPage,
-      .ProblemsPage,
-      .ProblemPage {
-        margin-left: 0px;
-      }
+  .GroupsPage,
+  .HomeworksPage,
+  .ProblemsPage,
+  .ProblemPage {
+    margin-left: 0px;
+  }
+  .add {
+    margin: 5%;
+  }
 
-      .paginare{
-        width:100%;
-      }
-      .add{
-        margin:5%;
-      }
+  .up-section {
+    flex-direction: column;
+  }
+
+  .left-section {
+    flex-direction: column !important;
+  }
 }
 
 @media only screen and (min-width: 601px) {
-    .maincontent .searchmenu {
-        flex-direction: column;
-        width:300px;
-        margin-bottom: 20px;
-      }
+  .maincontent .searchmenu,
+  .maincontent .searchmenu-2 {
+    flex-direction: column;
+    width: 300px;
+    margin-bottom: 20px;
+  }
 
-      .maincontent {
-        left: 60px;
-        width:calc(100dvw - 60px - 10%);
-        flex-direction: column;
-        align-items: center;
-        margin:5%;
-      }
+  .maincontent {
+    left: 60px;
+    width: calc(100dvw - 60px - 10%);
+    flex-direction: column;
+    align-items: center;
+    margin: 5%;
+  }
 
-      .GroupsPage,
-      .HomeworksPage,
-      .ProblemsPage,
-      .ProblemPage {
-        margin-left: 0px;
-      }
+  .GroupsPage,
+  .HomeworksPage,
+  .ProblemsPage,
+  .ProblemPage {
+    margin-left: 0px;
+  }
 
-.group,
-.homework,
-.problem {
+  .group,
+  .homework,
+  .problem {
     display: none;
     height: 10dvh;
-}
-.add{
-      margin:5%;
-    }
-}
-     
+  }
+  .add {
+    margin: 5%;
+  }
 
+  .up-section {
+    flex-direction: column;
+  }
+}
 
 @media only screen and (min-width: 634px) {
-      .maincontent .searchmenu {
-        flex-direction: row;
-        width:564px;
-      }
-      .maincontent {
-        flex-direction: column;
-    }
-    
+  .maincontent .searchmenu {
+    flex-direction: row;
+    width: 564px;
+  }
+  .maincontent {
+    flex-direction: column;
+  }
 }
 
 @media only screen and (min-width: 992px) {
-    .maincontent {
-        flex-direction: row;
-        justify-content: flex-start; /* Aligns children at the start of the main axis */
-        align-items: start;
-    }
-    .maincontent .searchmenu {
-        
-        flex-direction: column;
-        width:564px;
-        margin-bottom: 0px;
-      }
+  .maincontent {
+    flex-direction: row;
+    justify-content: flex-start; /* Aligns children at the start of the main axis */
+    align-items: start;
+  }
+  .maincontent .searchmenu,
+  .maincontent .searchmenu-2 {
+    flex-direction: column;
+    width: 564px;
+    margin-bottom: 0px;
+  }
 
-      .GroupsPage,
-      .HomeworksPage,
-      .ProblemsPage,
-      .ProblemPage {
-        margin-left: 50px;
-      }
+  .GroupsPage,
+  .HomeworksPage,
+  .ProblemsPage,
+  .ProblemPage {
+    margin-left: 50px;
+  }
 
-    .add{
-      margin: 0px;
-      margin-left: 50px;
-      
-    }
-      
+  .add {
+    margin: 0px;
+    margin-left: 50px;
+  }
+
+  .up-section {
+    flex-direction: row;
+  }
 }
 /*
 @media only screen and (min-width: 1200px) {

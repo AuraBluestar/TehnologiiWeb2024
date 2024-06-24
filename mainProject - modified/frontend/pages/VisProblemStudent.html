@@ -25,21 +25,6 @@
       height: 100%;
       font-family: Lato, normal;
     }
-
-    .comments-button {
-      display: block;
-      margin: 10px 0;
-      padding: 10px 20px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      cursor: pointer;
-      text-align: center;
-    }
-
-    .comments-button:hover {
-      background-color: #0056b3;
-    }
   </style>
 </head>
 
@@ -71,7 +56,8 @@
       <li><a href="/ProfilStudent"><i class='bx bxs-user-circle'></i><span class="navitem">Profile</span></a></li>
       <li><a href="/VisGroupsStudent"><i class='bx bxs-group'></i><span class="navitem">Groups</span></a></li>
       <li><a href="/VisHWStudent"><i class='bx bxs-book-alt'></i><span class="navitem">Homeworks</span></a></li>
-      <li><a href="mailto:assistance@informatix.com"><i class='bx bxs-contact'></i><span class="navitem">Contact</span></a></li>
+      <li><a href="mailto:assistance@informatix.com"><i class='bx bxs-contact'></i><span
+            class="navitem">Contact</span></a></li>
       <li><a href="/" onclick="logout()"><i class='bx bx-log-out'></i><span class="navitem">LogOut</span></a></li>
     </ul>
   </nav>
@@ -133,14 +119,14 @@
         <textarea class="solution-box" placeholder="Enter your solution here..."></textarea>
         <button class="submit-button">Submit</button>
       </div>
-      <div class="submission-message" style="display: none;">
+      <div class="submission-message" style="display: none;margin-top:  10px;">
         <p>You have already submitted a solution for this problem.</p>
       </div>
       <button class="comments-button" onclick="redirectToComments()">Comments</button>
       <!-- Comment Section -->
       <div class="comment-section" style="display: none;">
         <textarea class="comment-box" placeholder="Write your comment here..."></textarea>
-        <button class="add-comment-button">Add Comment</button>
+        <button class="add-comment-button" style="margin-bottom: 20px;">Add Comment</button>
       </div>
     </div>
   </div>

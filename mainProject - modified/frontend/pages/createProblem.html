@@ -1,185 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="../styles/nav-bar.css">
-        <link rel="stylesheet" href="../styles/side-bar.css">
-        <link rel="stylesheet" href="../styles/main-content.css">
-        <link rel="stylesheet" href="../styles/searchmenu.css">
-        <link rel="stylesheet" href="../styles/listingsPage.css">
-        <link rel='stylesheet'
-            href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
-        <link rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Lato">
-        <title>createProblem</title>
-        <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body, html {
-      position: relative;
-      height: 100%;
-      font-family: Lato, normal;
-    }
-  </style>
-    </head>
-    <body>
-        <!-- This is the NavBar -->
-        <nav class="navbar">
-            <div class="navleft">
-                <div class="logo"><a
-                        href="/loggedTeacher">In&lt;form&gt;atiX</a> </div>
-            </div>
-            <div class="navright">
-                <ul>
-                    <li><a href="/loggedTeacher">Home</a></li>
-                    <li><a href="/" onclick="logout()">LogOut</a></li>
-                    <li><a
-                            href="mailto:assistance@informatix.com">Contact</a></li>
-                </ul>
-            </div>
-        </nav>
 
-        <!-- This is the SideBar -->
-        <nav class="sidebar">
-            <div class="top">
-                <div class="menu">
-                    <i class='bx bx-code'></i>
-                    <span>Menu</span>
-                </div>
-                <i class='bx bx-menu' id="btn"></i>
-            </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/nav-bar.css">
+    <link rel="stylesheet" href="../styles/side-bar.css">
+    <link rel="stylesheet" href="../styles/main-content.css">
+    <link rel="stylesheet" href="../styles/searchmenu.css">
+    <link rel="stylesheet" href="../styles/listingsPage.css">
+    <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <title>createProblem</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body,
+        html {
+            position: relative;
+            height: 100%;
+            font-family: Lato, normal;
+        }
+    </style>
+</head>
+
+<body
+    style="background-image: url('data:image/svg+xml;base64,PHN2ZyBpZD0idmlzdWFsIiB2aWV3Qm94PSIwIDAgMTkyMCAxMDgwIiB3aWR0aD0iMTkyMCIgaGVpZ2h0PSIxMDgwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiPjxwYXRoIGQ9Ik0wIDIzOUwxNzUgMTk1TDM0OSAxNTJMNTI0IDk4TDY5OCAxMjBMODczIDIwNkwxMDQ3IDk4TDEyMjIgMTMxTDEzOTYgMTUyTDE1NzEgMjA2TDE3NDUgMjI4TDE5MjAgMTMxTDE5MjAgMEwxNzQ1IDBMMTU3MSAwTDEzOTYgMEwxMjIyIDBMMTA0NyAwTDg3MyAwTDY5OCAwTDUyNCAwTDM0OSAwTDE3NSAwTDAgMFoiIGZpbGw9IiNmZmZmZmYiPjwvcGF0aD48cGF0aCBkPSJNMCAzMzZMMTc1IDMzNkwzNDkgNDMzTDUyNCAxOTVMNjk4IDMyNUw4NzMgMzAzTDEwNDcgMjYwTDEyMjIgNDAxTDEzOTYgMzM2TDE1NzEgNDIyTDE3NDUgNDc2TDE5MjAgMzU3TDE5MjAgMTI5TDE3NDUgMjI2TDE1NzEgMjA0TDEzOTYgMTUwTDEyMjIgMTI5TDEwNDcgOTZMODczIDIwNEw2OTggMTE4TDUyNCA5NkwzNDkgMTUwTDE3NSAxOTNMMCAyMzdaIiBmaWxsPSIjZmZmMmViIj48L3BhdGg+PHBhdGggZD0iTTAgNjcxTDE3NSA4MDBMMzQ5IDU4NEw1MjQgNjYwTDY5OCA1OTVMODczIDU1MkwxMDQ3IDQ2NUwxMjIyIDYzOEwxMzk2IDc0NkwxNTcxIDY5MkwxNzQ1IDY0OUwxOTIwIDYyN0wxOTIwIDM1NUwxNzQ1IDQ3NEwxNTcxIDQyMEwxMzk2IDMzNEwxMjIyIDM5OUwxMDQ3IDI1OEw4NzMgMzAxTDY5OCAzMjNMNTI0IDE5M0wzNDkgNDMxTDE3NSAzMzRMMCAzMzRaIiBmaWxsPSIjZmVlNmQ4Ij48L3BhdGg+PHBhdGggZD0iTTAgNzM1TDE3NSA4NzZMMzQ5IDY4MUw1MjQgNzg5TDY5OCA3NjhMODczIDY5MkwxMDQ3IDYxN0wxMjIyIDc2OEwxMzk2IDkxOUwxNTcxIDgxMUwxNzQ1IDc1N0wxOTIwIDc2OEwxOTIwIDYyNUwxNzQ1IDY0N0wxNTcxIDY5MEwxMzk2IDc0NEwxMjIyIDYzNkwxMDQ3IDQ2M0w4NzMgNTUwTDY5OCA1OTNMNTI0IDY1OEwzNDkgNTgyTDE3NSA3OThMMCA2NjlaIiBmaWxsPSIjZmRkYWM0Ij48L3BhdGg+PHBhdGggZD0iTTAgMTA4MUwxNzUgMTA4MUwzNDkgMTA4MUw1MjQgMTA4MUw2OTggMTA4MUw4NzMgMTA4MUwxMDQ3IDEwODFMMTIyMiAxMDgxTDEzOTYgMTA4MUwxNTcxIDEwODFMMTc0NSAxMDgxTDE5MjAgMTA4MUwxOTIwIDc2NkwxNzQ1IDc1NUwxNTcxIDgwOUwxMzk2IDkxN0wxMjIyIDc2NkwxMDQ3IDYxNUw4NzMgNjkwTDY5OCA3NjZMNTI0IDc4N0wzNDkgNjc5TDE3NSA4NzRMMCA3MzNaIiBmaWxsPSIjZmJjZWIxIj48L3BhdGg+PC9zdmc+');">
+    <!-- This is the NavBar -->
+    <nav class="navbar">
+        <div class="navleft">
+            <div class="logo"><a href="/loggedTeacher">In&lt;form&gt;atiX</a> </div>
+        </div>
+        <div class="navright">
             <ul>
-                <li><a href="/loggedTeacher"><i class='bx bxs-home'></i><span
-                            class="navitem">Home</span></a></li>
-                <li><a href="/ProfilProfesor"><i
-                            class='bx bxs-user-circle'></i><span
-                            class="navitem">Profile</span></a></li>
-                <li><a href="/VisGroupsTeacher"><i
-                            class='bx bxs-group'></i><span
-                            class="navitem">Groups</span></a></li>
-                <li><a href="/VisHWTeacher"><i class='bx bxs-book-alt'></i><span
-                            class="navitem">Homeworks</span></a></li>
-                <li><a href="/submitedProblems"><i
-                            class='bx bxs-book-content'></i><span
-                            class="navitem">Proposed Problems</span></a></li>
-                <li><a href="createProblem"><i class='bx bxs-edit'></i><span
-                            class="navitem">New Problem</span></a></li>
-                <li><a href="mailto:assistance@informatix.com"><i
-                            class='bx bxs-contact'></i><span
-                            class="navitem">Contact</span></a></li>
-                <li><a href="/" onclick="logout()"><i class='bx bx-log-out'></i><span
-                            class="navitem">LogOut</span></a></li>
+                <li><a href="/loggedTeacher">Home</a></li>
+                <li><a href="/" onclick="logout()">LogOut</a></li>
+                <li><a href="mailto:assistance@informatix.com">Contact</a></li>
             </ul>
-        </nav>
+        </div>
+    </nav>
 
-        <div class="maincontent" style="justify-content: center;">
-            <div class="CreateProblemPage">
-                <h1>New Problem</h1>
+    <!-- This is the SideBar -->
+    <nav class="sidebar">
+        <div class="top">
+            <div class="menu">
+                <i class='bx bx-code'></i>
+                <span>Menu</span>
+            </div>
+            <i class='bx bx-menu' id="btn"></i>
+        </div>
+        <ul>
+            <li><a href="/loggedTeacher"><i class='bx bxs-home'></i><span class="navitem">Home</span></a></li>
+            <li><a href="/ProfilProfesor"><i class='bx bxs-user-circle'></i><span class="navitem">Profile</span></a>
+            </li>
+            <li><a href="/VisGroupsTeacher"><i class='bx bxs-group'></i><span class="navitem">Groups</span></a></li>
+            <li><a href="/VisHWTeacher"><i class='bx bxs-book-alt'></i><span class="navitem">Homeworks</span></a></li>
+            <li><a href="/submitedProblems"><i class='bx bxs-book-content'></i><span class="navitem">Proposed
+                        Problems</span></a></li>
+            <li><a href="createProblem"><i class='bx bxs-edit'></i><span class="navitem">New Problem</span></a></li>
+            <li><a href="mailto:assistance@informatix.com"><i class='bx bxs-contact'></i><span
+                        class="navitem">Contact</span></a></li>
+            <li><a href="/" onclick="logout()"><i class='bx bx-log-out'></i><span class="navitem">LogOut</span></a></li>
+        </ul>
+    </nav>
 
-                <div class="problemNameSection">
-                    <label for="problemName">Problem Name:</label>
-                    <input type="text" id="problemName" />
+    <div class="maincontent" style="justify-content: center;">
+        <div class="CreateProblemPage">
+            <h1>New Problem</h1>
+
+            <div class="problemNameSection">
+                <label for="problemName">Problem Name:</label>
+                <input type="text" id="problemName" />
+            </div>
+
+            <div class="problemDescriptionSection">
+                <label for="problemDescription">Problem Description:</label>
+                <textarea id="problemDescription"></textarea>
+            </div>
+
+            <div class="problemCategorySection">
+                <label for="problemCategory">Problem Category:</label>
+                <input type="text" id="problemCategory" />
+            </div>
+
+            <div class="problemDifficultySection">
+                <header>Difficulty:</header>
+                <div class="diffButtons">
+                    <input type="radio" id="radio-easy" name="diffButtons" value="1">
+                    <label class="diff" for="radio-easy">Easy</label>
+
+                    <input type="radio" id="radio-medium" name="diffButtons" value="2">
+                    <label class="diff" for="radio-medium">Medium</label>
+
+                    <input type="radio" id="radio-hard" name="diffButtons" value="3">
+                    <label class="diff" for="radio-hard">Hard</label>
                 </div>
+            </div>
 
-                <div class="problemDescriptionSection">
-                    <label for="problemDescription">Problem Description:</label>
-                    <textarea id="problemDescription"></textarea>
-                </div>
-
-                <div class="problemCategorySection">
-                    <label for="problemCategory">Problem Category:</label>
-                    <input type="text" id="problemCategory" />
-                </div>
-
-                <div class="problemDifficultySection">
-                    <header>Difficulty:</header>
-                    <div class="diffButtons">
-                        <input type="radio" id="radio-easy" name="diffButtons"
-                            value="1">
-                        <label class="diff" for="radio-easy">Easy</label>
-
-                        <input type="radio" id="radio-medium" name="diffButtons"
-                            value="2">
-                        <label class="diff" for="radio-medium">Medium</label>
-
-                        <input type="radio" id="radio-hard" name="diffButtons"
-                            value="3">
-                        <label class="diff" for="radio-hard">Hard</label>
-                    </div>
-                </div>
-
-                <div class="createProblemButtons">
-                    <button id="submitButton" type="button">Submit</button>
-                    <button id="jsonImportButton" type="button">Import
-                        JSON</button>
-                    <input type="file" id="jsonFileInput" style="display:none"
-                        accept=".json" />
-                </div>
+            <div class="createProblemButtons">
+                <button id="submitButton" type="button">Submit</button>
+                <button id="jsonImportButton" type="button">Import
+                    JSON</button>
+                <input type="file" id="jsonFileInput" style="display:none" accept=".json" />
             </div>
         </div>
+    </div>
 
-        <script src="../scripts/script.js"></script>
-        <script src="../scripts/logout.js"></script>
-        <script src="../scripts/checkProfesor.js"></script>
+    <script src="../scripts/script.js"></script>
+    <script src="../scripts/logout.js"></script>
+    <script src="../scripts/checkProfesor.js"></script>
 
-        <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const submitButton = document.getElementById('submitButton');
-        const jsonImportButton = document.getElementById('jsonImportButton');
-        const jsonFileInput = document.getElementById('jsonFileInput');
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const submitButton = document.getElementById('submitButton');
+            const jsonImportButton = document.getElementById('jsonImportButton');
+            const jsonFileInput = document.getElementById('jsonFileInput');
 
-        submitButton.addEventListener('click', function () {
-            const problemName = document.getElementById('problemName').value;
-            const problemDescription = document.getElementById('problemDescription').value;
-            const problemCategory = document.getElementById('problemCategory').value;
-            const problemDifficulty = document.querySelector('input[name="diffButtons"]:checked').value;
-            const profesorID = Storage.getItem('id'local);
+            submitButton.addEventListener('click', function () {
+                const problemName = document.getElementById('problemName').value;
+                const problemDescription = document.getElementById('problemDescription').value;
+                const problemCategory = document.getElementById('problemCategory').value;
+                const problemDifficulty = document.querySelector('input[name="diffButtons"]:checked').value;
+                const profesorID = localStorage.getItem('id');
 
-            const problemData = {
-                titlu: problemName,
-                descriere: problemDescription,
-                capitol: problemCategory,
-                dificultate: problemDifficulty,
-                profesorID: profesorID
-            };
+                const problemData = {
+                    titlu: problemName,
+                    descriere: problemDescription,
+                    capitol: problemCategory,
+                    dificultate: problemDifficulty,
+                    profesorID: profesorID
+                };
 
-            fetch('http://localhost:3000/problems/add', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(problemData)
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success) {
-                    if (confirm('Problem created successfully!')) {
-                        window.location.href = '/loggedTeacher';
-                    }
-                    document.getElementById('problemName').value = '';
-                    document.getElementById('problemDescription').value = '';
-                    document.getElementById('problemCategory').value = '';
-                    document.querySelector('input[name="diffButtons"]:checked').checked = false;
-                } else {
-                    alert('Failed to create problem');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Error creating problem');
+                fetch('http://localhost:3000/problems/add', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(problemData)
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.success) {
+                            if (confirm('Problem created successfully!')) {
+                                window.location.href = '/loggedTeacher';
+                            }
+                            document.getElementById('problemName').value = '';
+                            document.getElementById('problemDescription').value = '';
+                            document.getElementById('problemCategory').value = '';
+                            document.querySelector('input[name="diffButtons"]:checked').checked = false;
+                        } else {
+                            alert('Failed to create problem');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Error creating problem');
+                    });
             });
         });
-    });
-    jsonImportButton.addEventListener('click', function () {
+        jsonImportButton.addEventListener('click', function () {
             jsonFileInput.click();
         });
 
@@ -200,25 +188,25 @@
                             },
                             body: JSON.stringify(jsonData)
                         })
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error(`HTTP error! status: ${response.status}`);
-                            }
-                            return response.json();
-                        })
-                        .then(data => {
-                            if (data.success) {
-                                if (confirm('Problem imported successfully!')) {
-                                    window.location.href = '/loggedTeacher';
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error(`HTTP error! status: ${response.status}`);
                                 }
-                            } else {
-                                alert('Failed to import problem');
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                            alert('Error importing problem');
-                        });
+                                return response.json();
+                            })
+                            .then(data => {
+                                if (data.success) {
+                                    if (confirm('Problem imported successfully!')) {
+                                        window.location.href = '/loggedTeacher';
+                                    }
+                                } else {
+                                    alert('Failed to import problem');
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                                alert('Error importing problem');
+                            });
                     } catch (error) {
                         console.error('Error parsing JSON:', error);
                         alert('Invalid JSON file');
@@ -227,6 +215,7 @@
                 reader.readAsText(file);
             }
         });
-  </script>
-    </body>
+    </script>
+</body>
+
 </html>
